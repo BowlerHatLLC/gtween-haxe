@@ -1,0 +1,3 @@
+--interp
+-cp src
+--macro include("com.gskinner")

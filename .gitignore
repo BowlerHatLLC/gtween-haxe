@@ -1,0 +1,6 @@
+bin/
+.vscode/
+.DS_Store
+*.swf
+*.n
+*.hl

@@ -1,0 +1,5 @@
+-cp ../../../src
+-main GTweenSimpleSequencing
+-swf bin/GTweenSimpleSequencing.swf
+-swf-version 19
+--swf-header 550:400:60:ffffff

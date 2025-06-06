@@ -1,0 +1,3 @@
+tests.hxml
+-swf bin/tests.swf
+-D fdb

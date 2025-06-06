@@ -1,0 +1,3 @@
+-cp ../../../src
+-main GTweenInterrupt
+-js GTweenInterrupt.js
