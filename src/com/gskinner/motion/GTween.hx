@@ -494,7 +494,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 			#if (flash || openfl)
 			if ((target is IEventDispatcher))
 			{
-				target.removeEventListener("_", invalidate);
+				(cast target : IEventDispatcher).removeEventListener("_", invalidate);
 			}
 			#end
 			gcLockList.remove(this);
@@ -506,7 +506,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 			// prevent garbage collection:
 			if ((target is IEventDispatcher))
 			{
-				target.addEventListener("_", invalidate);
+				(cast target : IEventDispatcher).addEventListener("_", invalidate);
 			}
 			else
 			{
@@ -896,7 +896,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 	
 	// Protected Methods:
 
-	private function invalidate():Void
+	private function invalidate(#if (flash || openfl) evt:Event = null #end):Void
 	{
 		_inited = false;
 		if (_position > 0)
