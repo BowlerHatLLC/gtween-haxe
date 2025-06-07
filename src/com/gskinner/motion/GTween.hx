@@ -119,7 +119,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 	public static var timeScaleAll:Float = 1;
 	
 	private static var hasStarPlugins:Bool = false;
-	private static var plugins:Any = {};
+	private static var plugins:Any;
 	#if (flash || openfl)
 	private static var shape:Shape;
 	#else
@@ -129,8 +129,14 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 	#end
 	#end
 	private static var time:Float;
-	private static var tickList:Map<GTween, Bool> = [];
-	private static var gcLockList:Map<GTween, Bool> = [];
+	private static var tickList:Map<GTween, Bool>;
+	private static var gcLockList:Map<GTween, Bool>;
+
+	private static function __init__():Void {
+		plugins = {};
+		tickList = [];
+		gcLockList = [];
+	}
 	
 	/**
 		Installs a plugin for the specified property. Plugins with high priority
