@@ -36,7 +36,7 @@ import com.gskinner.motion.plugins.IGTweenPlugin;
 	Plugin for GTween. Makes rotation tweens rotate in the shortest direction. For example, rotating
 	from 5 to 330 degrees would rotate -35 degrees with smart rotation, instead of +325 degrees.
 
-	Supports the following <code>pluginData</code> properties:
+	Supports the following `pluginData` properties:
 	
 	- SmartRotationEnabled: overrides the enabled property for the plugin on a per tween basis.
 **/

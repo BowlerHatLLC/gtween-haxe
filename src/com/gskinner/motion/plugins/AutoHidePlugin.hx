@@ -39,11 +39,11 @@ import flash.display.DisplayObject;
 #end
 
 /**
-* Plugin for GTween. Sets the visible of the target to false if its alpha is 0 or less.
-* <p>
-* Supports the following <code>pluginData</code> properties:</p><ul>
-* <li> AutoHideEnabled: overrides the enabled property for the plugin on a per tween basis.</li>
-* </ul>
+	Plugin for GTween. Sets the visible of the target to false if its alpha is 0 or less.
+
+	Supports the following `pluginData` properties:
+
+	- AutoHideEnabled: overrides the enabled property for the plugin on a per tween basis.
 **/
 class AutoHidePlugin implements IGTweenPlugin {
 	
