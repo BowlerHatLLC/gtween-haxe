@@ -2,4 +2,4 @@
 -main GTweenColorAdjust
 -swf bin/GTweenColorAdjust.swf
 -swf-version 19
---swf-header 550:400:60:ffffff
+--swf-header 550:400:60:000000
