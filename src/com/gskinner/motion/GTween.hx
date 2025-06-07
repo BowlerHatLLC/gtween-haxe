@@ -834,7 +834,20 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 			{
 				var pluginArr:Array<IGTweenPlugin> = Reflect.field(plugins, n);
 				var l:Int = pluginArr.length;
-				var value:Float = Reflect.hasField(target, n) ? Reflect.field(target, n) : Math.NaN;
+				var value:Float = Math.NaN;
+				if (Reflect.hasField(target, n))
+				{
+					value = Reflect.field(target, n);
+				}
+				else
+				{
+					// Reflect.hasField doesn't work to find getter functions on
+					// some target, but Reflect.field() may still return a value
+					var getter = Reflect.field(target, 'get_$n');
+					if (getter != null && Reflect.isFunction(getter)) {
+						value = Reflect.getProperty(target, n);
+					}
+				}
 				for (i in 0...l)
 				{
 					value = pluginArr[i].init(this, n, value);
@@ -847,8 +860,9 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 			}
 			else
 			{
-				Reflect.setField(_initValues, n, Reflect.field(target, n));
-				Reflect.setField(_rangeValues, n, Reflect.field(_values, n) - Reflect.getProperty(target, n));
+				var initValue:Float = Reflect.getProperty(target, n);
+				Reflect.setField(_initValues, n, initValue);
+				Reflect.setField(_rangeValues, n, Reflect.field(_values, n) - initValue);
 			}
 		}
 		
