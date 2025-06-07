@@ -143,7 +143,7 @@ class ColorAdjustPlugin implements IGTweenPlugin {
 		}
 		
 		// grab the current color matrix, and tween it's values:
-		var matrix:Array<Dynamic> = cmF.matrix;
+		var matrix:Array<#if openfl Float #else Dynamic #end> = cmF.matrix;
 		var l:Int = matrix.length;
 		for (i in 0...l) {
 			matrix[i] = initMatrix[i]+(targMatrix[i]-initMatrix[i])*ratio;
