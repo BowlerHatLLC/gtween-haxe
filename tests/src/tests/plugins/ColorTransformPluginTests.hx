@@ -19,6 +19,13 @@ class ColorTransformPluginTests extends Test {
 	{
 		ColorTransformPlugin.install();
 	}
+
+	public function teardownClass():Void
+	{
+		// other tests might be affected by this plugin's properties
+		// so disable the plugin by default when we're done testing it
+		ColorTransformPlugin.enabled = false;
+	}
 	
 	public function teardown():Void
 	{

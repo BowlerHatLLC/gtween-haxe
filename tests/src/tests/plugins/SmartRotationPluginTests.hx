@@ -18,6 +18,13 @@ class SmartRotationPluginTests extends Test {
 	{
 		SmartRotationPlugin.install();
 	}
+
+	public function teardownClass():Void
+	{
+		// other tests might be affected by this plugin's properties
+		// so disable the plugin by default when we're done testing it
+		SmartRotationPlugin.enabled = false;
+	}
 	
 	public function teardown():Void
 	{
