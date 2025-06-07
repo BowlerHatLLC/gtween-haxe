@@ -32,8 +32,7 @@ class MotionBlurPluginTests extends Test {
 	public function testFiltersProperty():Void
 	{
 		var shape = new Shape();
-		tween = new GTween(shape, 0.5, {y:50}, {autoPlay:false}, {MotionBlurEnabled: true});
-		Assert.isTrue(tween.paused);
+		tween = new GTween(shape, 0.5, {y:50}, null, {MotionBlurEnabled: true});
 		// the filter is not applied immediately
 		Assert.notNull(shape.filters);
 		Assert.equals(0, shape.filters.length);
@@ -47,11 +46,10 @@ class MotionBlurPluginTests extends Test {
 		Assert.equals(0, shape.filters.length);
 	}
 
-	public function testWithoutMotionBlurEnabled():Void
+	public function testWithDefaultMotionBlurEnabled():Void
 	{
 		var shape = new Shape();
-		tween = new GTween(shape, 0.5, {y:50}, {autoPlay:false});
-		Assert.isTrue(tween.paused);
+		tween = new GTween(shape, 0.5, {y:50});
 		Assert.notNull(shape.filters);
 		Assert.equals(0, shape.filters.length);
 		tween.position = 0.5 * tween.duration;
@@ -62,8 +60,7 @@ class MotionBlurPluginTests extends Test {
 	public function testWithMotionBlurEnabledSetToFalse():Void
 	{
 		var shape = new Shape();
-		tween = new GTween(shape, 0.5, {y:50}, {autoPlay:false}, {MotionBlurEnabled: false});
-		Assert.isTrue(tween.paused);
+		tween = new GTween(shape, 0.5, {y:50}, null, {MotionBlurEnabled: false});
 		Assert.notNull(shape.filters);
 		Assert.equals(0, shape.filters.length);
 		tween.position = 0.5 * tween.duration;

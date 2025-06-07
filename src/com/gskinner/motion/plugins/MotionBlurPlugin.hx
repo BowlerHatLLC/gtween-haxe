@@ -62,7 +62,7 @@ class MotionBlurPlugin implements IGTweenPlugin {
 // Static interface:
 	/**
 		Specifies whether this plugin is enabled for all tweens by default.
-		**/
+	**/
 	public static var enabled:Bool = false;
 	
 	/**
@@ -81,9 +81,7 @@ class MotionBlurPlugin implements IGTweenPlugin {
 		GTween.installPlugin(instance,["x","y"]);
 	}
 
-	public function new() {
-
-	}
+	private function new() {}
 	
 // Public methods:
 	@:dox(hide)
