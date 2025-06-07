@@ -30,7 +30,7 @@
 
 package com.gskinner.geom;
 
-abstract ColorMatrix(Array<Float>) {
+abstract ColorMatrix(Array<Float>) to Array<Float> {
 	// constant for contrast calculations:
 	private static final DELTA_INDEX:Array<Float> = [
 		0, 0.01, 0.02, 0.04, 0.05, 0.06, 0.07, 0.08, 0.1, 0.11, 0.12, 0.14, 0.15, 0.16, 0.17, 0.18, 0.20, 0.21, 0.22, 0.24, 0.25, 0.27, 0.28, 0.30, 0.32,
