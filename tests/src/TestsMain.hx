@@ -8,10 +8,13 @@ class TestsMain {
 		// plugins
 		#if (openfl || flash)
 		runner.addCase(new tests.plugins.AutoHidePluginTests());
+		runner.addCase(new tests.plugins.BlurPluginTests());
+		runner.addCase(new tests.plugins.ColorAdjustPluginTests());
 		runner.addCase(new tests.plugins.ColorTransformPluginTests());
 		runner.addCase(new tests.plugins.CurrentFramePluginTests());
 		runner.addCase(new tests.plugins.MatrixPluginTests());
 		runner.addCase(new tests.plugins.MotionBlurPluginTests());
+		runner.addCase(new tests.plugins.SoundTransformPluginTests());
 		#end
 		runner.addCase(new tests.plugins.SnappingPluginTests());
 		runner.addCase(new tests.plugins.SmartRotationPluginTests());
