@@ -29,6 +29,12 @@ class GTweenSpeedDemo extends MovieClip {
 			addChild(thing);
 			var tween:GTween = new GTween(thing,0.5,{x:Math.random()*600,y:Math.random()*600},{delay:Math.random(),onComplete:onComplete});
 		}
+
+		#if openfl
+		var fps = new openfl.display.FPS();
+		fps.defaultTextFormat = new openfl.text.TextFormat("_sans", 12, 0xffffff);
+		addChild(fps);
+		#end
 	}
 	
 // Public getter / setters:
