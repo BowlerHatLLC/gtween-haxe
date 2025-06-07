@@ -118,7 +118,7 @@ class ColorAdjustPlugin implements IGTweenPlugin {
 		
 		// only run once per tween tick, regardless of how many properties we're dealing with
 		// ex. don't run twice if both contrast and hue are specified, because we deal with them at the same time:
-		if (ratio == data.ratio) { return value; }
+		if (ratio == data.ratio) { return Math.NaN; }
 		data.ratio = ratio;
 		
 		// use the "magic" ratio we set up in init:
@@ -177,7 +177,6 @@ class ColorAdjustPlugin implements IGTweenPlugin {
 		var tweenTarget:DisplayObject = cast(tween.target, DisplayObject);
 		var f:Array<BitmapFilter> = tweenTarget.filters;
 		var mtx:ColorMatrix = new ColorMatrix();
-		var mtxArray:Array<Float> = mtx;
 		f.push(new ColorMatrixFilter(mtx));
 		tweenTarget.filters = f;
 		var o:Dynamic = {index:f.length-1, ratio:Math.NaN};
