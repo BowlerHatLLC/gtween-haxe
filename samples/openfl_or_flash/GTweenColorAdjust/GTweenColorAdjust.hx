@@ -24,7 +24,7 @@ class GTweenColorAdjust extends MovieClip {
 	public function new() {
 		super();
 
-		var image = new Bitmap(new Image());
+		var image = new Bitmap(new EmbeddedBitmapData(0, 0));
 		addChild(image);
 
 		ColorAdjustPlugin.install();
@@ -40,8 +40,4 @@ class GTweenColorAdjust extends MovieClip {
 }
 
 @:bitmap("bitmap.png")
-private class Image extends BitmapData {
-	public function new() {
-		super(0, 0);
-	}
-}
+private class EmbeddedBitmapData extends BitmapData {}
