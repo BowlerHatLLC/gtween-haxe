@@ -8,6 +8,9 @@ class TestsMain {
 		// plugins
 		#if (openfl || flash)
 		runner.addCase(new tests.plugins.AutoHidePluginTests());
+		runner.addCase(new tests.plugins.ColorTransformPluginTests());
+		runner.addCase(new tests.plugins.CurrentFramePluginTests());
+		runner.addCase(new tests.plugins.MatrixPluginTests());
 		runner.addCase(new tests.plugins.MotionBlurPluginTests());
 		#end
 		runner.addCase(new tests.plugins.SnappingPluginTests());

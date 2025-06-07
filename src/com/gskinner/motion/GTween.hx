@@ -146,7 +146,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 		@param propertyNames An array of property names to operate on (ex. "rotation"), or "*" to register the plugin to be called for every GTween instance.
 		@param highPriority If true, the plugin will be added to the start of the plugin list for the specified property name, if false it will be added to the end.
 	**/
-	public static function installPlugin(plugin:Dynamic, propertyNames:Array<String>, highPriority:Bool = false):Void
+	public static function installPlugin(plugin:IGTweenPlugin, propertyNames:Array<String>, highPriority:Bool = false):Void
 	{
 		for (i in 0...propertyNames.length)
 		{

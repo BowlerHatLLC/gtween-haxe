@@ -64,7 +64,7 @@ class GTweenTests extends Test {
 
 	public function testTarget():Void
 	{
-		var target:Any = {a: 1.0};
+		var target:Any = {abc123: 1.0};
 		tween = new GTween(target);
 		Assert.equals(target, tween.target);
 	}
@@ -84,8 +84,8 @@ class GTweenTests extends Test {
 			Assert.notNull(argTween);
 			Assert.equals(tween, argTween);
 		}
-		var target:Any = {a: 123.4};
-		var values:Any = {a: 2.0};
+		var target:Any = {abc123: 123.4};
+		var values:Any = {abc123: 2.0};
 		tween = new GTween(target, 1.0, values, {onInit: onInit});
 		Assert.equals(0, onInitCallCount);
 		tween.position = 0.5;
@@ -103,8 +103,8 @@ class GTweenTests extends Test {
 			Assert.notNull(argTween);
 			Assert.equals(tween, argTween);
 		}
-		var target:Any = {a: 123.4};
-		var values:Any = {a: 2.0};
+		var target:Any = {abc123: 123.4};
+		var values:Any = {abc123: 2.0};
 		tween = new GTween(target, 1.0, values, {onChange: onChange});
 		Assert.equals(0, onChangeCallCount);
 		tween.position = 0.5;
@@ -122,8 +122,8 @@ class GTweenTests extends Test {
 			Assert.notNull(argTween);
 			Assert.equals(tween, argTween);
 		}
-		var target:Any = {a: 123.4};
-		var values:Any = {a: 2.0};
+		var target:Any = {abc123: 123.4};
+		var values:Any = {abc123: 2.0};
 		tween = new GTween(target, 1, values, {onComplete: onComplete});
 		Assert.equals(0, onCompleteCallCount);
 		tween.position = 0.5;
@@ -134,93 +134,93 @@ class GTweenTests extends Test {
 
 	public function testGetValuesWithoutTarget():Void
 	{
-		var values:Any = {a: 123.4, b: -567.89};
+		var values:Any = {abc123: 123.4, xyz456: -567.89};
 		tween = new GTween(null, 1, values);
 		Assert.notNull(tween.getValues());
 		Assert.equals(2, Reflect.fields(tween.getValues()).length);
-		Assert.equals(123.4, tween.getValues().a);
-		Assert.equals(-567.89, tween.getValues().b);
-		Assert.isNull(tween.getValues().c);
-		Assert.equals(123.4, tween.getValue("a"));
-		Assert.equals(-567.89, tween.getValue("b"));
-		Assert.isTrue(Math.isNaN(tween.getValue("c")));
+		Assert.equals(123.4, tween.getValues().abc123);
+		Assert.equals(-567.89, tween.getValues().xyz456);
+		Assert.isNull(tween.getValues().def789);
+		Assert.equals(123.4, tween.getValue("abc123"));
+		Assert.equals(-567.89, tween.getValue("xyz456"));
+		Assert.isTrue(Math.isNaN(tween.getValue("def789")));
 	}
 
 	public function testGetValuesWithoutValues():Void
 	{
-		var target:Any = {a: 123.4, b: -567.89};
+		var target:Any = {abc123: 123.4, xyz456: -567.89};
 		tween = new GTween(target);
 		Assert.notNull(tween.getValues());
 		Assert.equals(0, Reflect.fields(tween.getValues()).length);
-		Assert.isTrue(Math.isNaN(tween.getValue("a")));
-		Assert.isTrue(Math.isNaN(tween.getValue("b")));
-		Assert.isTrue(Math.isNaN(tween.getValue("c")));
+		Assert.isTrue(Math.isNaN(tween.getValue("abc123")));
+		Assert.isTrue(Math.isNaN(tween.getValue("xyz456")));
+		Assert.isTrue(Math.isNaN(tween.getValue("def789")));
 		tween.position = 0.5;
 		Assert.notNull(tween.getValues());
 		Assert.equals(0, Reflect.fields(tween.getValues()).length);
-		Assert.isTrue(Math.isNaN(tween.getValue("a")));
-		Assert.isTrue(Math.isNaN(tween.getValue("b")));
-		Assert.isTrue(Math.isNaN(tween.getValue("c")));
+		Assert.isTrue(Math.isNaN(tween.getValue("abc123")));
+		Assert.isTrue(Math.isNaN(tween.getValue("xyz456")));
+		Assert.isTrue(Math.isNaN(tween.getValue("def789")));
 	}
 
 	public function testGetValuesAndInitialValues():Void
 	{
-		var target:Any = {a: 123.4, b: -567.89};
-		var values:Any = {a: -43.21, b: 56.789};
+		var target:Any = {abc123: 123.4, xyz456: -567.89};
+		var values:Any = {abc123: -43.21, xyz456: 56.789};
 		tween = new GTween(target, 1, values);
 		Assert.notNull(tween.getValues());
 		Assert.equals(2, Reflect.fields(tween.getValues()).length);
-		Assert.equals(-43.21, tween.getValues().a);
-		Assert.equals(56.789, tween.getValues().b);
-		Assert.isNull(tween.getValues().c);
-		Assert.equals(-43.21, tween.getValue("a"));
-		Assert.equals(56.789, tween.getValue("b"));
-		Assert.isTrue(Math.isNaN(tween.getValue("c")));
+		Assert.equals(-43.21, tween.getValues().abc123);
+		Assert.equals(56.789, tween.getValues().xyz456);
+		Assert.isNull(tween.getValues().def789);
+		Assert.equals(-43.21, tween.getValue("abc123"));
+		Assert.equals(56.789, tween.getValue("xyz456"));
+		Assert.isTrue(Math.isNaN(tween.getValue("def789")));
 
 		Assert.raises(() -> {
-			tween.getInitValue("a");
+			tween.getInitValue("abc123");
 		});
 		Assert.raises(() -> {
-			tween.getInitValue("b");
+			tween.getInitValue("xyz456");
 		});
 		Assert.raises(() -> {
-			tween.getInitValue("c");
+			tween.getInitValue("def789");
 		});
 
 		tween.position = 0.5;
 
-		Assert.equals(123.4, tween.getInitValue("a"));
-		Assert.equals(-567.89, tween.getInitValue("b"));
-		Assert.isTrue(Math.isNaN(tween.getInitValue("c")));
+		Assert.equals(123.4, tween.getInitValue("abc123"));
+		Assert.equals(-567.89, tween.getInitValue("xyz456"));
+		Assert.isTrue(Math.isNaN(tween.getInitValue("def789")));
 	}
 
 	public function testGetInitialValuesWithoutValues():Void
 	{
-		var target:Any = {a: 123.4, b: -567.89};
+		var target:Any = {abc123: 123.4, xyz456: -567.89};
 		tween = new GTween(target);
 
 		Assert.raises(() -> {
-			tween.getInitValue("a");
+			tween.getInitValue("abc123");
 		});
 		Assert.raises(() -> {
-			tween.getInitValue("b");
+			tween.getInitValue("xyz456");
 		});
 		Assert.raises(() -> {
-			tween.getInitValue("c");
+			tween.getInitValue("def789");
 		});
 
 		tween.position = 0.5;
 
 		// if we didn't pass in values, there is nothing read from the target
-		Assert.isTrue(Math.isNaN(tween.getInitValue("a")));
-		Assert.isTrue(Math.isNaN(tween.getInitValue("b")));
-		Assert.isTrue(Math.isNaN(tween.getInitValue("c")));
+		Assert.isTrue(Math.isNaN(tween.getInitValue("abc123")));
+		Assert.isTrue(Math.isNaN(tween.getInitValue("xyz456")));
+		Assert.isTrue(Math.isNaN(tween.getInitValue("def789")));
 	}
 
 	public function testRatioAndCalculatedPosition():Void
 	{
-		var target:Any = {a: 1.0};
-		var values:Any = {a: 2.0};
+		var target:Any = {abc123: 1.0};
+		var values:Any = {abc123: 2.0};
 		tween = new GTween(target, 3.0, values);
 
 		Assert.equals(0.0, tween.ratio);
@@ -237,8 +237,8 @@ class GTweenTests extends Test {
 
 	public function testDelay():Void
 	{
-		var target:Any = {a: 1.0};
-		var values:Any = {a: 2.0};
+		var target:Any = {abc123: 1.0};
+		var values:Any = {abc123: 2.0};
 		tween = new GTween(target, 3.0, values, {delay: 0.5});
 
 		Assert.equals(0.0, tween.ratio);
@@ -261,8 +261,8 @@ class GTweenTests extends Test {
 
 	public function testRepeatCount():Void
 	{
-		var target:Any = {a: 1.0};
-		var values:Any = {a: 2.0};
+		var target:Any = {abc123: 1.0};
+		var values:Any = {abc123: 2.0};
 		tween = new GTween(target, 3.0, values, {repeatCount: 2});
 
 		Assert.equals(0.0, tween.ratio);
@@ -291,8 +291,8 @@ class GTweenTests extends Test {
 
 	public function testReflect():Void
 	{
-		var target:Any = {a: 1.0};
-		var values:Any = {a: 2.0};
+		var target:Any = {abc123: 1.0};
+		var values:Any = {abc123: 2.0};
 		tween = new GTween(target, 3.0, values, {repeatCount: 2, reflect: true});
 
 		Assert.equals(0.0, tween.ratio);
