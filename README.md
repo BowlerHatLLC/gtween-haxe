@@ -115,7 +115,13 @@ See the [API reference](https://bowlerhatllc.github.io/gtween-haxe/api/) for des
 
 ## Download
 
-[Download latest build of GTween](#) (Not yet available for download)
+This library is not yet available on Haxelib. In the meantime, use the [**haxelib git**](https://lib.haxe.org/documentation/using-haxelib/#git) command to download GTween for Haxe.
+
+```sh
+haxelib git gtween https://github.com/BowlerHatLLC/gtween-haxe.git
+```
+
+Requires Haxe 4.0 or newer.
 
 ## Feedback
 
