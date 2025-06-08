@@ -46,7 +46,14 @@ myTween.ease = Sine.easeInOut;
 
 ### Proxy
 
-The proxy property does not exist in the Haxe version of GTween.
+GTween provides a unique proxy property that allows you to work with tween destination values the same way you would work with them on the target object.
+The proxy object effectively "**stands in**" for your target object.
+
+This simple example shows how you can use the proxy to tween the target object 100 pixels to the right of its current position.
+
+```haxe
+myTween.proxy.x += 100;
+```
 
 ### Sequencing
 

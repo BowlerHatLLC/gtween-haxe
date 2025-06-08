@@ -667,6 +667,59 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 		_delay = value;
 		return _delay;
 	}
+
+	private var _proxy:TargetProxy;
+
+	/**
+		The proxy object allows you to work with the properties and methods of the target object directly through GTween.
+		Numeric property assignments will be used by GTween as end values. The proxy will return GTween end values
+		when they are set, or the target's property values if they are not. Delete operations on properties will result in a deleteProperty
+		call. All other property access and method execution through proxy will be passed directly to the target object.
+		
+		**Example 1:** Equivalent to calling `myGTween.setValue("scaleY",2.5)`:
+		
+		```haxe
+		myGTween.proxy.scaleY = 2.5;
+		```
+		
+		**Example 2:** Gets the current rotation value from the target object (because it hasn't been set yet on the GTween), adds 100 to it, and then
+		calls setValue on the GTween instance with the appropriate value:
+		
+		```haxe
+		myGTween.proxy.rotation += 100;
+		```
+
+		**Example 3:** Sets an end property value (through setValue) for scaleX, then retrieves it from GTween (because it will always return
+		end values when available):
+		
+		```haxe
+		trace(myGTween.proxy.scaleX);  // 1 (value from target, because no end value is set)
+		myGTween.proxy.scaleX = 2;     // set a end value
+		trace(myGTween.proxy.scaleX);  // 2 (end value from GTween)
+		trace(myGTween.target.scaleX); // 1 (current value from target)
+		```
+
+		**Example 4:** Non-numeric property access is passed through to the target:
+		
+		```haxe
+		myGTween.proxy.blendMode = "multiply"; // passes value assignment through to the target
+		trace(myGTween.target.blendMode);      // "multiply" (value from target)
+		trace(myGTween.proxy.blendMode);       // "multiply" (value passed through proxy from target)
+		```
+
+		Note: Unlike the AS3 version of GTween, the Haxe version cannot delete
+		properties or call methods using the proxy.
+	**/
+	public var proxy(get, never):TargetProxy;
+	
+	private function get_proxy():TargetProxy
+	{
+		if (_proxy == null)
+		{
+			_proxy = new TargetProxy(this);
+		}
+		return _proxy;
+	}
 	
 	// Public Methods:
 	/**
@@ -950,4 +1003,52 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 	}
 	#end
 
+}
+
+private abstract TargetProxy(GTween) from GTween
+{
+	public function new(tween:GTween)
+	{
+		this = tween;
+	}
+
+	@:op(a.b)
+	public function fieldRead(name:String):Dynamic
+	{
+		var value:Float = this.getValue(name);
+		return (Math.isNaN(value)) ? Reflect.getProperty(this.target, name) : value;
+	}
+
+	@:op(a.b)
+	public function fieldWrite(name:String, value:Dynamic):Void
+	{
+		if (value == true || value == false || (value is String) || Math.isNaN(value))
+		{
+			Reflect.setProperty(this.target, name, value);
+		}
+		else
+		{
+			this.setValue(name, Std.parseFloat(Std.string(value)));
+		}
+	}
+
+	@:op([])
+	public function arrayRead(name:String):Dynamic
+	{
+		var value:Float = this.getValue(name);
+		return (Math.isNaN(value)) ? Reflect.getProperty(this.target, name) : value;
+	}
+
+	@:op([])
+	public function arrayWrite(name:String, value:Dynamic):Void
+	{
+		if ((value is Bool) || (value is String) || Math.isNaN(value))
+		{
+			Reflect.setProperty(this.target, name, value);
+		}
+		else
+		{
+			this.setValue(name, Std.parseFloat(Std.string(value)));
+		}
+	}
 }

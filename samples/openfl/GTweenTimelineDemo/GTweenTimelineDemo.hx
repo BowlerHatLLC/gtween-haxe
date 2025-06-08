@@ -45,8 +45,8 @@ class GTweenTimelineDemo extends Sprite {
 		// note that these tweens could easily be created in a single line, but are expanded
 		// to show different approaches.
 		var tween:GTween = new GTween(pod,1,{scaleX:0,scaleY:0},{ease:Circular.easeOut});
-		tween.setValue("x", pod.y+pod.width/2);
-		tween.setValue("y", pod.x+pod.height/2);
+		tween.proxy.x += pod.width/2;
+		tween.proxy.y += pod.height/2;
 		// swap the values so it tweens from the specified location to it's current location:
 		tween.swapValues();
 		timeline.addTween(0,tween);
@@ -60,7 +60,7 @@ class GTweenTimelineDemo extends Sprite {
 		timeline.addTween(1,tween);
 		
 		tween = new GTween(title,0.6,{alpha:0},{ease:Circular.easeOut});
-		tween.setValue("x", title.x+100);
+		tween.proxy.x += 100;
 		tween.swapValues();
 		timeline.addTween(0.9,tween);
 		
@@ -79,7 +79,7 @@ class GTweenTimelineDemo extends Sprite {
 		for (i in 0...6) {
 			var btn = getChildByName("btn"+i);
 			tween = new GTween(btn,0.4,{alpha:0,scaleY:4},{ease:Circular.easeOut});
-			tween.setValue("y", btn.y-120);
+			tween.proxy.y -= 120;
 			tween.swapValues();
 			timeline.addTween(3.2-i*0.1,tween);
 			

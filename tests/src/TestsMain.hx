@@ -5,6 +5,7 @@ class TestsMain {
 	public static function main():Void {
 		var runner = new Runner();
 		runner.addCase(new tests.GTweenTests());
+		runner.addCase(new tests.GTweenProxyTests());
 		// plugins
 		#if (openfl || flash)
 		runner.addCase(new tests.plugins.AutoHidePluginTests());
