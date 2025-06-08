@@ -129,7 +129,7 @@ class GTweener implements IGTweenPlugin {
 	}
 	
 	/**
-	* Returns an array of all tweens that GTweener is managing for the specified target.
+		Returns an array of all tweens that GTweener is managing for the specified target.
 	**/
 	public static function getTweens(target:Any):Array<GTween> {
 		var tweens:Array<GTween> = tweens.get(target);
@@ -140,7 +140,7 @@ class GTweener implements IGTweenPlugin {
 	}
 	
 	/**
-	* Pauses all tweens that GTweener is managing for the specified target.
+		Pauses all tweens that GTweener is managing for the specified target.
 	**/
 	public static function pauseTweens(target:Any,paused:Bool=true):Void {
 		var list:Array<GTween> = tweens.get(target);
@@ -152,14 +152,14 @@ class GTweener implements IGTweenPlugin {
 	}
 	
 	/**
-	* Resumes all tweens that GTweener is managing for the specified target.
+		Resumes all tweens that GTweener is managing for the specified target.
 	**/
 	public static function resumeTweens(target:Any):Void {
 		pauseTweens(target,false);
 	}
 	
 	/**
-	* Removes a tween from being managed by GTweener.
+		Removes a tween from being managed by GTweener.
 	**/
 	public static function remove(tween:GTween):Void {
 		Reflect.deleteField(tween.pluginData, "GTweener");

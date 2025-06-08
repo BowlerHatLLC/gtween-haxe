@@ -196,30 +196,30 @@ class GTweenTimeline extends GTween {
 	}
 	
 	/**
-	* Removes the specified label.
-	*
-	* @param label The label to remove.
+		Removes the specified label.
+	
+		@param label The label to remove.
 	**/
 	public function removeLabel(label:String):Void {
 		labels.remove(label);
 	}
 	
 	/**
-	* Adds a callback function at the specified position. When the timeline's playhead passes over or lands on the position while playing
-	* the callback will be called with the parameters specified. You can also optionally specify a callback and parameters to use
-	* if the timeline is playing in reverse (when reflected for example).
-	* <p>
-	* You can add multiple callbacks at a specified position, however it is important to note that they will be played in the same order
-	* (most recently added first) playing both forwards and in reverse. You can enforce the order they are called in by offsetting the
-	* callbacks' positions by a tiny amount (ex. one at 2s, and one at 2.001s).
-	* </p><p>
-	* Note that this can be used in conjunction with the static <code>setPropertyValue</code> method to easily set properties on objects in the timeline.
-	* </p>
-	* @param labelOrPosition The position or label to add the callback at in frames or seconds (as per the timing mode of this tween).
-	* @param forwardCallback The function to call when playing forwards.
-	* @param forwardParameters Optional array of parameters to pass to the callback when it is called when playing forwards.
-	* @param reverseCallback The function to call when playing in reverse.
-	* @param reverseParameters Optional array of parameters to pass to the callback when it is called when playing in reverse.
+		Adds a callback function at the specified position. When the timeline's playhead passes over or lands on the position while playing
+		the callback will be called with the parameters specified. You can also optionally specify a callback and parameters to use
+		if the timeline is playing in reverse (when reflected for example).
+	
+		You can add multiple callbacks at a specified position, however it is important to note that they will be played in the same order
+		(most recently added first) playing both forwards and in reverse. You can enforce the order they are called in by offsetting the
+		callbacks' positions by a tiny amount (ex. one at 2s, and one at 2.001s).
+	
+		Note that this can be used in conjunction with the static <code>setPropertyValue</code> method to easily set properties on objects in the timeline.
+	
+		@param labelOrPosition The position or label to add the callback at in frames or seconds (as per the timing mode of this tween).
+		@param forwardCallback The function to call when playing forwards.
+		@param forwardParameters Optional array of parameters to pass to the callback when it is called when playing forwards.
+		@param reverseCallback The function to call when playing in reverse.
+		@param reverseParameters Optional array of parameters to pass to the callback when it is called when playing in reverse.
 	**/
 	public function addCallback(labelOrPosition:Any, forwardCallback:Function, forwardParameters:Array<Any>=null, reverseCallback:Function=null, reverseParameters:Array<Any>=null):Void {
 		var position:Float = resolveLabelOrPosition(labelOrPosition);
@@ -236,9 +236,9 @@ class GTweenTimeline extends GTween {
 	
 	
 	/**
-	* Removes the callback(s) at the specified label or position.
-	*
-	* @param labelOrPosition The position of the callback(s) to remove in frames or seconds (as per the timing mode of this tween).
+		Removes the callback(s) at the specified label or position.
+	
+		@param labelOrPosition The position of the callback(s) to remove in frames or seconds (as per the timing mode of this tween).
 	**/
 	public function removeCallback(labelOrPosition:Any):Void {
 		var position:Float = resolveLabelOrPosition(labelOrPosition);
@@ -252,9 +252,9 @@ class GTweenTimeline extends GTween {
 	}
 	
 	/**
-	* Jumps the timeline to the specified label or numeric position and plays it.
-	*
-	* @param labelOrPosition The label name or numeric position in frames or seconds (as per the timing mode of this tween) to jump to.
+		Jumps the timeline to the specified label or numeric position and plays it.
+	
+		@param labelOrPosition The label name or numeric position in frames or seconds (as per the timing mode of this tween) to jump to.
 	**/
 	public function gotoAndPlay(labelOrPosition:Any):Void {
 		goto(labelOrPosition);
@@ -262,9 +262,9 @@ class GTweenTimeline extends GTween {
 	}
 	
 	/**
-	* Jumps the timeline to the specified label or numeric position and pauses it.
-	*
-	* @param labelOrPosition The label name or numeric position in frames or seconds (as per the timing mode of this tween) to jump to.
+		Jumps the timeline to the specified label or numeric position and pauses it.
+	
+		@param labelOrPosition The label name or numeric position in frames or seconds (as per the timing mode of this tween) to jump to.
 	**/
 	public function gotoAndStop(labelOrPosition:Any):Void {
 		goto(labelOrPosition);

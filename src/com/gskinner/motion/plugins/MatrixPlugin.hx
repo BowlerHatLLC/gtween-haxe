@@ -61,7 +61,7 @@ class MatrixPlugin implements IGTweenPlugin {
 	private static var tweenProperties:Array<String> = ['a', 'b', 'c', 'd', 'tx', 'ty'];
 	
 	/**
-	* Installs this plugin for use with all GTween instances.
+		Installs this plugin for use with all GTween instances.
 	**/
 	public static function install():Void {
 		if (instance != null) { return; }

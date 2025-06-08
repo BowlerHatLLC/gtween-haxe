@@ -68,7 +68,7 @@ class BlurPlugin implements IGTweenPlugin {
 	private static var tweenProperties:Array<String> = ["blurX","blurY","blur"];
 	
 	/**
-	* Installs this plugin for use with all GTween instances.
+		Installs this plugin for use with all GTween instances.
 	**/
 	public static function install():Void {
 		if (instance != null) { return; }
