@@ -1,0 +1,49 @@
+--xml ../bin/dox/neko.xml
+--neko _.n
+-cp ../src
+-D doc-gen
+--macro include("com.gskinner")
+--no-output
+
+--next
+--xml ../bin/dox/hl.xml
+--hl _.hl
+-cp ../src
+-D doc-gen
+--macro include("com.gskinner")
+--no-output
+
+--next
+--xml ../bin/dox/flash.xml
+--swf _.swf
+-cp ../src
+-D doc-gen
+--macro include("com.gskinner")
+--no-output
+
+--next
+--xml ../bin/dox/js.xml
+--js _.js
+-cp ../src
+-D doc-gen
+--macro include("com.gskinner")
+--no-output
+
+--next
+--xml ../bin/dox/cpp.xml
+--cpp _
+-cp ../src
+-D doc-gen
+--macro include("com.gskinner")
+--no-output
+
+--next
+-xml ../bin/dox/interp.xml
+--interp
+-cp ../src
+-D doc-gen
+--macro include("com.gskinner")
+--no-output
+
+--next
+-cmd haxelib run dox -o ../bin/api -i ../bin/dox -in com.gskinner --title "GTween API Reference (Haxe)" --toplevel-package com.gskinner -D website "https://github.com/joshtynjala/gtween" -D source-path "https://github.com/joshtynjala/gtween/tree/main/src/"
