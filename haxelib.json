@@ -1,0 +1,16 @@
+{
+	"name": "gtween",
+	"url": "https://github.com/joshtynjala/gtween-haxe",
+	"license": "MIT",
+	"tags": [
+		"animation",
+		"openfl",
+		"tween",
+		"frontend"
+	],
+	"description": "A small but extremely robust Haxe library for programmatic tweening, animation, and transitions",
+	"version": "2.2.0-alpha.0",
+	"classPath": "src",
+	"contributors": ["bowlerhat"],
+	"releasenote": "Initial release"
+}
