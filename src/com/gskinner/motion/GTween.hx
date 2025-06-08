@@ -1,4 +1,4 @@
-/**
+/*
  * GTween v1 by Grant Skinner. Aug 15, 2008
  * GTween v2 by Grant Skinner. Oct 02, 2009
  * Visit www.gskinner.com/blog for documentation, updates and more free code.
@@ -26,7 +26,7 @@
  * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
- **/
+ */
 
 package com.gskinner.motion;
 
