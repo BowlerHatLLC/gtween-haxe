@@ -31,7 +31,6 @@ package com.gskinner.motion;
 	
 import haxe.Constraints.Function;
 import com.gskinner.motion.GTween;
-import flash.utils.Dictionary;
 
 /**
 	**GTweenTimeline ©2008 Grant Skinner, gskinner.com. Visit www.gskinner.com/libraries/gtween/ for documentation, updates and more free code. Licensed under the MIT license - see the source file header for more information.**
@@ -88,7 +87,7 @@ class GTweenTimeline extends GTween {
 		@param pluginData An object containing data for installed plugins to use with this tween. See `.pluginData` for more information.
 		@param tweens An array of alternating start positions and tween instances. For example, the following array would add 3 tweens starting at positions 2, 6, and 8: `[2, tween1, 6, tween2, 8, tween3]`
 	**/
-	public function new(target:Any=null, duration:Float=1, values:Any=null, props:Any=null, pluginData:Any=null, tweens:Array<GTween>=null) {
+	public function new(target:Any=null, duration:Float=1, values:Any=null, props:Any=null, pluginData:Any=null, tweens:Array<Any>=null) {
 		this.tweens = [];
 		tweenStartPositions = [];
 		callbacks = [];
@@ -161,7 +160,9 @@ class GTweenTimeline extends GTween {
 		if (tweens == null) { return; }
 		var i:Int = 0;
 		while (i < tweens.length) {
-			addTween(tweens[i],Std.downcast(tweens[i+1], GTween));
+			var position:Int = tweens[i];
+			var tween:GTween = cast(tweens[i+1], GTween);
+			addTween(position, tween);
 			i+=2;
 		}
 	}
