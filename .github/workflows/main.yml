@@ -90,3 +90,49 @@ jobs:
         node bin/tests.js
         haxe cpp.hxml
         bin/tests/TestsMain-debug
+
+  samples:
+    strategy:
+      matrix:
+        haxe-version: [4.0.5, 4.1.5, 4.2.5, 4.3.7]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: krdlab/setup-haxe@master
+      with:
+        haxe-version: ${{ matrix.haxe-version }}
+    - name: Set up Haxelib dependencies
+      run: |
+        haxelib dev gtween ${{ github.workspace }}
+    # --- JS samples ---
+    - name: JS GTweenerDemo
+      working-directory: samples/js/GTweenerDemo
+      run: haxe js.hxml
+    - name: JS GTweenInterrupt
+      working-directory: samples/js/GTweenInterrupt
+      run: haxe js.hxml
+    - name: JS GTweenSimpleSequencing
+      working-directory: samples/js/GTweenSimpleSequencing
+      run: haxe js.hxml
+    - name: JS GTweenSpeedDemo
+      working-directory: samples/js/GTweenSpeedDemo
+      run: haxe js.hxml
+    # --- Flash samples ---
+    - name: Flash GTweenColorAdjust
+      working-directory: samples/flash/GTweenColorAdjust
+      run: haxe flash.hxml
+    - name: Flash GTweenerDemo
+      working-directory: samples/flash/GTweenerDemo
+      run: haxe flash.hxml
+    - name: Flash GTweenInterrupt
+      working-directory: samples/flash/GTweenInterrupt
+      run: haxe flash.hxml
+    - name: Flash GTweenSimpleSequencing
+      working-directory: samples/flash/GTweenSimpleSequencing
+      run: haxe flash.hxml
+    - name: Flash GTweenSpeedDemo
+      working-directory: samples/flash/GTweenSpeedDemo
+      run: haxe flash.hxml
+    - name: Flash GTweenTimelineDemo
+      working-directory: samples/flash/GTweenTimelineDemo
+      run: haxe flash.hxml
