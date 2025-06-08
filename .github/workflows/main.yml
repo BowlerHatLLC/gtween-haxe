@@ -102,6 +102,8 @@ jobs:
         haxe-version: ${{ matrix.haxe-version }}
     - name: Set up Haxelib dependencies
       run: |
+        haxelib install lime --quiet
+        haxelib install openfl --quiet
         haxelib dev gtween ${{ github.workspace }}
     # --- JS samples ---
     - name: JS GTweenerDemo
@@ -135,3 +137,46 @@ jobs:
     - name: Flash GTweenTimelineDemo
       working-directory: samples/flash/GTweenTimelineDemo
       run: haxe flash.hxml
+    # --- OpenFL samples ---
+    - name: OpenFL GTweenColorAdjust
+      working-directory: samples/openfl/GTweenColorAdjust
+      run: |
+        lime build html5
+        lime build neko
+        lime build hl
+        lime build flash
+    - name: OpenFL GTweenerDemo
+      working-directory: samples/openfl/GTweenerDemo
+      run: |
+        lime build html5
+        lime build neko
+        lime build hl
+        lime build flash
+    - name: OpenFL GTweenInterrupt
+      working-directory: samples/openfl/GTweenInterrupt
+      run: |
+        lime build html5
+        lime build neko
+        lime build hl
+        lime build flash
+    - name: OpenFL GTweenSimpleSequencing
+      working-directory: samples/openfl/GTweenSimpleSequencing
+      run: |
+        lime build html5
+        lime build neko
+        lime build hl
+        lime build flash
+    - name: OpenFL GTweenSpeedDemo
+      working-directory: samples/openfl/GTweenSpeedDemo
+      run: |
+        lime build html5
+        lime build neko
+        lime build hl
+        lime build flash
+    - name: OpenFL GTweenTimelineDemo
+      working-directory: samples/openfl/GTweenTimelineDemo
+      run: |
+        lime build html5
+        lime build neko
+        lime build hl
+        lime build flash
