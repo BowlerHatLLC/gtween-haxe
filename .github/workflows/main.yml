@@ -32,6 +32,7 @@ jobs:
         haxe-version: 4.0.5
     - name: Set up Haxelib dependencies
       run: |
+        haxelib --global update haxelib --quiet
         haxelib install dox --quiet
         haxelib dev gtween ${{ github.workspace }}
     - name: Build API reference
@@ -74,6 +75,7 @@ jobs:
     - uses: cedx/setup-hashlink@v6
     - name: Set up Haxelib dependencies
       run: |
+        haxelib --global update haxelib --quiet
         haxelib install utest --quiet
         haxelib dev gtween ${{ github.workspace }}
     - name: Run Tests
