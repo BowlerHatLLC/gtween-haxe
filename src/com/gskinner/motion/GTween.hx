@@ -767,14 +767,14 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 	}
 	
 	/**
-		Shorthand method for making multiple setProperty calls quickly.
+		Shorthand method for making multiple setValue calls quickly.
 		This adds the specified properties to the values list. Passing a
 		property with a value of null will delete that value from the list.
 		
 		**Example:** set x and y end values, delete rotation:
 
 		```haxe
-		myGTween.setProperties({x:200, y:400, rotation:null});
+		myGTween.setValues({x:200, y:400, rotation:null});
 		```
 		
 		@param properties An object containing end property values.
