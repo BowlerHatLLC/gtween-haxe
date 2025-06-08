@@ -6,6 +6,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   haxelib:
     runs-on: ubuntu-latest
@@ -42,6 +45,13 @@ jobs:
         name: gtween-docs
         path: bin/api/
         if-no-files-found: error
+    - name: Upload API Reference
+      if: ${{ github.repository == 'joshtynjala/gtween-haxe' && github.event_name != 'pull_request' && github.ref_name == 'main' }}
+      uses: JamesIves/github-pages-deploy-action@v4.6.0
+      with:
+        branch: gh-pages
+        folder: bin/api
+        target-folder: api
 
   build-swc:
     runs-on: ubuntu-latest
