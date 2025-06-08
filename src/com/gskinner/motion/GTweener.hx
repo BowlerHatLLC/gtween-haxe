@@ -33,8 +33,6 @@ import com.gskinner.motion.plugins.IGTweenPlugin;
 import com.gskinner.motion.GTween;
 
 /**
-	**GTweener ©2009 Grant Skinner, gskinner.com. Visit www.gskinner.com/libraries/gtween/ for documentation, updates and more free code. Licensed under the MIT license - see the source file header for more information.**
-
 	GTweener is an experimental class that provides a static interface and basic
 	override management for GTween. It adds about 1kb to GTween. With GTweener, if you tween a value that is
 	already being tweened, the new tween will override the old tween for only that

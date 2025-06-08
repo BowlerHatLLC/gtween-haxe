@@ -34,8 +34,6 @@ import haxe.Constraints.Function;
 import com.gskinner.motion.GTween;
 
 /**
-	**GTweenTimeline ©2008 Grant Skinner, gskinner.com. Visit www.gskinner.com/libraries/gtween/ for documentation, updates and more free code. Licensed under the MIT license - see the source file header for more information.**
-
 	GTweenTimeline is a powerful sequencing engine for GTween. It allows you to build a virtual timeline
 	with tweens, actions (callbacks), and labels. It supports all of the features of GTween, so you can repeat,
 	reflect, and pause the timeline. You can even embed timelines within each other. GTweenTimeline adds about 1.2kb above GTween.</p>

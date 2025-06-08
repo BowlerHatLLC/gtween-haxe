@@ -45,8 +45,6 @@ import flash.events.IEventDispatcher;
 #end
 	
 /**
-	**GTween ©2008 Grant Skinner, gskinner.com. Visit www.gskinner.com/libraries/gtween/ for documentation, updates and more free code. Licensed under the MIT license - see the source file header for more information.**
-
 	GTween is a light-weight instance oriented tween engine. This means that you instantiate tweens for specific purposes, and then reuse, update or discard them.
 	This is different than centralized tween engines where you "register" tweens with a global object. This provides a more familiar and useful interface
 	for object oriented programmers.
