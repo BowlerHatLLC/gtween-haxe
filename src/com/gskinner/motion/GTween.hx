@@ -561,7 +561,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 		else
 		{
 			_position = value;
-			calculatedPosition = _position < 0 ? 0 : _position % duration;
+			calculatedPosition = _position < 0 ? 0 : duration == 0 ? Math.NaN : _position % duration;
 			if (reflect && (Std.int(_position / duration) & 1) != 0)
 			{
 				calculatedPosition = duration - calculatedPosition;
