@@ -1,0 +1,7 @@
+-cp ../../../src
+-main GTweenTimelineDemo
+-swf bin/GTweenTimelineDemo.swf
+-swf-version 19
+--swf-header 550:400:60:252525
+-debug
+-D fdb

@@ -1,8 +1,9 @@
-﻿import flash.display.Bitmap;
-import flash.display.BitmapData;
-import com.gskinner.motion.GTween;
+﻿import com.gskinner.motion.GTween;
 import com.gskinner.motion.GTweener;
 import com.gskinner.motion.plugins.ColorAdjustPlugin;
+
+import flash.display.Bitmap;
+import flash.display.BitmapData;
 import flash.display.MovieClip;
 import flash.display.Sprite;
 import flash.events.Event;

@@ -9,4 +9,6 @@
 	<source path="."/>
 	
 	<haxelib name="openfl"/>
+
+	<assets path="bitmap.png"/>
 </project>

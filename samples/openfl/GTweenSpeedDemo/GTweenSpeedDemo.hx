@@ -1,15 +1,13 @@
 ﻿
 import com.gskinner.motion.GTween;
 
-import flash.display.MovieClip;
-import flash.display.Shape;
+import openfl.display.FPS;
+import openfl.display.Shape;
+import openfl.display.Sprite;
+import openfl.text.TextFormat;
 
-class GTweenSpeedDemo extends MovieClip {
+class GTweenSpeedDemo extends Sprite {
 
-	public static function main():Void {
-		flash.Lib.current.stage.addChild(new GTweenSpeedDemo());
-	}
-		
 // Constants:
 	
 // Public Properties:
@@ -30,11 +28,9 @@ class GTweenSpeedDemo extends MovieClip {
 			var tween:GTween = new GTween(thing,0.5,{x:Math.random()*600,y:Math.random()*600},{delay:Math.random(),onComplete:onComplete});
 		}
 
-		#if openfl
-		var fps = new openfl.display.FPS();
-		fps.defaultTextFormat = new openfl.text.TextFormat("_sans", 12, 0xffffff);
+		var fps = new FPS();
+		fps.defaultTextFormat = new TextFormat("_sans", 12, 0xffffff);
 		addChild(fps);
-		#end
 	}
 	
 // Public getter / setters:
@@ -42,10 +38,10 @@ class GTweenSpeedDemo extends MovieClip {
 // Public Methods:
 	
 // Protected Methods:
-		private function onComplete(tween:GTween):Void {
-			var targ:Shape = cast(tween.target, Shape);
-			targ.x = targ.y = 300;
-			var tween:GTween = new GTween(targ,0.5,{x:Math.random()*600,y:Math.random()*600},{delay:Math.random(),onComplete:onComplete});
-		}
+	private function onComplete(tween:GTween):Void {
+		var targ:Shape = cast(tween.target, Shape);
+		targ.x = targ.y = 300;
+		var tween:GTween = new GTween(targ,0.5,{x:Math.random()*600,y:Math.random()*600},{delay:Math.random(),onComplete:onComplete});
+	}
 	
 }
