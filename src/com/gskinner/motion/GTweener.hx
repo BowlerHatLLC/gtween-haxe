@@ -48,7 +48,7 @@ import com.gskinner.motion.GTween;
 class GTweener implements IGTweenPlugin {
 	
 // Protected Static Properties:
-	private static var tweens:Map<Any, Array<GTween>> = [];
+	private static var tweens:Map<{}, Array<GTween>> = [];
 	private static var instance:GTweener;
 	
 // Initialization:
