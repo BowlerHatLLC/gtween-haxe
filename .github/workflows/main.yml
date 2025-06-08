@@ -76,6 +76,7 @@ jobs:
       run: |
         haxelib --global update haxelib --quiet
         haxelib install utest --quiet
+        haxelib install hxcpp --quiet
         haxelib dev gtween ${{ github.workspace }}
     - name: Run Tests
       working-directory: tests
