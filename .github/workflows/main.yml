@@ -60,3 +60,31 @@ jobs:
         name: gtween-swc
         path: bin/gtween-haxe.swc
         if-no-files-found: error
+        
+  tests:
+    strategy:
+      matrix:
+        haxe-version: [4.0.5, 4.1.5, 4.2.5, 4.3.7]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: krdlab/setup-haxe@master
+      with:
+        haxe-version: ${{ matrix.haxe-version }}
+    - uses: cedx/setup-hashlink@v6
+    - name: Set up Haxelib dependencies
+      run: |
+        haxelib install utest --quiet
+        haxelib dev gtween ${{ github.workspace }}
+    - name: Run Tests
+      working-directory: tests
+      run: |
+        haxe interp.hxml
+        haxe neko.hxml
+        neko bin/tests.n
+        haxe hl.hxml
+        hl bin/tests.hl
+        haxe js.hxml
+        node bin/tests.js
+        haxe cpp.hxml
+        bin/tests/TestsMain-debug
