@@ -46,7 +46,7 @@ jobs:
         path: bin/api/
         if-no-files-found: error
     - name: Upload API Reference
-      if: ${{ github.repository == 'joshtynjala/gtween-haxe' && github.event_name != 'pull_request' && github.ref_name == 'main' }}
+      if: ${{ github.repository == 'BowlerHatLLC/gtween-haxe' && github.event_name != 'pull_request' && github.ref_name == 'main' }}
       uses: JamesIves/github-pages-deploy-action@v4.6.0
       with:
         branch: gh-pages

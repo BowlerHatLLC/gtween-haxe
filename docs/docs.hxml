@@ -46,4 +46,4 @@
 --no-output
 
 --next
--cmd haxelib run dox -o ../bin/api -i ../bin/dox -in com.gskinner --title "GTween API Reference (Haxe)" --toplevel-package com.gskinner -D website "https://github.com/joshtynjala/gtween" -D source-path "https://github.com/joshtynjala/gtween/tree/main/src/"
+-cmd haxelib run dox -o ../bin/api -i ../bin/dox -in com.gskinner --title "GTween API Reference (Haxe)" --toplevel-package com.gskinner -D website "https://github.com/BowlerHatLLC/gtween-haxe" -D source-path "https://github.com/BowlerHatLLC/gtween-haxe/tree/main/src/"

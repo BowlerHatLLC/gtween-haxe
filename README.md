@@ -103,7 +103,7 @@ Here's a quick list of a few more features you might find interesting:
 * calculate the optimal duration for a timeline based on the tweens and callbacks in it.
 * change, init, and complete callbacks.
 
-The best place to learn about these and other features is by checking out the included demos, and flipping through the [API documentation](https://joshtynjala.github.io/gtween-haxe/api/).
+The best place to learn about these and other features is by checking out the included demos, and flipping through the [API documentation](https://bowlerhatllc.github.io/gtween-haxe/api/).
 
 ## Demos
 
@@ -111,7 +111,7 @@ All source code for these demos is included with the download.
 
 ## Documentation
 
-See the [API reference](https://joshtynjala.github.io/gtween-haxe/api/) for descriptions of all classes, interfaces, methods, and properties.
+See the [API reference](https://bowlerhatllc.github.io/gtween-haxe/api/) for descriptions of all classes, interfaces, methods, and properties.
 
 ## Download
 
@@ -119,7 +119,7 @@ See the [API reference](https://joshtynjala.github.io/gtween-haxe/api/) for desc
 
 ## Feedback
 
-Found a bug? Report an [issue](https://github.com/joshtynjala/gtween-haxe/issues).
+Found a bug? Report an [issue](https://github.com/BowlerHatLLC/gtween-haxe/issues).
 
-Want to extend the library? Submit a [pull request](https://github.com/joshtynjala/gtween-haxe/pulls).
+Want to extend the library? Submit a [pull request](https://github.com/BowlerHatLLC/gtween-haxe/pulls).
 
