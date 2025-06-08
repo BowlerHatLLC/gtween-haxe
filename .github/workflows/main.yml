@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  haxelib:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: krdlab/setup-haxe@master
+      with:
+        haxe-version: 4.3.6
+    - name: Package Haxelib
+      working-directory: haxelib
+      run: haxe haxelib.hxml
+    - uses: actions/upload-artifact@v4
+      with:
+        name: gtween-haxelib
+        path: bin/haxelib/
+        if-no-files-found: error
+
+  build-api:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: krdlab/setup-haxe@master
+      with:
+        haxe-version: 4.0.5
+    - name: Set up Haxelib dependencies
+      run: |
+        haxelib install dox --quiet
+        haxelib dev gtween ${{ github.workspace }}
+    - name: Build API reference
+      working-directory: docs
+      run: haxe docs.hxml
+    - uses: actions/upload-artifact@v4
+      with:
+        name: gtween-docs
+        path: bin/api/
+        if-no-files-found: error
+
+  build-swc:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: krdlab/setup-haxe@master
+      with:
+        haxe-version: 4.0.5
+    - name: Set up Haxelib dependencies
+      run: |
+        haxelib dev gtween ${{ github.workspace }}
+    - name: Build Flash .swc library
+      run: haxe flash.hxml
+    - uses: actions/upload-artifact@v4
+      with:
+        name: gtween-swc
+        path: bin/gtween-haxe.swc
+        if-no-files-found: error
