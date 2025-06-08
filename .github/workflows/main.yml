@@ -142,42 +142,42 @@ jobs:
     - name: OpenFL GTweenColorAdjust
       working-directory: samples/openfl/GTweenColorAdjust
       run: |
-        lime build html5
-        lime build neko
-        lime build hl
-        lime build flash
+        haxelib run lime build html5
+        haxelib run lime build neko
+        haxelib run lime build hl
+        haxelib run lime build flash
     - name: OpenFL GTweenerDemo
       working-directory: samples/openfl/GTweenerDemo
       run: |
-        lime build html5
-        lime build neko
-        lime build hl
-        lime build flash
+        haxelib run lime build html5
+        haxelib run lime build neko
+        haxelib run lime build hl
+        haxelib run lime build flash
     - name: OpenFL GTweenInterrupt
       working-directory: samples/openfl/GTweenInterrupt
       run: |
-        lime build html5
-        lime build neko
-        lime build hl
-        lime build flash
+        haxelib run lime build html5
+        haxelib run lime build neko
+        haxelib run lime build hl
+        haxelib run lime build flash
     - name: OpenFL GTweenSimpleSequencing
       working-directory: samples/openfl/GTweenSimpleSequencing
       run: |
-        lime build html5
-        lime build neko
-        lime build hl
-        lime build flash
+        haxelib run lime build html5
+        haxelib run lime build neko
+        haxelib run lime build hl
+        haxelib run lime build flash
     - name: OpenFL GTweenSpeedDemo
       working-directory: samples/openfl/GTweenSpeedDemo
       run: |
-        lime build html5
-        lime build neko
-        lime build hl
-        lime build flash
+        haxelib run lime build html5
+        haxelib run lime build neko
+        haxelib run lime build hl
+        haxelib run lime build flash
     - name: OpenFL GTweenTimelineDemo
       working-directory: samples/openfl/GTweenTimelineDemo
       run: |
-        lime build html5
-        lime build neko
-        lime build hl
-        lime build flash
+        haxelib run lime build html5
+        haxelib run lime build neko
+        haxelib run lime build hl
+        haxelib run lime build flash
