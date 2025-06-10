@@ -169,7 +169,7 @@ jobs:
         haxelib run lime build hl
         haxelib run lime build flash
         mkdir -p ../../gh_pages/openfl/GTweenColorAdjust
-        cp -R bin/html5/bin/ ../../gh_pages/openfl/GTweenColorAdjust
+        cp -R bin/html5/bin/. ../../gh_pages/openfl/GTweenColorAdjust
     - name: OpenFL GTweenerDemo
       working-directory: samples/openfl/GTweenerDemo
       run: |
@@ -178,7 +178,7 @@ jobs:
         haxelib run lime build hl
         haxelib run lime build flash
         mkdir -p ../../gh_pages/openfl/GTweenerDemo
-        cp -R bin/html5/bin/ ../../gh_pages/openfl/GTweenerDemo
+        cp -R bin/html5/bin/. ../../gh_pages/openfl/GTweenerDemo
     - name: OpenFL GTweenInterrupt
       working-directory: samples/openfl/GTweenInterrupt
       run: |
@@ -187,7 +187,7 @@ jobs:
         haxelib run lime build hl
         haxelib run lime build flash
         mkdir -p ../../gh_pages/openfl/GTweenInterrupt
-        cp -R bin/html5/bin/ ../../gh_pages/openfl/GTweenInterrupt
+        cp -R bin/html5/bin/. ../../gh_pages/openfl/GTweenInterrupt
     - name: OpenFL GTweenSimpleSequencing
       working-directory: samples/openfl/GTweenSimpleSequencing
       run: |
@@ -196,7 +196,7 @@ jobs:
         haxelib run lime build hl
         haxelib run lime build flash
         mkdir -p ../../gh_pages/openfl/GTweenSimpleSequencing
-        cp -R bin/html5/bin/ ../../gh_pages/openfl/GTweenSimpleSequencing
+        cp -R bin/html5/bin/. ../../gh_pages/openfl/GTweenSimpleSequencing
     - name: OpenFL GTweenSpeedDemo
       working-directory: samples/openfl/GTweenSpeedDemo
       run: |
@@ -205,7 +205,7 @@ jobs:
         haxelib run lime build hl
         haxelib run lime build flash
         mkdir -p ../../gh_pages/openfl/GTweenSpeedDemo
-        cp -R bin/html5/bin/ ../../gh_pages/openfl/GTweenSpeedDemo
+        cp -R bin/html5/bin/. ../../gh_pages/openfl/GTweenSpeedDemo
     - name: OpenFL GTweenTimelineDemo
       working-directory: samples/openfl/GTweenTimelineDemo
       run: |
@@ -214,7 +214,7 @@ jobs:
         haxelib run lime build hl
         haxelib run lime build flash
         mkdir -p ../../gh_pages/openfl/GTweenTimelineDemo
-        cp -R bin/html5/bin/ ../../gh_pages/openfl/GTweenTimelineDemo/
+        cp -R bin/html5/bin/. ../../gh_pages/openfl/GTweenTimelineDemo/
     - name: Upload JS Samples
       if: ${{ github.repository == 'BowlerHatLLC/gtween-haxe' && github.event_name != 'pull_request' && github.ref_name == 'main' }}
       uses: JamesIves/github-pages-deploy-action@v4.6.0
