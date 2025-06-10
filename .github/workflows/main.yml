@@ -119,16 +119,28 @@ jobs:
     # --- JS samples ---
     - name: JS GTweenerDemo
       working-directory: samples/js/GTweenerDemo
-      run: haxe js.hxml
+      run: |
+        haxe js.hxml
+        mkdir -p ../../gh_pages/js/GTweenerDemo
+        cp index.html GTweenerDemo.js ../../gh_pages/js/GTweenerDemo
     - name: JS GTweenInterrupt
       working-directory: samples/js/GTweenInterrupt
-      run: haxe js.hxml
+      run: |
+        haxe js.hxml
+        mkdir -p ../../gh_pages/js/GTweenInterrupt
+        cp index.html GTweenInterrupt.js ../../gh_pages/js/GTweenInterrupt
     - name: JS GTweenSimpleSequencing
       working-directory: samples/js/GTweenSimpleSequencing
-      run: haxe js.hxml
+      run: |
+        haxe js.hxml
+        mkdir -p ../../gh_pages/js/GTweenSimpleSequencing
+        cp index.html GTweenSimpleSequencing.js ../../gh_pages/js/GTweenSimpleSequencing
     - name: JS GTweenSpeedDemo
       working-directory: samples/js/GTweenSpeedDemo
-      run: haxe js.hxml
+      run: |
+        haxe js.hxml
+        mkdir -p ../../gh_pages/js/GTweenSpeedDemo
+        cp index.html GTweenSpeedDemo.js ../../gh_pages/js/GTweenSpeedDemo
     # --- Flash samples ---
     - name: Flash GTweenColorAdjust
       working-directory: samples/flash/GTweenColorAdjust
@@ -156,6 +168,8 @@ jobs:
         haxelib run lime build neko
         haxelib run lime build hl
         haxelib run lime build flash
+        mkdir -p ../../gh_pages/openfl/GTweenColorAdjust
+        cp -R bin/html5/bin ../../gh_pages/openfl/GTweenColorAdjust
     - name: OpenFL GTweenerDemo
       working-directory: samples/openfl/GTweenerDemo
       run: |
@@ -163,6 +177,8 @@ jobs:
         haxelib run lime build neko
         haxelib run lime build hl
         haxelib run lime build flash
+        mkdir -p ../../gh_pages/openfl/GTweenerDemo
+        cp -R bin/html5/bin ../../gh_pages/openfl/GTweenerDemo
     - name: OpenFL GTweenInterrupt
       working-directory: samples/openfl/GTweenInterrupt
       run: |
@@ -170,6 +186,8 @@ jobs:
         haxelib run lime build neko
         haxelib run lime build hl
         haxelib run lime build flash
+        mkdir -p ../../gh_pages/openfl/GTweenInterrupt
+        cp -R bin/html5/bin ../../gh_pages/openfl/GTweenInterrupt
     - name: OpenFL GTweenSimpleSequencing
       working-directory: samples/openfl/GTweenSimpleSequencing
       run: |
@@ -177,6 +195,8 @@ jobs:
         haxelib run lime build neko
         haxelib run lime build hl
         haxelib run lime build flash
+        mkdir -p ../../gh_pages/openfl/GTweenSimpleSequencing
+        cp -R bin/html5/bin ../../gh_pages/openfl/GTweenSimpleSequencing
     - name: OpenFL GTweenSpeedDemo
       working-directory: samples/openfl/GTweenSpeedDemo
       run: |
@@ -184,6 +204,8 @@ jobs:
         haxelib run lime build neko
         haxelib run lime build hl
         haxelib run lime build flash
+        mkdir -p ../../gh_pages/openfl/GTweenSpeedDemo
+        cp -R bin/html5/bin ../../gh_pages/openfl/GTweenSpeedDemo
     - name: OpenFL GTweenTimelineDemo
       working-directory: samples/openfl/GTweenTimelineDemo
       run: |
@@ -191,3 +213,12 @@ jobs:
         haxelib run lime build neko
         haxelib run lime build hl
         haxelib run lime build flash
+        mkdir -p ../../gh_pages/openfl/GTweenTimelineDemo
+        cp -R bin/html5/bin ../../gh_pages/openfl/GTweenTimelineDemo
+    - name: Upload JS Samples
+      if: ${{ github.repository == 'BowlerHatLLC/gtween-haxe' && github.event_name != 'pull_request' && github.ref_name == 'main' }}
+      uses: JamesIves/github-pages-deploy-action@v4.6.0
+      with:
+        branch: gh-pages
+        folder: samples/gh_pages
+        target-folder: samples
