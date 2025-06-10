@@ -2,10 +2,10 @@ package tests.plugins;
 
 #if (openfl || flash)
 #if openfl
-import openfl.display.Sprite;
+import openfl.display.SimpleButton;
 import openfl.media.SoundTransform;
 #elseif flash
-import flash.display.Sprite;
+import flash.display.SimpleButton;
 import flash.media.SoundTransform;
 #end
 import com.gskinner.motion.GTween;
@@ -40,7 +40,7 @@ class SoundTransformPluginTests extends Test {
 
 	public function testSoundTransformProperties():Void
 	{
-		var sprite = new Sprite();
+		var sprite = new SimpleButton();
 		sprite.soundTransform = new SoundTransform();
 		
 		tween = new GTween(sprite, 0.5, {volume: 0.5}, null, {SoundTransformEnabled: true});
@@ -56,7 +56,7 @@ class SoundTransformPluginTests extends Test {
 
 	public function testWithDefaultSoundTransformEnabled():Void
 	{
-		var sprite = new Sprite();
+		var sprite = new SimpleButton();
 		sprite.soundTransform = new SoundTransform();
 		
 		tween = new GTween(sprite, 0.5, {volume: 0.5});
@@ -72,7 +72,7 @@ class SoundTransformPluginTests extends Test {
 
 	public function testWithSoundTransformSetToFalse():Void
 	{
-		var sprite = new Sprite();
+		var sprite = new SimpleButton();
 		sprite.soundTransform = new SoundTransform();
 		
 		tween = new GTween(sprite, 0.5, {volume: 0.5}, null, {SoundTransformEnabled: false});
