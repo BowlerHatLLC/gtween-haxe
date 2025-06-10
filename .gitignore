@@ -5,3 +5,4 @@ bin/
 *.n
 *.hl
 samples/gh_pages
+samples/js/**/*.js
