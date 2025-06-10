@@ -87,6 +87,8 @@ jobs:
         haxelib --global update haxelib --quiet
         haxelib install utest --quiet
         haxelib install hxcpp --quiet
+        haxelib install lime --quiet
+        haxelib install openfl --quiet
         haxelib dev gtween ${{ github.workspace }}
     - name: Run Tests
       working-directory: tests
@@ -100,6 +102,7 @@ jobs:
         node bin/tests.js
         haxe cpp.hxml
         bin/tests/TestsMain-debug
+        haxelib run lime test neko
 
   samples:
     strategy:
