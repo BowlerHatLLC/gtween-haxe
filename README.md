@@ -61,7 +61,7 @@ myTween.proxy.x += 100;
 
 ### Sequencing
 
-([timeline demo](https://bowlerhatllc.github.io/gtween-haxe/samples/openfl/GTweenTimelineDemo/)
+([timeline demo](https://bowlerhatllc.github.io/gtween-haxe/samples/openfl/GTweenTimelineDemo/))
 
 GTweenTimeline lets you set up complex animations or transitions on a **virtual timeline**.
 In addition to tweens, you can add actions and labels at specified positions.
@@ -94,7 +94,7 @@ GTween supports both frame and time based tweens on a per tween basis. You can s
 
 ### Extensibility
 
-([color adjust plugin demo](https://bowlerhatllc.github.io/gtween-haxe/samples/openfl/GTweenColorAdjust/)
+([color adjust plugin demo](https://bowlerhatllc.github.io/gtween-haxe/samples/openfl/GTweenColorAdjust/))
 
 The code base for GTween is straightforward and easy to read, extend, and modify. It also supports an easy to use, robust plug-in model which makes it easy to add and share custom functionality without having to modify or extend the core classes.
 
