@@ -1,6 +1,5 @@
 package tests.plugins;
 
-#if (openfl || flash)
 #if openfl
 import openfl.display.Shape;
 #elseif flash
@@ -38,7 +37,11 @@ class AutoHidePluginTests extends Test {
 
 	public function testVisibleProperty():Void
 	{
+		#if (flash || openfl)
 		var shape = new Shape();
+		#else
+		var shape = {alpha: 1.0, visible: true};
+		#end
 		tween = new GTween(shape, 0.5, {alpha:0}, null, {AutoHideEnabled: true});
 
 		Assert.equals(1, shape.alpha);
@@ -55,7 +58,11 @@ class AutoHidePluginTests extends Test {
 
 	public function testWithDefaultAutoHideEnabled():Void
 	{
+		#if (flash || openfl)
 		var shape = new Shape();
+		#else
+		var shape = {alpha: 1.0, visible: true};
+		#end
 		tween = new GTween(shape, 0.5, {alpha:0});
 
 		Assert.equals(1, shape.alpha);
@@ -72,7 +79,11 @@ class AutoHidePluginTests extends Test {
 
 	public function testWithAutoHideEnabledSetToFalse():Void
 	{
+		#if (flash || openfl)
 		var shape = new Shape();
+		#else
+		var shape = {alpha: 1.0, visible: true};
+		#end
 		tween = new GTween(shape, 0.5, {alpha:0}, null, {AutoHideEnabled: false});
 
 		Assert.equals(1, shape.alpha);
@@ -87,4 +98,3 @@ class AutoHidePluginTests extends Test {
 		Assert.isTrue(shape.visible);
 	}
 }
-#end

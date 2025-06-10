@@ -1,6 +1,5 @@
 package tests.plugins;
 
-#if (openfl || flash)
 #if openfl
 import openfl.display.MovieClip;
 #elseif flash
@@ -43,13 +42,25 @@ class CurrentFramePluginTests extends Test {
 				
 		tween = new GTween(mc, 0.5, {currentFrame: 3}, null, {CurrentFrameEnabled: true});
 
+		#if openfl
+		Assert.equals(1, mc.currentFrame);
+		#else
 		Assert.equals(0, mc.currentFrame);
+		#end
 
 		tween.position = 0.5 * tween.duration;
+		#if openfl
+		Assert.equals(1, mc.currentFrame);
+		#else
 		Assert.equals(0, mc.currentFrame);
+		#end
 
 		tween.position = tween.duration;
+		#if openfl
+		Assert.equals(1, mc.currentFrame);
+		#else
 		Assert.equals(0, mc.currentFrame);
+		#end
 	}
 
 	public function testWithDynamicMovieClipAndDefaultCurrentFrameEnabled():Void
@@ -58,28 +69,61 @@ class CurrentFramePluginTests extends Test {
 		
 		tween = new GTween(mc, 0.5, {currentFrame:3});
 
+		#if openfl
+		Assert.equals(1, mc.currentFrame);
+		#else
 		Assert.equals(0, mc.currentFrame);
+		#end
 
 		tween.position = 0.5 * tween.duration;
+		#if openfl
+		Assert.equals(1, mc.currentFrame);
+		#else
 		Assert.equals(0, mc.currentFrame);
+		#end
 
 		tween.position = tween.duration;
+		#if openfl
+		Assert.equals(1, mc.currentFrame);
+		#else
 		Assert.equals(0, mc.currentFrame);
+		#end
 	}
 
+	#if flash
 	public function testWithDynamicMovieClipAndCurrentFrameEnabledSetToFalse():Void
 	{
 		var mc = new MovieClip();
 		
 		tween = new GTween(mc, 0.5, {currentFrame: 5}, null, {CurrentFrameEnabled: false});
 
+		#if openfl
+		Assert.equals(1, mc.currentFrame);
+		#else
 		Assert.equals(0, mc.currentFrame);
+		#end
 
-		// it tries to set mc.currentFrame, which is a property that doesn't exist
+		// it tries to set mc.currentFrame, which is a property that can't be set
 		Assert.raises(() -> 
 		{
 			tween.position = 0.5 * tween.duration;
 		});
+	}
+	#end
+}
+
+#if (!flash && !openfl)
+private class MovieClip {
+	public function new() {}
+
+	public var currentFrame(get, never):Int;
+
+	private function get_currentFrame():Int {
+		return 0;
+	}
+
+	public function gotoAndStop(frame:Int):Void
+	{
 	}
 }
 #end

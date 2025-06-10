@@ -30,15 +30,9 @@
  */
 
 package com.gskinner.motion.plugins;
-	
-#if (openfl || flash)
+
 import com.gskinner.motion.GTween;
 import com.gskinner.motion.plugins.IGTweenPlugin;
-#if openfl
-import openfl.display.DisplayObject;
-#else
-import flash.display.DisplayObject;
-#end
 
 /**
 	Plugin for GTween. Sets the visible of the target to false if its alpha is 0 or less.
@@ -79,11 +73,12 @@ class AutoHidePlugin implements IGTweenPlugin {
 	public function tween(tween:GTween, name:String, value:Float, initValue:Float, rangeValue:Float, ratio:Float, end:Bool):Float {
 		// only change the visibility if the plugin is enabled:
 		if (((tween.pluginData.AutoHideEnabled == null && enabled) || tween.pluginData.AutoHideEnabled)) {
-			var tweenTarget:DisplayObject = cast(tween.target, DisplayObject);
-			if (tweenTarget.visible != (value > 0)) { tweenTarget.visible = (value > 0); }
+			var visible = Reflect.getProperty(tween.target, "visible");
+			if (visible != (value > 0)) {
+				Reflect.setProperty(tween.target, "visible", (value > 0));
+			}
 		}
 		return value;
 	}
 	
 }
-#end

@@ -31,16 +31,9 @@
 
 package com.gskinner.motion.plugins;
 	
-#if (openfl || flash)
 import com.gskinner.motion.GTween;
 import com.gskinner.motion.plugins.IGTweenPlugin;
-	
-#if openfl
-import openfl.display.MovieClip;
-#else
-import flash.display.MovieClip;
-#end
-	
+
 /**
 	Plugin for GTween. Allows you to tween the currentFrame property of the target.
 	This lets you keep a timeline animation in synch with a tween, even when the duration
@@ -82,9 +75,10 @@ class CurrentFramePlugin implements IGTweenPlugin {
 		if (!((tween.pluginData.CurrentFrameEnabled == null && enabled) || tween.pluginData.CurrentFrameEnabled)) { return value; }
 		
 		var frame:Int = Math.round(initValue+rangeValue*ratio);
-		var tweenTarget:MovieClip = cast(tween.target, MovieClip);
-		if (tweenTarget.currentFrame != frame) {
-			tweenTarget.gotoAndStop(frame);
+		var currentFrame:Int = Reflect.getProperty(tween.target, "currentFrame");
+		if (currentFrame != frame) {
+			var gotoAndStop = Reflect.field(tween.target, "gotoAndStop");
+			Reflect.callMethod(tween.target, gotoAndStop, [frame]);
 		}
 		
 		// tell GTween not to use the default assignment behaviour:
@@ -92,4 +86,3 @@ class CurrentFramePlugin implements IGTweenPlugin {
 	}
 	
 }
-#end
