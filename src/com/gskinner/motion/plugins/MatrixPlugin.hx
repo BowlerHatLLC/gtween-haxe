@@ -87,7 +87,7 @@ class MatrixPlugin implements IGTweenPlugin {
 		var tweenTarget:DisplayObject = cast(tween.target, DisplayObject);
 		var matrix:Matrix = tweenTarget.transform.matrix;
 		Reflect.setProperty(matrix, name, value);
-		tween.target.transform.matrix = matrix;
+		tweenTarget.transform.matrix = matrix;
 		
 		// tell GTween not to use the default assignment behaviour:
 		return Math.NaN;
