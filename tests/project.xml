@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<meta title="GTween Tests" package="com.gskinner.gtween-haxe.tests"/>
+	<app main="TestsMain" file="GTweenTests"/>
+	<window background="#252525" allow-high-dpi="true" fps="60"/>
+	<window fps="0" if="html5"/>
+	
+	<source path="../src"/>
+	<source path="src"/>
+	
+	<haxelib name="openfl"/>
+	<haxelib name="utest"/>
+</project>
