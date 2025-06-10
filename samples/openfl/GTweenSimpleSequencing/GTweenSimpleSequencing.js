@@ -887,18 +887,18 @@ var ApplicationMain = function() { };
 $hxClasses["ApplicationMain"] = ApplicationMain;
 ApplicationMain.__name__ = "ApplicationMain";
 ApplicationMain.main = function() {
-	lime_system_System.__registerEntryPoint("GTweenInterrupt",ApplicationMain.create);
+	lime_system_System.__registerEntryPoint("GTweenSimpleSequencing",ApplicationMain.create);
 };
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
 	app.meta.h["build"] = "1";
 	app.meta.h["company"] = "";
-	app.meta.h["file"] = "GTweenInterrupt";
-	app.meta.h["name"] = "GTween Interrupt";
-	app.meta.h["packageName"] = "com.gskinner.gtween-haxe.interrupt";
+	app.meta.h["file"] = "GTweenSimpleSequencing";
+	app.meta.h["name"] = "GTween Simple Sequencing";
+	app.meta.h["packageName"] = "com.gskinner.gtween-haxe.simple-sequencing";
 	app.meta.h["version"] = "1.0.0";
-	var attributes = { allowHighDPI : true, alwaysOnTop : false, borderless : false, element : null, frameRate : 0, height : 0, hidden : false, maximized : false, minimized : false, parameters : { }, resizable : true, title : "GTween Interrupt", width : 0, x : null, y : null};
-	attributes.context = { antialiasing : 0, background : 0, colorDepth : 32, depth : true, hardware : true, stencil : true, type : null, vsync : false};
+	var attributes = { allowHighDPI : true, alwaysOnTop : false, borderless : false, element : null, frameRate : 0, height : 0, hidden : false, maximized : false, minimized : false, parameters : { }, resizable : true, title : "GTween Simple Sequencing", width : 0, x : null, y : null};
+	attributes.context = { antialiasing : 0, background : 16777215, colorDepth : 32, depth : true, hardware : true, stencil : true, type : null, vsync : false};
 	if(app.__window == null) {
 		if(config != null) {
 			var _g = 0;
@@ -3366,47 +3366,37 @@ openfl_display_Sprite.prototype = $extend(openfl_display_DisplayObjectContainer.
 	,__class__: openfl_display_Sprite
 	,__properties__: $extend(openfl_display_DisplayObjectContainer.prototype.__properties__,{get_graphics:"get_graphics",set_buttonMode:"set_buttonMode",get_buttonMode:"get_buttonMode"})
 });
-var GTweenInterrupt = function() {
-	this.tweens = [];
+var GTweenSimpleSequencing = function() {
 	openfl_display_Sprite.call(this);
-	var _g = 0;
-	while(_g < 25) {
-		var i = _g++;
-		var circle = new openfl_display_Shape();
-		circle.get_graphics().lineStyle(15,1127253,1 - i * 0.02);
-		circle.get_graphics().drawCircle(0,0,(i + 1) * 4);
-		circle.set_x(Math.random() * 550);
-		circle.set_y(Math.random() * 400);
-		circle.set_blendMode(0);
-		this.addChild(circle);
-		var circleTween = new com_gskinner_motion_GTween(circle,0.5 + i * 0.04,{ x : 275, y : 200},{ ease : com_gskinner_motion_easing_Bounce.easeOut});
-		this.tweens.push(circleTween);
-	}
-	this.stage.addEventListener("click",$bind(this,this.handleClick));
+	this.ball = new openfl_display_Sprite();
+	this.ball.get_graphics().beginFill(16711680);
+	this.ball.get_graphics().drawCircle(0,0,50);
+	this.ball.get_graphics().endFill();
+	this.ball.set_x(50);
+	this.ball.set_y(50);
+	this.addChild(this.ball);
+	com_gskinner_motion_plugins_MotionBlurPlugin.install();
+	var tween4 = new com_gskinner_motion_GTween(this.ball,0.4,{ y : 50},{ autoPlay : false, delay : 0.5, ease : com_gskinner_motion_easing_Sine.easeInOut},{ MotionBlurEnabled : true});
+	var tween3 = new com_gskinner_motion_GTween(this.ball,0.4,{ x : 50},{ autoPlay : false, nextTween : tween4, delay : 0.5, ease : com_gskinner_motion_easing_Sine.easeInOut},{ MotionBlurEnabled : true});
+	var tween2 = new com_gskinner_motion_GTween(this.ball,0.4,{ y : 350},{ autoPlay : false, nextTween : tween3, delay : 0.5, ease : com_gskinner_motion_easing_Sine.easeInOut},{ MotionBlurEnabled : true});
+	var tween1 = new com_gskinner_motion_GTween(this.ball,0.5,{ x : 500},{ nextTween : tween2, delay : 0.5, ease : com_gskinner_motion_easing_Sine.easeInOut},{ MotionBlurEnabled : true});
+	tween4.nextTween = tween1;
 };
-$hxClasses["GTweenInterrupt"] = GTweenInterrupt;
-GTweenInterrupt.__name__ = "GTweenInterrupt";
-GTweenInterrupt.__super__ = openfl_display_Sprite;
-GTweenInterrupt.prototype = $extend(openfl_display_Sprite.prototype,{
-	handleClick: function(evt) {
-		var _g = 0;
-		var _g1 = this.tweens.length;
-		while(_g < _g1) {
-			var i = _g++;
-			this.tweens[i].setValues({ x : this.get_mouseX(), y : this.get_mouseY()});
-		}
-	}
-	,__class__: GTweenInterrupt
+$hxClasses["GTweenSimpleSequencing"] = GTweenSimpleSequencing;
+GTweenSimpleSequencing.__name__ = "GTweenSimpleSequencing";
+GTweenSimpleSequencing.__super__ = openfl_display_Sprite;
+GTweenSimpleSequencing.prototype = $extend(openfl_display_Sprite.prototype,{
+	__class__: GTweenSimpleSequencing
 });
 var DocumentClass = function(current) {
 	current.addChild(this);
-	GTweenInterrupt.call(this);
+	GTweenSimpleSequencing.call(this);
 	this.dispatchEvent(new openfl_events_Event("addedToStage",false,false));
 };
 $hxClasses["DocumentClass"] = DocumentClass;
 DocumentClass.__name__ = "DocumentClass";
-DocumentClass.__super__ = GTweenInterrupt;
-DocumentClass.prototype = $extend(GTweenInterrupt.prototype,{
+DocumentClass.__super__ = GTweenSimpleSequencing;
+DocumentClass.prototype = $extend(GTweenSimpleSequencing.prototype,{
 	__class__: DocumentClass
 });
 var EReg = function(r,opt) {
@@ -4470,29 +4460,17 @@ com_gskinner_motion__$GTween_TargetProxy.arrayWrite = function(this1,name,value)
 		this1.setValue(name,parseFloat(Std.string(value)));
 	}
 };
-var com_gskinner_motion_easing_Bounce = function() { };
-$hxClasses["com.gskinner.motion.easing.Bounce"] = com_gskinner_motion_easing_Bounce;
-com_gskinner_motion_easing_Bounce.__name__ = "com.gskinner.motion.easing.Bounce";
-com_gskinner_motion_easing_Bounce.easeIn = function(ratio,unused1,unused2,unused3) {
-	return 1 - com_gskinner_motion_easing_Bounce.easeOut(1 - ratio,0,0,0);
+var com_gskinner_motion_easing_Sine = function() { };
+$hxClasses["com.gskinner.motion.easing.Sine"] = com_gskinner_motion_easing_Sine;
+com_gskinner_motion_easing_Sine.__name__ = "com.gskinner.motion.easing.Sine";
+com_gskinner_motion_easing_Sine.easeIn = function(ratio,unused1,unused2,unused3) {
+	return 1 - Math.cos(ratio * (Math.PI / 2));
 };
-com_gskinner_motion_easing_Bounce.easeOut = function(ratio,unused1,unused2,unused3) {
-	if(ratio < 0.363636363636363646) {
-		return 7.5625 * ratio * ratio;
-	} else if(ratio < 0.727272727272727293) {
-		return 7.5625 * (ratio -= 0.545454545454545414) * ratio + 0.75;
-	} else if(ratio < 0.909090909090909061) {
-		return 7.5625 * (ratio -= 0.818181818181818232) * ratio + 0.9375;
-	} else {
-		return 7.5625 * (ratio -= 0.954545454545454586) * ratio + 0.984375;
-	}
+com_gskinner_motion_easing_Sine.easeOut = function(ratio,unused1,unused2,unused3) {
+	return Math.sin(ratio * (Math.PI / 2));
 };
-com_gskinner_motion_easing_Bounce.easeInOut = function(ratio,unused1,unused2,unused3) {
-	if((ratio *= 2) < 1) {
-		return 0.5 * com_gskinner_motion_easing_Bounce.easeIn(ratio,0,0,0);
-	} else {
-		return 0.5 * com_gskinner_motion_easing_Bounce.easeOut(ratio - 1,0,0,0) + 0.5;
-	}
+com_gskinner_motion_easing_Sine.easeInOut = function(ratio,unused1,unused2,unused3) {
+	return -0.5 * (Math.cos(ratio * Math.PI) - 1);
 };
 var com_gskinner_motion_plugins_IGTweenPlugin = function() { };
 $hxClasses["com.gskinner.motion.plugins.IGTweenPlugin"] = com_gskinner_motion_plugins_IGTweenPlugin;
@@ -4500,6 +4478,63 @@ com_gskinner_motion_plugins_IGTweenPlugin.__name__ = "com.gskinner.motion.plugin
 com_gskinner_motion_plugins_IGTweenPlugin.__isInterface__ = true;
 com_gskinner_motion_plugins_IGTweenPlugin.prototype = {
 	__class__: com_gskinner_motion_plugins_IGTweenPlugin
+};
+var com_gskinner_motion_plugins_MotionBlurPlugin = function() {
+};
+$hxClasses["com.gskinner.motion.plugins.MotionBlurPlugin"] = com_gskinner_motion_plugins_MotionBlurPlugin;
+com_gskinner_motion_plugins_MotionBlurPlugin.__name__ = "com.gskinner.motion.plugins.MotionBlurPlugin";
+com_gskinner_motion_plugins_MotionBlurPlugin.__interfaces__ = [com_gskinner_motion_plugins_IGTweenPlugin];
+com_gskinner_motion_plugins_MotionBlurPlugin.install = function() {
+	if(com_gskinner_motion_plugins_MotionBlurPlugin.instance != null) {
+		return;
+	}
+	com_gskinner_motion_plugins_MotionBlurPlugin.instance = new com_gskinner_motion_plugins_MotionBlurPlugin();
+	com_gskinner_motion_GTween.installPlugin(com_gskinner_motion_plugins_MotionBlurPlugin.instance,["x","y"]);
+};
+com_gskinner_motion_plugins_MotionBlurPlugin.prototype = {
+	init: function(tween,name,value) {
+		return value;
+	}
+	,tween: function(tween,name,value,initValue,rangeValue,ratio,end) {
+		if(!(com_gskinner_motion_plugins_MotionBlurPlugin.enabled && tween.pluginData.MotionBlurEnabled == null || tween.pluginData.MotionBlurEnabled)) {
+			return value;
+		}
+		var data = Reflect.field(tween.pluginData,"MotionBlurData");
+		if(data == null) {
+			data = this.initTarget(tween);
+		}
+		var tweenTarget = js_Boot.__cast(tween.target , openfl_display_DisplayObject);
+		var f = tweenTarget.get_filters();
+		var dataIndex = Reflect.field(data,"index");
+		var value1 = f[dataIndex];
+		var blurF = ((value1) instanceof openfl_filters_BlurFilter) ? value1 : null;
+		if(blurF == null) {
+			return value;
+		}
+		if(end) {
+			f.splice(dataIndex,1);
+			Reflect.deleteField(tween.pluginData,"MotionBlurData");
+		} else {
+			var blur = Math.abs((tween.ratioOld - ratio) * rangeValue * com_gskinner_motion_plugins_MotionBlurPlugin.strength);
+			if(name == "x") {
+				blurF.set_blurX(blur);
+			} else {
+				blurF.set_blurY(blur);
+			}
+		}
+		tweenTarget.set_filters(f);
+		return value;
+	}
+	,initTarget: function(tween) {
+		var tweenTarget = js_Boot.__cast(tween.target , openfl_display_DisplayObject);
+		var f = tweenTarget.get_filters();
+		f.push(new openfl_filters_BlurFilter(0,0,1));
+		tweenTarget.set_filters(f);
+		var result = { index : f.length - 1};
+		tween.pluginData["MotionBlurData"] = result;
+		return result;
+	}
+	,__class__: com_gskinner_motion_plugins_MotionBlurPlugin
 };
 var haxe_StackItem = $hxEnums["haxe.StackItem"] = { __ename__:"haxe.StackItem",__constructs__:null
 	,CFunction: {_hx_name:"CFunction",_hx_index:0,__enum__:"haxe.StackItem",toString:$estr}
@@ -25096,7 +25131,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 345564;
+	this.version = 121350;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -66053,6 +66088,130 @@ openfl_filters_BitmapFilter.prototype = {
 	}
 	,__class__: openfl_filters_BitmapFilter
 };
+var openfl_filters_BitmapFilterShader = function(code) {
+	if(this.__glFragmentSource == null) {
+		this.__glFragmentSource = "varying vec2 openfl_TextureCoordv;\n\n\t\tuniform sampler2D openfl_Texture;\n\t\tuniform vec2 openfl_TextureSize;\n\n\t\tvoid main(void) {\n\n\t\t\tgl_FragColor = texture2D (openfl_Texture, openfl_TextureCoordv);\n\n\t\t}";
+	}
+	if(this.__glVertexSource == null) {
+		this.__glVertexSource = "attribute vec4 openfl_Position;\n\t\tattribute vec2 openfl_TextureCoord;\n\n\t\tvarying vec2 openfl_TextureCoordv;\n\n\t\tuniform mat4 openfl_Matrix;\n\t\tuniform vec2 openfl_TextureSize;\n\n\t\tvoid main(void) {\n\n\t\t\topenfl_TextureCoordv = openfl_TextureCoord;\n\n\t\tgl_Position = openfl_Matrix * openfl_Position;\n\n\t\t}";
+	}
+	openfl_display_Shader.call(this,code);
+	this.__isGenerated = true;
+	this.__initGL();
+};
+$hxClasses["openfl.filters.BitmapFilterShader"] = openfl_filters_BitmapFilterShader;
+openfl_filters_BitmapFilterShader.__name__ = "openfl.filters.BitmapFilterShader";
+openfl_filters_BitmapFilterShader.__super__ = openfl_display_Shader;
+openfl_filters_BitmapFilterShader.prototype = $extend(openfl_display_Shader.prototype,{
+	__class__: openfl_filters_BitmapFilterShader
+});
+var openfl_filters__$BlurFilter_BlurShader = function() {
+	if(this.__glFragmentSource == null) {
+		this.__glFragmentSource = "uniform sampler2D openfl_Texture;\n\n\t\tvarying vec2 vBlurCoords[7];\n\n\t\tvoid main(void) {\n\n\t\t\tvec4 sum = vec4(0.0);\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[0]) * 0.00443;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[1]) * 0.05399;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[2]) * 0.24197;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[3]) * 0.39894;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[4]) * 0.24197;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[5]) * 0.05399;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[6]) * 0.00443;\n\n\t\t\tgl_FragColor = sum;\n\n\t\t}";
+	}
+	if(this.__glVertexSource == null) {
+		this.__glVertexSource = "attribute vec4 openfl_Position;\n\t\tattribute vec2 openfl_TextureCoord;\n\n\t\tuniform mat4 openfl_Matrix;\n\n\t\tuniform vec2 uRadius;\n\t\tvarying vec2 vBlurCoords[7];\n\t\tuniform vec2 uTextureSize;\n\n\t\tvoid main(void) {\n\n\t\t\tgl_Position = openfl_Matrix * openfl_Position;\n\n\t\t\tvec2 r = uRadius / uTextureSize;\n\t\t\tvBlurCoords[0] = openfl_TextureCoord - r;\n\t\t\tvBlurCoords[1] = openfl_TextureCoord - r * 0.75;\n\t\t\tvBlurCoords[2] = openfl_TextureCoord - r * 0.5;\n\t\t\tvBlurCoords[3] = openfl_TextureCoord;\n\t\t\tvBlurCoords[4] = openfl_TextureCoord + r * 0.5;\n\t\t\tvBlurCoords[5] = openfl_TextureCoord + r * 0.75;\n\t\t\tvBlurCoords[6] = openfl_TextureCoord + r;\n\n\t\t}";
+	}
+	openfl_filters_BitmapFilterShader.call(this);
+	this.uRadius.value = [0,0];
+	this.__isGenerated = true;
+	this.__initGL();
+};
+$hxClasses["openfl.filters._BlurFilter.BlurShader"] = openfl_filters__$BlurFilter_BlurShader;
+openfl_filters__$BlurFilter_BlurShader.__name__ = "openfl.filters._BlurFilter.BlurShader";
+openfl_filters__$BlurFilter_BlurShader.__super__ = openfl_filters_BitmapFilterShader;
+openfl_filters__$BlurFilter_BlurShader.prototype = $extend(openfl_filters_BitmapFilterShader.prototype,{
+	__update: function() {
+		this.uTextureSize.value = [this.__texture.input.width,this.__texture.input.height];
+		openfl_filters_BitmapFilterShader.prototype.__update.call(this);
+	}
+	,__class__: openfl_filters__$BlurFilter_BlurShader
+});
+var openfl_filters_BlurFilter = function(blurX,blurY,quality) {
+	if(quality == null) {
+		quality = 1;
+	}
+	if(blurY == null) {
+		blurY = 4;
+	}
+	if(blurX == null) {
+		blurX = 4;
+	}
+	openfl_filters_BitmapFilter.call(this);
+	this.set_blurX(blurX);
+	this.set_blurY(blurY);
+	this.set_quality(quality);
+	this.__needSecondBitmapData = true;
+	this.__preserveObject = false;
+	this.__renderDirty = true;
+};
+$hxClasses["openfl.filters.BlurFilter"] = openfl_filters_BlurFilter;
+openfl_filters_BlurFilter.__name__ = "openfl.filters.BlurFilter";
+openfl_filters_BlurFilter.__super__ = openfl_filters_BitmapFilter;
+openfl_filters_BlurFilter.prototype = $extend(openfl_filters_BitmapFilter.prototype,{
+	clone: function() {
+		return new openfl_filters_BlurFilter(this.__blurX,this.__blurY,this.__quality);
+	}
+	,__applyFilter: function(bitmapData,sourceBitmapData,sourceRect,destPoint) {
+		var time = new Date().getTime() / 1000;
+		var finalImage = lime__$internal_graphics_ImageDataUtil.gaussianBlur(bitmapData.image,sourceBitmapData.image,sourceRect.__toLimeRectangle(),destPoint.__toLimeVector2(),this.__blurX,this.__blurY,this.__quality);
+		var elapsed = new Date().getTime() / 1000 - time;
+		if(finalImage == bitmapData.image) {
+			return bitmapData;
+		}
+		return sourceBitmapData;
+	}
+	,__initShader: function(renderer,pass,sourceBitmapData) {
+		if(pass < this.__horizontalPasses) {
+			var scale = Math.pow(0.5,pass >> 1);
+			openfl_filters_BlurFilter.__blurShader.uRadius.value[0] = this.get_blurX() * scale;
+			openfl_filters_BlurFilter.__blurShader.uRadius.value[1] = 0;
+		} else {
+			var scale = Math.pow(0.5,pass - this.__horizontalPasses >> 1);
+			openfl_filters_BlurFilter.__blurShader.uRadius.value[0] = 0;
+			openfl_filters_BlurFilter.__blurShader.uRadius.value[1] = this.get_blurY() * scale;
+		}
+		return openfl_filters_BlurFilter.__blurShader;
+	}
+	,get_blurX: function() {
+		return this.__blurX;
+	}
+	,set_blurX: function(value) {
+		if(value != this.__blurX) {
+			this.__blurX = value;
+			this.__renderDirty = true;
+			this.__leftExtension = value > 0 ? Math.ceil(value) : 0;
+			this.__rightExtension = this.__leftExtension;
+		}
+		return value;
+	}
+	,get_blurY: function() {
+		return this.__blurY;
+	}
+	,set_blurY: function(value) {
+		if(value != this.__blurY) {
+			this.__blurY = value;
+			this.__renderDirty = true;
+			this.__topExtension = value > 0 ? Math.ceil(value) : 0;
+			this.__bottomExtension = this.__topExtension;
+		}
+		return value;
+	}
+	,get_quality: function() {
+		return this.__quality;
+	}
+	,set_quality: function(value) {
+		this.__horizontalPasses = this.__blurX <= 0 ? 0 : Math.round(this.__blurX * (value / 4)) + 1;
+		this.__verticalPasses = this.__blurY <= 0 ? 0 : Math.round(this.__blurY * (value / 4)) + 1;
+		this.__numShaderPasses = this.__horizontalPasses + this.__verticalPasses;
+		if(value != this.__quality) {
+			this.__renderDirty = true;
+		}
+		return this.__quality = value;
+	}
+	,__class__: openfl_filters_BlurFilter
+	,__properties__: {set_quality:"set_quality",get_quality:"get_quality",set_blurY:"set_blurY",get_blurY:"get_blurY",set_blurX:"set_blurX",get_blurX:"get_blurX"}
+});
 var openfl_geom_Matrix3D = function(v) {
 	if(v != null && v.get_length() == 16) {
 		this.rawData = v.concat(null);
@@ -78241,6 +78400,8 @@ com_gskinner_motion_GTween.defaultEase = com_gskinner_motion_GTween.linearEase;
 com_gskinner_motion_GTween.pauseAll = false;
 com_gskinner_motion_GTween.timeScaleAll = 1;
 com_gskinner_motion_GTween.hasStarPlugins = false;
+com_gskinner_motion_plugins_MotionBlurPlugin.enabled = false;
+com_gskinner_motion_plugins_MotionBlurPlugin.strength = 0.6;
 haxe_Serializer.USE_CACHE = false;
 haxe_Serializer.USE_ENUM_INDEX = false;
 haxe_Serializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
@@ -80017,6 +80178,7 @@ openfl_events_TouchEvent.TOUCH_ROLL_OUT = "touchRollOut";
 openfl_events_TouchEvent.TOUCH_ROLL_OVER = "touchRollOver";
 openfl_events_TouchEvent.TOUCH_TAP = "touchTap";
 openfl_events_UncaughtErrorEvent.UNCAUGHT_ERROR = "uncaughtError";
+openfl_filters_BlurFilter.__blurShader = new openfl_filters__$BlurFilter_BlurShader();
 openfl_geom_Matrix3D.__meta__ = { statics : { create2D : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, createABCD : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, createOrtho : { SuppressWarnings : ["checkstyle:FieldDocComment"]}}};
 openfl_geom_Orientation3D.AXIS_ANGLE = 0;
 openfl_geom_Orientation3D.EULER_ANGLES = 1;
@@ -80528,7 +80690,7 @@ ApplicationMain.main();
 	} else {
 		$hx_exports.lime = $hx_exports.lime || {};
 		$hx_exports.lime.$scripts = $hx_exports.lime.$scripts || {};
-		$hx_exports.lime.$scripts["GTweenInterrupt"] = $hx_script;
+		$hx_exports.lime.$scripts["GTweenSimpleSequencing"] = $hx_script;
 		$hx_exports.lime.embed = function (projectName) {
 			var exports = {};
 			var script = $hx_exports.lime.$scripts[projectName];

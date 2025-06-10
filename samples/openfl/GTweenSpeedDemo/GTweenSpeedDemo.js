@@ -887,18 +887,17 @@ var ApplicationMain = function() { };
 $hxClasses["ApplicationMain"] = ApplicationMain;
 ApplicationMain.__name__ = "ApplicationMain";
 ApplicationMain.main = function() {
-	lime_system_System.__registerEntryPoint("GTweenColorAdjust",ApplicationMain.create);
+	lime_system_System.__registerEntryPoint("GTweenSpeedDemo",ApplicationMain.create);
 };
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
-	ManifestResources.init(config);
 	app.meta.h["build"] = "1";
 	app.meta.h["company"] = "";
-	app.meta.h["file"] = "GTweenColorAdjust";
-	app.meta.h["name"] = "GTween Color Adjust";
-	app.meta.h["packageName"] = "com.gskinner.gtween-haxe.color-adjust";
+	app.meta.h["file"] = "GTweenSpeedDemo";
+	app.meta.h["name"] = "GTween Speed Demo";
+	app.meta.h["packageName"] = "com.gskinner.gtween-haxe.gtween-speed-demo";
 	app.meta.h["version"] = "1.0.0";
-	var attributes = { allowHighDPI : true, alwaysOnTop : false, borderless : false, element : null, frameRate : 0, height : 0, hidden : false, maximized : false, minimized : false, parameters : { }, resizable : true, title : "GTween Color Adjust", width : 0, x : null, y : null};
+	var attributes = { allowHighDPI : true, alwaysOnTop : false, borderless : false, element : null, frameRate : 0, height : 0, hidden : false, maximized : false, minimized : false, parameters : { }, resizable : true, title : "GTween Speed Demo", width : 0, x : null, y : null};
 	attributes.context = { antialiasing : 0, background : 0, colorDepth : 32, depth : true, hardware : true, stencil : true, type : null, vsync : false};
 	if(app.__window == null) {
 		if(config != null) {
@@ -928,20 +927,6 @@ ApplicationMain.create = function(config) {
 		ApplicationMain.start(stage);
 	};
 	preloader.onComplete.add(tmp);
-	var _g = 0;
-	var _g1 = ManifestResources.preloadLibraries;
-	while(_g < _g1.length) {
-		var library = _g1[_g];
-		++_g;
-		app.__preloader.addLibrary(library);
-	}
-	var _g = 0;
-	var _g1 = ManifestResources.preloadLibraryNames;
-	while(_g < _g1.length) {
-		var name = _g1[_g];
-		++_g;
-		app.__preloader.addLibraryName(name);
-	}
 	app.__preloader.load();
 	var result = app.exec();
 };
@@ -3381,28 +3366,43 @@ openfl_display_Sprite.prototype = $extend(openfl_display_DisplayObjectContainer.
 	,__class__: openfl_display_Sprite
 	,__properties__: $extend(openfl_display_DisplayObjectContainer.prototype.__properties__,{get_graphics:"get_graphics",set_buttonMode:"set_buttonMode",get_buttonMode:"get_buttonMode"})
 });
-var GTweenColorAdjust = function() {
+var GTweenSpeedDemo = function() {
 	openfl_display_Sprite.call(this);
-	var image = new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("bitmap.png"));
-	this.addChild(image);
-	com_gskinner_motion_plugins_ColorAdjustPlugin.install();
-	new com_gskinner_motion_GTween(image,3,{ saturation : -100, contrast : 70},{ repeatCount : 0, reflect : true});
+	var _g = 0;
+	while(_g < 5000) {
+		var i = _g++;
+		var thing = new openfl_display_Shape();
+		thing.get_graphics().beginFill(16777215);
+		thing.get_graphics().drawRect(0,0,1,1);
+		thing.get_graphics().endFill();
+		thing.set_x(thing.set_y(300));
+		this.addChild(thing);
+		var tween = new com_gskinner_motion_GTween(thing,0.5,{ x : Math.random() * 600, y : Math.random() * 600},{ delay : Math.random(), onComplete : $bind(this,this.onComplete)});
+	}
+	var fps = new openfl_display_FPS();
+	fps.set_defaultTextFormat(new openfl_text_TextFormat("_sans",12,16777215));
+	this.addChild(fps);
 };
-$hxClasses["GTweenColorAdjust"] = GTweenColorAdjust;
-GTweenColorAdjust.__name__ = "GTweenColorAdjust";
-GTweenColorAdjust.__super__ = openfl_display_Sprite;
-GTweenColorAdjust.prototype = $extend(openfl_display_Sprite.prototype,{
-	__class__: GTweenColorAdjust
+$hxClasses["GTweenSpeedDemo"] = GTweenSpeedDemo;
+GTweenSpeedDemo.__name__ = "GTweenSpeedDemo";
+GTweenSpeedDemo.__super__ = openfl_display_Sprite;
+GTweenSpeedDemo.prototype = $extend(openfl_display_Sprite.prototype,{
+	onComplete: function(tween) {
+		var targ = js_Boot.__cast(tween.target , openfl_display_Shape);
+		targ.set_x(targ.set_y(300));
+		var tween = new com_gskinner_motion_GTween(targ,0.5,{ x : Math.random() * 600, y : Math.random() * 600},{ delay : Math.random(), onComplete : $bind(this,this.onComplete)});
+	}
+	,__class__: GTweenSpeedDemo
 });
 var DocumentClass = function(current) {
 	current.addChild(this);
-	GTweenColorAdjust.call(this);
+	GTweenSpeedDemo.call(this);
 	this.dispatchEvent(new openfl_events_Event("addedToStage",false,false));
 };
 $hxClasses["DocumentClass"] = DocumentClass;
 DocumentClass.__name__ = "DocumentClass";
-DocumentClass.__super__ = GTweenColorAdjust;
-DocumentClass.prototype = $extend(GTweenColorAdjust.prototype,{
+DocumentClass.__super__ = GTweenSpeedDemo;
+DocumentClass.prototype = $extend(GTweenSpeedDemo.prototype,{
 	__class__: DocumentClass
 });
 var EReg = function(r,opt) {
@@ -3576,34 +3576,6 @@ Lambda.count = function(it,pred) {
 		}
 	}
 	return n;
-};
-var ManifestResources = function() { };
-$hxClasses["ManifestResources"] = ManifestResources;
-ManifestResources.__name__ = "ManifestResources";
-ManifestResources.init = function(config) {
-	ManifestResources.preloadLibraries = [];
-	ManifestResources.preloadLibraryNames = [];
-	ManifestResources.rootPath = null;
-	if(config != null && Object.prototype.hasOwnProperty.call(config,"rootPath")) {
-		ManifestResources.rootPath = Reflect.field(config,"rootPath");
-		if(!StringTools.endsWith(ManifestResources.rootPath,"/")) {
-			ManifestResources.rootPath += "/";
-		}
-	}
-	if(ManifestResources.rootPath == null) {
-		ManifestResources.rootPath = "./";
-	}
-	var bundle;
-	var data = "{\"name\":null,\"assets\":\"aoy4:pathy10:bitmap.pngy4:sizei389785y4:typey5:IMAGEy2:idR1y7:preloadtgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
-	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
-	var library = lime_utils_AssetLibrary.fromManifest(manifest);
-	lime_utils_Assets.registerLibrary("default",library);
-	library = lime_utils_Assets.getLibrary("default");
-	if(library != null) {
-		ManifestResources.preloadLibraries.push(library);
-	} else {
-		ManifestResources.preloadLibraryNames.push("default");
-	}
 };
 Math.__name__ = "Math";
 var Reflect = function() { };
@@ -4076,164 +4048,6 @@ Xml.prototype = {
 	}
 	,__class__: Xml
 };
-var com_gskinner_geom_ColorMatrix = {};
-com_gskinner_geom_ColorMatrix._new = function(matrix) {
-	var this1 = [];
-	matrix = com_gskinner_geom_ColorMatrix.fixMatrix(this1,matrix);
-	com_gskinner_geom_ColorMatrix.copyMatrix(this1,matrix.length == com_gskinner_geom_ColorMatrix.LENGTH ? matrix : com_gskinner_geom_ColorMatrix.IDENTITY_MATRIX);
-	return this1;
-};
-com_gskinner_geom_ColorMatrix.reset = function(this1) {
-	var _g = 0;
-	var _g1 = com_gskinner_geom_ColorMatrix.LENGTH;
-	while(_g < _g1) {
-		var i = _g++;
-		this1[i] = com_gskinner_geom_ColorMatrix.IDENTITY_MATRIX[i];
-	}
-};
-com_gskinner_geom_ColorMatrix.adjustColor = function(this1,brightness,contrast,saturation,hue) {
-	com_gskinner_geom_ColorMatrix.adjustHue(this1,hue);
-	com_gskinner_geom_ColorMatrix.adjustContrast(this1,contrast);
-	com_gskinner_geom_ColorMatrix.adjustBrightness(this1,brightness);
-	com_gskinner_geom_ColorMatrix.adjustSaturation(this1,saturation);
-};
-com_gskinner_geom_ColorMatrix.adjustBrightness = function(this1,value) {
-	value = com_gskinner_geom_ColorMatrix.cleanValue(this1,value,255);
-	if(value == 0 || isNaN(value)) {
-		return;
-	}
-	com_gskinner_geom_ColorMatrix.multiplyMatrix(this1,[1,0,0,0,value,0,1,0,0,value,0,0,1,0,value,0,0,0,1,0,0,0,0,0,1]);
-};
-com_gskinner_geom_ColorMatrix.adjustContrast = function(this1,value) {
-	value = com_gskinner_geom_ColorMatrix.cleanValue(this1,value,100);
-	if(value == 0 || isNaN(value)) {
-		return;
-	}
-	var x;
-	if(value < 0) {
-		x = 127 + value / 100 * 127;
-	} else {
-		x = value % 1;
-		if(x == 0) {
-			x = com_gskinner_geom_ColorMatrix.DELTA_INDEX[value | 0];
-		} else {
-			x = com_gskinner_geom_ColorMatrix.DELTA_INDEX[value | 0] * (1 - x) + com_gskinner_geom_ColorMatrix.DELTA_INDEX[(value | 0) + 1] * x;
-		}
-		x = x * 127 + 127;
-	}
-	com_gskinner_geom_ColorMatrix.multiplyMatrix(this1,[x / 127,0,0,0,0.5 * (127 - x),0,x / 127,0,0,0.5 * (127 - x),0,0,x / 127,0,0.5 * (127 - x),0,0,0,1,0,0,0,0,0,1]);
-};
-com_gskinner_geom_ColorMatrix.adjustSaturation = function(this1,value) {
-	value = com_gskinner_geom_ColorMatrix.cleanValue(this1,value,100);
-	if(value == 0 || isNaN(value)) {
-		return;
-	}
-	var x = 1 + (value > 0 ? 3 * value / 100 : value / 100);
-	var lumR = 0.3086;
-	var lumG = 0.6094;
-	var lumB = 0.0820;
-	com_gskinner_geom_ColorMatrix.multiplyMatrix(this1,[lumR * (1 - x) + x,lumG * (1 - x),lumB * (1 - x),0,0,lumR * (1 - x),lumG * (1 - x) + x,lumB * (1 - x),0,0,lumR * (1 - x),lumG * (1 - x),lumB * (1 - x) + x,0,0,0,0,0,1,0,0,0,0,0,1]);
-};
-com_gskinner_geom_ColorMatrix.adjustHue = function(this1,value) {
-	value = com_gskinner_geom_ColorMatrix.cleanValue(this1,value,180) / 180 * Math.PI;
-	if(value == 0 || isNaN(value)) {
-		return;
-	}
-	var cosVal = Math.cos(value);
-	var sinVal = Math.sin(value);
-	var lumR = 0.213;
-	var lumG = 0.715;
-	var lumB = 0.072;
-	com_gskinner_geom_ColorMatrix.multiplyMatrix(this1,[lumR + cosVal * (1 - lumR) + sinVal * -lumR,lumG + cosVal * -lumG + sinVal * -lumG,lumB + cosVal * -lumB + sinVal * (1 - lumB),0,0,lumR + cosVal * -lumR + sinVal * 0.143,lumG + cosVal * (1 - lumG) + sinVal * 0.140,lumB + cosVal * -lumB + sinVal * -0.283,0,0,lumR + cosVal * -lumR + sinVal * -(1 - lumR),lumG + cosVal * -lumG + sinVal * lumG,lumB + cosVal * (1 - lumB) + sinVal * lumB,0,0,0,0,0,1,0,0,0,0,0,1]);
-};
-com_gskinner_geom_ColorMatrix.concat = function(this1,matrix) {
-	matrix = com_gskinner_geom_ColorMatrix.fixMatrix(this1,matrix);
-	if(matrix.length != com_gskinner_geom_ColorMatrix.LENGTH) {
-		return;
-	}
-	com_gskinner_geom_ColorMatrix.multiplyMatrix(this1,matrix);
-};
-com_gskinner_geom_ColorMatrix.clone = function(this1) {
-	return com_gskinner_geom_ColorMatrix._new(this1);
-};
-com_gskinner_geom_ColorMatrix.toString = function(this1) {
-	return "ColorMatrix [ " + this1.join(" , ") + " ]";
-};
-com_gskinner_geom_ColorMatrix.toArray = function(this1) {
-	return this1.slice(0,20);
-};
-com_gskinner_geom_ColorMatrix.copyMatrix = function(this1,matrix) {
-	var l = com_gskinner_geom_ColorMatrix.LENGTH;
-	var _g = 0;
-	var _g1 = l;
-	while(_g < _g1) {
-		var i = _g++;
-		this1[i] = matrix[i];
-	}
-};
-com_gskinner_geom_ColorMatrix.multiplyMatrix = function(this1,matrix) {
-	var col = [];
-	var _g = 0;
-	while(_g < 5) {
-		var i = _g++;
-		col[0] = this1[i * 5];
-		col[1] = this1[1 + i * 5];
-		col[2] = this1[2 + i * 5];
-		col[3] = this1[3 + i * 5];
-		col[4] = this1[4 + i * 5];
-		var val = 0;
-		val += matrix[0] * col[0];
-		val += matrix[5] * col[1];
-		val += matrix[10] * col[2];
-		val += matrix[15] * col[3];
-		val += matrix[20] * col[4];
-		this1[i * 5] = val;
-		var val1 = 0;
-		val1 += matrix[1] * col[0];
-		val1 += matrix[6] * col[1];
-		val1 += matrix[11] * col[2];
-		val1 += matrix[16] * col[3];
-		val1 += matrix[21] * col[4];
-		this1[1 + i * 5] = val1;
-		var val2 = 0;
-		val2 += matrix[2] * col[0];
-		val2 += matrix[7] * col[1];
-		val2 += matrix[12] * col[2];
-		val2 += matrix[17] * col[3];
-		val2 += matrix[22] * col[4];
-		this1[2 + i * 5] = val2;
-		var val3 = 0;
-		val3 += matrix[3] * col[0];
-		val3 += matrix[8] * col[1];
-		val3 += matrix[13] * col[2];
-		val3 += matrix[18] * col[3];
-		val3 += matrix[23] * col[4];
-		this1[3 + i * 5] = val3;
-		var val4 = 0;
-		val4 += matrix[4] * col[0];
-		val4 += matrix[9] * col[1];
-		val4 += matrix[14] * col[2];
-		val4 += matrix[19] * col[3];
-		val4 += matrix[24] * col[4];
-		this1[4 + i * 5] = val4;
-	}
-};
-com_gskinner_geom_ColorMatrix.cleanValue = function(this1,value,limit) {
-	return Math.min(limit,Math.max(-limit,value));
-};
-com_gskinner_geom_ColorMatrix.fixMatrix = function(this1,matrix) {
-	if(matrix == null) {
-		return com_gskinner_geom_ColorMatrix.IDENTITY_MATRIX;
-	}
-	if(matrix.length < com_gskinner_geom_ColorMatrix.LENGTH) {
-		matrix = matrix.slice(0,matrix.length).concat(com_gskinner_geom_ColorMatrix.IDENTITY_MATRIX.slice(matrix.length,com_gskinner_geom_ColorMatrix.LENGTH));
-	} else if(matrix.length > com_gskinner_geom_ColorMatrix.LENGTH) {
-		matrix = matrix.slice(0,com_gskinner_geom_ColorMatrix.LENGTH);
-	} else {
-		matrix = matrix.slice(0);
-	}
-	return matrix;
-};
 var com_gskinner_motion_GTween = function(target,duration,values,props,pluginData) {
 	if(duration == null) {
 		duration = 1;
@@ -4658,246 +4472,6 @@ com_gskinner_motion_plugins_IGTweenPlugin.__name__ = "com.gskinner.motion.plugin
 com_gskinner_motion_plugins_IGTweenPlugin.__isInterface__ = true;
 com_gskinner_motion_plugins_IGTweenPlugin.prototype = {
 	__class__: com_gskinner_motion_plugins_IGTweenPlugin
-};
-var com_gskinner_motion_GTweener = function() {
-};
-$hxClasses["com.gskinner.motion.GTweener"] = com_gskinner_motion_GTweener;
-com_gskinner_motion_GTweener.__name__ = "com.gskinner.motion.GTweener";
-com_gskinner_motion_GTweener.__interfaces__ = [com_gskinner_motion_plugins_IGTweenPlugin];
-com_gskinner_motion_GTweener.to = function(target,duration,values,props,pluginData) {
-	if(duration == null) {
-		duration = 1;
-	}
-	var tween = new com_gskinner_motion_GTween(target,duration,values,props,pluginData);
-	com_gskinner_motion_GTweener.add(tween);
-	return tween;
-};
-com_gskinner_motion_GTweener.from = function(target,duration,values,props,pluginData) {
-	if(duration == null) {
-		duration = 1;
-	}
-	var tween = com_gskinner_motion_GTweener.to(target,duration,values,props,pluginData);
-	tween.swapValues();
-	return tween;
-};
-com_gskinner_motion_GTweener.add = function(tween) {
-	var target = tween.target;
-	var list = com_gskinner_motion_GTweener.tweens.h[target.__id__];
-	if(list != null) {
-		com_gskinner_motion_GTweener.clearValues(target,tween.getValues());
-	} else {
-		list = [];
-		com_gskinner_motion_GTweener.tweens.set(target,list);
-	}
-	list.push(tween);
-	tween.pluginData.GTweener = true;
-};
-com_gskinner_motion_GTweener.getTween = function(target,name) {
-	var list = com_gskinner_motion_GTweener.tweens.h[target.__id__];
-	if(list == null) {
-		return null;
-	}
-	var l = list.length;
-	var _g = 0;
-	var _g1 = l;
-	while(_g < _g1) {
-		var i = _g++;
-		var tween = list[i];
-		var f = tween.getValue(name);
-		if(!isNaN(f)) {
-			return tween;
-		}
-	}
-	return null;
-};
-com_gskinner_motion_GTweener.getTweens = function(target) {
-	var tweens = com_gskinner_motion_GTweener.tweens.h[target.__id__];
-	if(tweens != null) {
-		return tweens;
-	}
-	return [];
-};
-com_gskinner_motion_GTweener.pauseTweens = function(target,paused) {
-	if(paused == null) {
-		paused = true;
-	}
-	var list = com_gskinner_motion_GTweener.tweens.h[target.__id__];
-	if(list == null) {
-		return;
-	}
-	var l = list.length;
-	var _g = 0;
-	var _g1 = l;
-	while(_g < _g1) {
-		var i = _g++;
-		list[i].set_paused(paused);
-	}
-};
-com_gskinner_motion_GTweener.resumeTweens = function(target) {
-	com_gskinner_motion_GTweener.pauseTweens(target,false);
-};
-com_gskinner_motion_GTweener.remove = function(tween) {
-	Reflect.deleteField(tween.pluginData,"GTweener");
-	var list = com_gskinner_motion_GTweener.tweens.h[tween.target.__id__];
-	if(list == null) {
-		return;
-	}
-	var l = list.length;
-	var _g = 0;
-	var _g1 = l;
-	while(_g < _g1) {
-		var i = _g++;
-		if(list[i] == tween) {
-			list.splice(i,1);
-			return;
-		}
-	}
-};
-com_gskinner_motion_GTweener.removeTweens = function(target) {
-	com_gskinner_motion_GTweener.pauseTweens(target);
-	var list = com_gskinner_motion_GTweener.tweens.h[target.__id__];
-	if(list == null) {
-		return;
-	}
-	var l = list.length;
-	var _g = 0;
-	var _g1 = l;
-	while(_g < _g1) {
-		var i = _g++;
-		Reflect.deleteField(list[i].pluginData,"GTweener");
-	}
-	com_gskinner_motion_GTweener.tweens.remove(target);
-};
-com_gskinner_motion_GTweener.clearValues = function(target,values) {
-	var _g = 0;
-	var _g1 = Reflect.fields(values);
-	while(_g < _g1.length) {
-		var n = _g1[_g];
-		++_g;
-		var tween = com_gskinner_motion_GTweener.getTween(target,n);
-		if(tween != null) {
-			tween.deleteValue(n);
-		}
-	}
-};
-com_gskinner_motion_GTweener.prototype = {
-	init: function(tween,name,value) {
-		return value;
-	}
-	,tween: function(tween,name,value,initValue,rangeValue,ratio,end) {
-		if(end && tween.pluginData.GTweener) {
-			com_gskinner_motion_GTweener.remove(tween);
-		}
-		return value;
-	}
-	,__class__: com_gskinner_motion_GTweener
-};
-var com_gskinner_motion_plugins_ColorAdjustPlugin = function() {
-};
-$hxClasses["com.gskinner.motion.plugins.ColorAdjustPlugin"] = com_gskinner_motion_plugins_ColorAdjustPlugin;
-com_gskinner_motion_plugins_ColorAdjustPlugin.__name__ = "com.gskinner.motion.plugins.ColorAdjustPlugin";
-com_gskinner_motion_plugins_ColorAdjustPlugin.__interfaces__ = [com_gskinner_motion_plugins_IGTweenPlugin];
-com_gskinner_motion_plugins_ColorAdjustPlugin.install = function() {
-	if(com_gskinner_motion_plugins_ColorAdjustPlugin.instance != null) {
-		return;
-	}
-	com_gskinner_motion_plugins_ColorAdjustPlugin.instance = new com_gskinner_motion_plugins_ColorAdjustPlugin();
-	com_gskinner_motion_GTween.installPlugin(com_gskinner_motion_plugins_ColorAdjustPlugin.instance,com_gskinner_motion_plugins_ColorAdjustPlugin.tweenProperties);
-};
-com_gskinner_motion_plugins_ColorAdjustPlugin.prototype = {
-	init: function(tween,name,value) {
-		if(!(tween.pluginData.ColorAdjustEnabled == null && com_gskinner_motion_plugins_ColorAdjustPlugin.enabled || tween.pluginData.ColorAdjustEnabled)) {
-			return value;
-		}
-		if(tween.pluginData.ColorAdjustData == null) {
-			var tweenTarget = js_Boot.__cast(tween.target , openfl_display_DisplayObject);
-			var f = tweenTarget.get_filters();
-			var _g = 0;
-			var _g1 = f.length;
-			while(_g < _g1) {
-				var i = _g++;
-				if(((f[i]) instanceof openfl_filters_ColorMatrixFilter)) {
-					var cmF = f[i];
-					var o = { index : i, ratio : NaN};
-					o.initMatrix = cmF.get_matrix();
-					o.matrix = this.getMatrix(tween);
-					tween.pluginData.ColorAdjustData = o;
-				}
-			}
-		}
-		return tween.getValue(name) - 1;
-	}
-	,tween: function(tween,name,value,initValue,rangeValue,ratio,end) {
-		if(!(tween.pluginData.ColorAdjustEnabled == null && com_gskinner_motion_plugins_ColorAdjustPlugin.enabled || tween.pluginData.ColorAdjustEnabled)) {
-			return value;
-		}
-		var data = tween.pluginData.ColorAdjustData;
-		if(data == null) {
-			data = this.initTarget(tween);
-		}
-		if(ratio == data.ratio) {
-			return NaN;
-		}
-		data.ratio = ratio;
-		ratio = value - initValue;
-		var tweenTarget = js_Boot.__cast(tween.target , openfl_display_DisplayObject);
-		var f = tweenTarget.get_filters();
-		var value1 = f[data.index | 0];
-		var cmF = ((value1) instanceof openfl_filters_ColorMatrixFilter) ? value1 : null;
-		if(cmF == null) {
-			return value;
-		}
-		var initMatrix = data.initMatrix;
-		var targMatrix = data.matrix;
-		if(rangeValue < 0) {
-			initMatrix = targMatrix;
-			targMatrix = data.initMatrix;
-			ratio *= -1;
-		}
-		var matrix = cmF.get_matrix();
-		var l = matrix.length;
-		var _g = 0;
-		var _g1 = l;
-		while(_g < _g1) {
-			var i = _g++;
-			matrix[i] = initMatrix[i] + (targMatrix[i] - initMatrix[i]) * ratio;
-		}
-		cmF.set_matrix(matrix);
-		tweenTarget.set_filters(f);
-		if(end) {
-			Reflect.deleteField(tween.pluginData,"ColorAdjustData");
-		}
-		return NaN;
-	}
-	,getMatrix: function(tween) {
-		var brightness = this.fixValue(tween.getValue("brightness"));
-		var contrast = this.fixValue(tween.getValue("contrast"));
-		var saturation = this.fixValue(tween.getValue("saturation"));
-		var hue = this.fixValue(tween.getValue("hue"));
-		var mtx = com_gskinner_geom_ColorMatrix._new();
-		com_gskinner_geom_ColorMatrix.adjustColor(mtx,brightness,contrast,saturation,hue);
-		return mtx;
-	}
-	,initTarget: function(tween) {
-		var tweenTarget = js_Boot.__cast(tween.target , openfl_display_DisplayObject);
-		var f = tweenTarget.get_filters();
-		var mtx = com_gskinner_geom_ColorMatrix._new();
-		f.push(new openfl_filters_ColorMatrixFilter(mtx));
-		tweenTarget.set_filters(f);
-		var o = { index : f.length - 1, ratio : NaN};
-		o.initMatrix = mtx;
-		o.matrix = this.getMatrix(tween);
-		tween.pluginData.ColorAdjustData = o;
-		return o;
-	}
-	,fixValue: function(value) {
-		if(isNaN(value)) {
-			return 0;
-		} else {
-			return value;
-		}
-	}
-	,__class__: com_gskinner_motion_plugins_ColorAdjustPlugin
 };
 var haxe_StackItem = $hxEnums["haxe.StackItem"] = { __ename__:"haxe.StackItem",__constructs__:null
 	,CFunction: {_hx_name:"CFunction",_hx_index:0,__enum__:"haxe.StackItem",toString:$estr}
@@ -25494,7 +25068,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 286691;
+	this.version = 611003;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -27584,58 +27158,8 @@ lime_utils_Preloader.prototype = {
 	,update: function(loaded,total) {
 	}
 	,updateProgress: function() {
-		var _gthis = this;
 		if(!this.simulateProgress) {
 			this.onProgress.dispatch(this.bytesLoaded,this.bytesTotal);
-		}
-		if(this.loadedLibraries == this.libraries.length && !this.initLibraryNames) {
-			this.initLibraryNames = true;
-			var _g = 0;
-			var _g1 = this.libraryNames;
-			while(_g < _g1.length) {
-				var name = [_g1[_g]];
-				++_g;
-				lime_utils_Log.verbose("Preloading asset library: " + name[0],{ fileName : "lime/utils/Preloader.hx", lineNumber : 239, className : "lime.utils.Preloader", methodName : "updateProgress"});
-				lime_utils_Assets.loadLibrary(name[0]).onProgress((function(name) {
-					return function(loaded,total) {
-						if(total > 0) {
-							if(!Object.prototype.hasOwnProperty.call(_gthis.bytesTotalCache.h,name[0])) {
-								_gthis.bytesTotalCache.h[name[0]] = total;
-								_gthis.bytesTotal += total - 200;
-							}
-							if(loaded > total) {
-								loaded = total;
-							}
-							if(!Object.prototype.hasOwnProperty.call(_gthis.bytesLoadedCache2.h,name[0])) {
-								_gthis.bytesLoaded += loaded;
-							} else {
-								_gthis.bytesLoaded += loaded - _gthis.bytesLoadedCache2.h[name[0]];
-							}
-							_gthis.bytesLoadedCache2.h[name[0]] = loaded;
-							if(!_gthis.simulateProgress) {
-								_gthis.onProgress.dispatch(_gthis.bytesLoaded,_gthis.bytesTotal);
-							}
-						}
-					};
-				})(name)).onComplete((function(name) {
-					return function(library) {
-						var total = 200;
-						if(Object.prototype.hasOwnProperty.call(_gthis.bytesTotalCache.h,name[0])) {
-							total = _gthis.bytesTotalCache.h[name[0]];
-						}
-						if(!Object.prototype.hasOwnProperty.call(_gthis.bytesLoadedCache2.h,name[0])) {
-							_gthis.bytesLoaded += total;
-						} else {
-							_gthis.bytesLoaded += total - _gthis.bytesLoadedCache2.h[name[0]];
-						}
-						_gthis.loadedAssetLibrary(name[0]);
-					};
-				})(name)).onError((function() {
-					return function(e) {
-						lime_utils_Log.error(e,{ fileName : "lime/utils/Preloader.hx", lineNumber : 293, className : "lime.utils.Preloader", methodName : "updateProgress"});
-					};
-				})());
-			}
 		}
 		if(!this.simulateProgress && this.loadedLibraries == this.libraries.length + this.libraryNames.length) {
 			if(!this.preloadComplete) {
@@ -32585,6 +32109,1896 @@ openfl_display_DisplayObjectShader.__name__ = "openfl.display.DisplayObjectShade
 openfl_display_DisplayObjectShader.__super__ = openfl_display_Shader;
 openfl_display_DisplayObjectShader.prototype = $extend(openfl_display_Shader.prototype,{
 	__class__: openfl_display_DisplayObjectShader
+});
+var openfl_text_TextField = function() {
+	this.__forceCachedBitmapUpdate = false;
+	this.__renderedOnCanvasWhileOnDOM = false;
+	this.__mouseScrollVCounter = 0;
+	this.condenseWhite = false;
+	openfl_display_InteractiveObject.call(this);
+	this.__wordSelection = false;
+	this.__drawableType = 7;
+	this.__caretIndex = -1;
+	this.__selectionIndex = -1;
+	this.__displayAsPassword = false;
+	this.__graphics = new openfl_display_Graphics(this);
+	this.__textEngine = new openfl_text__$internal_TextEngine(this);
+	this.__layoutDirty = true;
+	this.__offsetX = 0;
+	this.__offsetY = 0;
+	this.__mouseWheelEnabled = true;
+	this.__text = "";
+	if(openfl_text_TextField.__defaultTextFormat == null) {
+		openfl_text_TextField.__defaultTextFormat = new openfl_text_TextFormat("Times New Roman",12,0,false,false,false,"","",3,0,0,0,0);
+		openfl_text_TextField.__defaultTextFormat.blockIndent = 0;
+		openfl_text_TextField.__defaultTextFormat.bullet = false;
+		openfl_text_TextField.__defaultTextFormat.letterSpacing = 0;
+		openfl_text_TextField.__defaultTextFormat.kerning = false;
+	}
+	this.__textFormat = openfl_text_TextField.__defaultTextFormat.clone();
+	this.__textEngine.textFormatRanges.push(new openfl_text__$internal_TextFormatRange(this.__textFormat,0,0));
+	this.addEventListener("mouseDown",$bind(this,this.this_onMouseDown));
+	this.addEventListener("focusIn",$bind(this,this.this_onFocusIn));
+	this.addEventListener("focusOut",$bind(this,this.this_onFocusOut));
+	this.addEventListener("keyDown",$bind(this,this.this_onKeyDown));
+	this.addEventListener("mouseWheel",$bind(this,this.this_onMouseWheel));
+};
+$hxClasses["openfl.text.TextField"] = openfl_text_TextField;
+openfl_text_TextField.__name__ = "openfl.text.TextField";
+openfl_text_TextField.__super__ = openfl_display_InteractiveObject;
+openfl_text_TextField.prototype = $extend(openfl_display_InteractiveObject.prototype,{
+	appendText: function(text) {
+		if(text == null || text == "") {
+			return;
+		}
+		this.__dirty = true;
+		this.__layoutDirty = true;
+		if(!this.__renderDirty) {
+			this.__renderDirty = true;
+			this.__setParentRenderDirty();
+		}
+		this.__updateText(this.__text + text);
+		this.__textEngine.textFormatRanges.get(this.__textEngine.textFormatRanges.get_length() - 1).end = this.__text.length;
+		this.__selectionIndex = this.__caretIndex = this.__text.length;
+	}
+	,getCharBoundaries: function(charIndex) {
+		if(charIndex < 0 || charIndex > this.__text.length - 1) {
+			return null;
+		}
+		var rect = new openfl_geom_Rectangle();
+		if(this.__getCharBoundaries(charIndex,rect)) {
+			return rect;
+		} else {
+			return null;
+		}
+	}
+	,getCharIndexAtPoint: function(x,y) {
+		if(x <= 2 || x > this.get_width() + 4 || y <= 0 || y > this.get_height() + 4) {
+			return -1;
+		}
+		this.__updateLayout();
+		x += this.get_scrollH();
+		var _g = 0;
+		var _g1 = this.get_scrollV() - 1;
+		while(_g < _g1) {
+			var i = _g++;
+			y += this.__textEngine.lineHeights.get(i);
+		}
+		var group = this.__textEngine.layoutGroups.iterator();
+		while(group.hasNext()) {
+			var group1 = group.next();
+			if(y >= group1.offsetY && y <= group1.offsetY + group1.height) {
+				if(x >= group1.offsetX && x <= group1.offsetX + group1.width) {
+					var advance = 0.0;
+					var _g = 0;
+					var _g1 = group1.positions.length;
+					while(_g < _g1) {
+						var i = _g++;
+						advance += group1.positions[i];
+						if(x <= group1.offsetX + advance) {
+							return group1.startIndex + i;
+						}
+					}
+					return group1.endIndex;
+				}
+			}
+		}
+		return -1;
+	}
+	,getFirstCharInParagraph: function(charIndex) {
+		if(charIndex < 0 || charIndex > this.get_text().length) {
+			return -1;
+		}
+		if(this.__textEngine.lineBreaks.get_length() == 0) {
+			return 0;
+		}
+		var _g = 0;
+		var _g1 = this.__textEngine.lineBreaks.get_length();
+		while(_g < _g1) {
+			var i = _g++;
+			if(charIndex <= this.__textEngine.lineBreaks.get(i)) {
+				if(i == 0) {
+					return 0;
+				} else {
+					return this.__textEngine.lineBreaks.get(i - 1) + 1;
+				}
+			}
+		}
+		return this.__textEngine.lineBreaks.get(this.__textEngine.lineBreaks.get_length() - 1) + 1;
+	}
+	,getLineIndexAtPoint: function(x,y) {
+		this.__updateLayout();
+		if(x <= 2 || x > this.get_width() + 4 || y <= 0 || y > this.get_height() + 4) {
+			return -1;
+		}
+		var _g = 0;
+		var _g1 = this.get_scrollV() - 1;
+		while(_g < _g1) {
+			var i = _g++;
+			y += this.__textEngine.lineHeights.get(i);
+		}
+		var group = this.__textEngine.layoutGroups.iterator();
+		while(group.hasNext()) {
+			var group1 = group.next();
+			if(y >= group1.offsetY && y <= group1.offsetY + group1.height) {
+				return group1.lineIndex;
+			}
+		}
+		return -1;
+	}
+	,getLineIndexOfChar: function(charIndex) {
+		if(charIndex < 0 || charIndex > this.__text.length) {
+			return -1;
+		}
+		this.__updateLayout();
+		var group = this.__textEngine.layoutGroups.iterator();
+		while(group.hasNext()) {
+			var group1 = group.next();
+			if(group1.startIndex <= charIndex && group1.endIndex >= charIndex) {
+				return group1.lineIndex;
+			}
+		}
+		return -1;
+	}
+	,getLineLength: function(lineIndex) {
+		this.__updateLayout();
+		if(lineIndex < 0 || lineIndex > this.__textEngine.numLines - 1) {
+			return 0;
+		}
+		var startIndex = -1;
+		var endIndex = -1;
+		var group = this.__textEngine.layoutGroups.iterator();
+		while(group.hasNext()) {
+			var group1 = group.next();
+			if(group1.lineIndex == lineIndex) {
+				if(startIndex == -1) {
+					startIndex = group1.startIndex;
+				}
+			} else if(group1.lineIndex == lineIndex + 1) {
+				endIndex = group1.startIndex;
+				break;
+			}
+		}
+		if(endIndex == -1) {
+			endIndex = this.__text.length;
+		}
+		return endIndex - startIndex;
+	}
+	,getLineMetrics: function(lineIndex) {
+		this.__updateLayout();
+		var ascender = this.__textEngine.lineAscents.get(lineIndex);
+		var descender = this.__textEngine.lineDescents.get(lineIndex);
+		var leading = this.__textEngine.lineLeadings.get(lineIndex);
+		var lineHeight = this.__textEngine.lineHeights.get(lineIndex);
+		var lineWidth = this.__textEngine.lineWidths.get(lineIndex);
+		var margin;
+		switch(this.__textFormat.align) {
+		case 0:
+			margin = (this.__textEngine.width - lineWidth) / 2;
+			break;
+		case 1:case 4:
+			margin = this.__textEngine.width - lineWidth - 2;
+			break;
+		case 2:case 3:case 5:
+			margin = 2;
+			break;
+		}
+		return new openfl_text_TextLineMetrics(margin,lineWidth,lineHeight,ascender,descender,leading);
+	}
+	,getLineOffset: function(lineIndex) {
+		this.__updateLayout();
+		if(lineIndex < 0 || lineIndex > this.__textEngine.numLines - 1) {
+			return -1;
+		}
+		var group = this.__textEngine.layoutGroups.iterator();
+		while(group.hasNext()) {
+			var group1 = group.next();
+			if(group1.lineIndex == lineIndex) {
+				return group1.startIndex;
+			}
+		}
+		return 0;
+	}
+	,getLineText: function(lineIndex) {
+		this.__updateLayout();
+		if(lineIndex < 0 || lineIndex > this.__textEngine.numLines - 1) {
+			return null;
+		}
+		var startIndex = -1;
+		var endIndex = -1;
+		var group = this.__textEngine.layoutGroups.iterator();
+		while(group.hasNext()) {
+			var group1 = group.next();
+			if(group1.lineIndex == lineIndex) {
+				if(startIndex == -1) {
+					startIndex = group1.startIndex;
+				}
+			} else if(group1.lineIndex == lineIndex + 1) {
+				endIndex = group1.startIndex;
+				break;
+			}
+		}
+		if(endIndex == -1) {
+			endIndex = this.__text.length;
+		}
+		return this.__textEngine.text.substring(startIndex,endIndex);
+	}
+	,getParagraphLength: function(charIndex) {
+		if(charIndex < 0 || charIndex > this.get_text().length) {
+			return -1;
+		}
+		var startIndex = this.getFirstCharInParagraph(charIndex);
+		if(charIndex >= this.get_text().length) {
+			return this.get_text().length - startIndex + 1;
+		}
+		var endIndex = this.__textEngine.getLineBreakIndex(charIndex) + 1;
+		if(endIndex == 0) {
+			endIndex = this.__text.length;
+		}
+		return endIndex - startIndex;
+	}
+	,getTextFormat: function(beginIndex,endIndex) {
+		if(endIndex == null) {
+			endIndex = -1;
+		}
+		if(beginIndex == null) {
+			beginIndex = -1;
+		}
+		var format = null;
+		if(beginIndex >= this.get_text().length || beginIndex < -1 || endIndex > this.get_text().length || endIndex < -1) {
+			throw new openfl_errors_RangeError("The supplied index is out of bounds");
+		}
+		if(beginIndex == -1) {
+			beginIndex = 0;
+		}
+		if(endIndex == -1) {
+			endIndex = this.get_text().length;
+		}
+		if(beginIndex >= endIndex) {
+			return new openfl_text_TextFormat();
+		}
+		var group = this.__textEngine.textFormatRanges.iterator();
+		while(group.hasNext()) {
+			var group1 = group.next();
+			if(group1.start <= beginIndex && group1.end > beginIndex || group1.start < endIndex && group1.end >= endIndex) {
+				if(format == null) {
+					format = group1.format.clone();
+				} else {
+					if(group1.format.font != format.font) {
+						format.font = null;
+					}
+					if(group1.format.size != format.size) {
+						format.size = null;
+					}
+					if(group1.format.color != format.color) {
+						format.color = null;
+					}
+					if(group1.format.bold != format.bold) {
+						format.bold = null;
+					}
+					if(group1.format.italic != format.italic) {
+						format.italic = null;
+					}
+					if(group1.format.underline != format.underline) {
+						format.underline = null;
+					}
+					if(group1.format.url != format.url) {
+						format.url = null;
+					}
+					if(group1.format.target != format.target) {
+						format.target = null;
+					}
+					if(group1.format.align != format.align) {
+						format.align = null;
+					}
+					if(group1.format.leftMargin != format.leftMargin) {
+						format.leftMargin = null;
+					}
+					if(group1.format.rightMargin != format.rightMargin) {
+						format.rightMargin = null;
+					}
+					if(group1.format.indent != format.indent) {
+						format.indent = null;
+					}
+					if(group1.format.leading != format.leading) {
+						format.leading = null;
+					}
+					if(group1.format.blockIndent != format.blockIndent) {
+						format.blockIndent = null;
+					}
+					if(group1.format.bullet != format.bullet) {
+						format.bullet = null;
+					}
+					if(group1.format.kerning != format.kerning) {
+						format.kerning = null;
+					}
+					if(group1.format.letterSpacing != format.letterSpacing) {
+						format.letterSpacing = null;
+					}
+					if(group1.format.tabStops != format.tabStops) {
+						format.tabStops = null;
+					}
+				}
+			}
+		}
+		if(format == null) {
+			format = new openfl_text_TextFormat();
+		}
+		return format;
+	}
+	,replaceSelectedText: function(value) {
+		this.__replaceSelectedText(value,false);
+	}
+	,replaceText: function(beginIndex,endIndex,newText) {
+		this.__replaceText(beginIndex,endIndex,newText,false);
+	}
+	,setSelection: function(beginIndex,endIndex) {
+		this.__selectionIndex = beginIndex;
+		this.__caretIndex = endIndex;
+		this.__updateScrollV();
+		this.__updateScrollH();
+		if(this.stage != null && this.stage.get_focus() == this) {
+			this.__stopCursorTimer();
+			this.__startCursorTimer();
+		}
+	}
+	,setTextFormat: function(format,beginIndex,endIndex) {
+		if(endIndex == null) {
+			endIndex = -1;
+		}
+		if(beginIndex == null) {
+			beginIndex = -1;
+		}
+		var max = this.get_text().length;
+		var range;
+		if(beginIndex == -1) {
+			if(endIndex == -1) {
+				endIndex = max;
+			}
+			beginIndex = 0;
+		} else if(endIndex == -1) {
+			endIndex = beginIndex + 1;
+		}
+		if(beginIndex == endIndex) {
+			return;
+		}
+		if(beginIndex < 0 || endIndex <= 0 || endIndex < beginIndex || beginIndex >= max || endIndex > max) {
+			throw new openfl_errors_RangeError();
+		}
+		if(beginIndex == 0 && endIndex == max) {
+			this.__textEngine.textFormatRanges.set_length(1);
+			range = this.__textEngine.textFormatRanges.get(0);
+			range.start = 0;
+			range.end = max;
+			range.format.__merge(format);
+		} else {
+			var index = 0;
+			var newRange;
+			while(index < this.__textEngine.textFormatRanges.get_length()) {
+				range = this.__textEngine.textFormatRanges.get(index);
+				if(range.end <= beginIndex) {
+					++index;
+				} else if(range.start >= endIndex) {
+					break;
+				} else if(range.start <= beginIndex && range.end >= endIndex) {
+					if(range.start == beginIndex && range.end == endIndex) {
+						range.format = range.format.clone();
+						range.format.__merge(format);
+						break;
+					} else if(range.start == beginIndex) {
+						newRange = new openfl_text__$internal_TextFormatRange(range.format.clone(),beginIndex,endIndex);
+						newRange.format.__merge(format);
+						this.__textEngine.textFormatRanges.insertAt(index,newRange);
+						range.start = endIndex;
+						index += 2;
+					} else if(range.end == endIndex) {
+						newRange = new openfl_text__$internal_TextFormatRange(range.format.clone(),beginIndex,endIndex);
+						newRange.format.__merge(format);
+						this.__textEngine.textFormatRanges.insertAt(index + 1,newRange);
+						range.end = beginIndex;
+						break;
+					} else {
+						newRange = new openfl_text__$internal_TextFormatRange(range.format.clone(),beginIndex,endIndex);
+						newRange.format.__merge(format);
+						this.__textEngine.textFormatRanges.insertAt(index + 1,newRange);
+						newRange = new openfl_text__$internal_TextFormatRange(range.format.clone(),endIndex,range.end);
+						this.__textEngine.textFormatRanges.insertAt(index + 2,newRange);
+						range.end = beginIndex;
+						break;
+					}
+				} else if(range.start >= beginIndex && range.end <= endIndex) {
+					if(range.start == beginIndex) {
+						range.format = range.format.clone();
+						range.format.__merge(format);
+						range.end = endIndex;
+					} else {
+						this.__textEngine.textFormatRanges.removeAt(index);
+					}
+				} else if(range.start > beginIndex && range.end > beginIndex) {
+					range.start = endIndex;
+					break;
+				} else if(range.start < beginIndex && range.end <= endIndex) {
+					newRange = new openfl_text__$internal_TextFormatRange(range.format.clone(),beginIndex,endIndex);
+					newRange.format.__merge(format);
+					this.__textEngine.textFormatRanges.insertAt(index + 1,newRange);
+					range.end = beginIndex;
+					index += 2;
+				} else {
+					++index;
+					lime_utils_Log.warn("You found a bug in OpenFL's text code! Please save a copy of your project and create an issue on GitHub so we can fix this.",{ fileName : "openfl/text/TextField.hx", lineNumber : 1610, className : "openfl.text.TextField", methodName : "setTextFormat"});
+				}
+			}
+		}
+		this.__dirty = true;
+		this.__layoutDirty = true;
+		if(!this.__renderDirty) {
+			this.__renderDirty = true;
+			this.__setParentRenderDirty();
+		}
+	}
+	,__setStageReference: function(stage) {
+		this.__stopTextInput();
+		openfl_display_InteractiveObject.prototype.__setStageReference.call(this,stage);
+	}
+	,__allowMouseFocus: function() {
+		return this.mouseEnabled;
+	}
+	,__caretBeginningOfLine: function() {
+		this.__caretIndex = this.getLineOffset(this.getLineIndexOfChar(this.__caretIndex));
+	}
+	,__caretBeginningOfNextLine: function() {
+		var lineIndex = this.getLineIndexOfChar(this.__caretIndex);
+		if(lineIndex < this.__textEngine.numLines - 1) {
+			this.__caretIndex = this.getLineOffset(lineIndex + 1);
+		} else {
+			this.__caretIndex = this.__text.length;
+		}
+	}
+	,__caretBeginningOfPreviousLine: function() {
+		var lineIndex = this.getLineIndexOfChar(this.__caretIndex);
+		if(lineIndex > 0) {
+			var index = this.getLineOffset(this.getLineIndexOfChar(this.__caretIndex));
+			if(this.__caretIndex == index) {
+				this.__caretIndex = this.getLineOffset(lineIndex - 1);
+			} else {
+				this.__caretIndex = index;
+			}
+		}
+	}
+	,__caretEndOfLine: function() {
+		var lineIndex = this.getLineIndexOfChar(this.__caretIndex);
+		if(lineIndex < this.__textEngine.numLines - 1) {
+			this.__caretIndex = this.getLineOffset(lineIndex + 1) - 1;
+		} else {
+			this.__caretIndex = this.__text.length;
+		}
+	}
+	,__caretNextCharacter: function() {
+		if(this.__caretIndex < this.__text.length) {
+			this.__caretIndex++;
+		}
+	}
+	,__caretNextLine: function() {
+		var lineIndex = this.getLineIndexOfChar(this.__caretIndex);
+		if(lineIndex < this.__textEngine.numLines - 1) {
+			this.__caretIndex = this.__getCharIndexOnDifferentLine(this.get_caretIndex(),lineIndex + 1);
+		}
+	}
+	,__caretPreviousCharacter: function() {
+		if(this.__caretIndex > 0) {
+			this.__caretIndex--;
+		}
+	}
+	,__caretPreviousLine: function() {
+		var lineIndex = this.getLineIndexOfChar(this.__caretIndex);
+		if(lineIndex > 0) {
+			this.__caretIndex = this.__getCharIndexOnDifferentLine(this.get_caretIndex(),lineIndex - 1);
+		}
+	}
+	,__disableInput: function() {
+		if(this.__inputEnabled && this.stage != null) {
+			this.stage.window.__backend.setTextInputEnabled(false);
+			this.stage.window.onTextInput.remove($bind(this,this.window_onTextInput));
+			this.stage.window.onKeyDown.remove($bind(this,this.window_onKeyDown));
+			this.__inputEnabled = false;
+			this.__stopCursorTimer();
+		}
+	}
+	,__dispatch: function(event) {
+		if(event.eventPhase == 2 && event.type == "mouseUp") {
+			var event1 = event;
+			var group = this.__getGroup(this.get_mouseX(),this.get_mouseY(),true);
+			if(group != null) {
+				var url = group.format.url;
+				if(url != null && url != "") {
+					if(StringTools.startsWith(url,"event:")) {
+						this.dispatchEvent(new openfl_events_TextEvent("link",true,false,HxOverrides.substr(url,6,null)));
+					} else {
+						openfl_Lib.getURL(new openfl_net_URLRequest(url));
+					}
+				}
+			}
+		}
+		return openfl_display_InteractiveObject.prototype.__dispatch.call(this,event);
+	}
+	,__enableInput: function() {
+		if(this.stage != null) {
+			var bounds = this.getBounds(this.stage);
+			var limeRect = new lime_math_Rectangle(bounds.x,bounds.y,bounds.width,bounds.height);
+			this.stage.window.setTextInputRect(limeRect);
+			this.stage.window.__backend.setTextInputEnabled(true);
+			if(!this.__inputEnabled) {
+				this.stage.window.__backend.setTextInputEnabled(true);
+				if(!this.stage.window.onTextInput.has($bind(this,this.window_onTextInput))) {
+					this.stage.window.onTextInput.add($bind(this,this.window_onTextInput));
+					this.stage.window.onKeyDown.add($bind(this,this.window_onKeyDown));
+				}
+				this.__inputEnabled = true;
+				this.__stopCursorTimer();
+				this.__startCursorTimer();
+			}
+		}
+	}
+	,__getAdvance: function(position) {
+		return position;
+	}
+	,__getBounds: function(rect,matrix) {
+		this.__updateLayout();
+		var bounds = openfl_geom_Rectangle.__pool.get();
+		bounds.copyFrom(this.__textEngine.bounds);
+		bounds.offset(this.__offsetX,this.__offsetY);
+		bounds.__transform(bounds,matrix);
+		rect.__expand(bounds.x,bounds.y,bounds.width,bounds.height);
+		openfl_geom_Rectangle.__pool.release(bounds);
+	}
+	,__getCharBoundaries: function(charIndex,rect) {
+		if(charIndex < 0 || charIndex > this.__text.length - 1) {
+			return false;
+		}
+		this.__updateLayout();
+		var group = this.__textEngine.layoutGroups.iterator();
+		while(group.hasNext()) {
+			var group1 = group.next();
+			if(charIndex >= group1.startIndex && charIndex < group1.endIndex) {
+				try {
+					var x = group1.offsetX;
+					var _g = 0;
+					var _g1 = charIndex - group1.startIndex;
+					while(_g < _g1) {
+						var i = _g++;
+						x += group1.positions[i];
+					}
+					var lastPosition = group1.positions[charIndex - group1.startIndex];
+					rect.setTo(x,group1.offsetY,lastPosition,group1.ascent + group1.descent);
+					return true;
+				} catch( _g2 ) {
+					haxe_NativeStackTrace.lastError = _g2;
+				}
+			}
+		}
+		return false;
+	}
+	,__getCharIndexOnDifferentLine: function(charIndex,lineIndex) {
+		if(charIndex < 0 || charIndex > this.__text.length) {
+			return -1;
+		}
+		if(lineIndex < 0 || lineIndex > this.__textEngine.numLines - 1) {
+			return -1;
+		}
+		var x = null;
+		var y = null;
+		var group = this.__textEngine.layoutGroups.iterator();
+		while(group.hasNext()) {
+			var group1 = group.next();
+			if(charIndex >= group1.startIndex && charIndex <= group1.endIndex) {
+				x = group1.offsetX;
+				var _g = 0;
+				var _g1 = charIndex - group1.startIndex;
+				while(_g < _g1) {
+					var i = _g++;
+					x += group1.positions[i];
+				}
+				if(y != null) {
+					return this.__getPosition(x,y);
+				}
+			}
+			if(group1.lineIndex == lineIndex) {
+				y = group1.offsetY + group1.height / 2;
+				var _g2 = 0;
+				var _g3 = this.get_scrollV() - 1;
+				while(_g2 < _g3) {
+					var i1 = _g2++;
+					y -= this.__textEngine.lineHeights.get(i1);
+				}
+				if(x != null) {
+					return this.__getPosition(x,y);
+				}
+			}
+		}
+		return -1;
+	}
+	,__getCursor: function() {
+		var group = this.__getGroup(this.get_mouseX(),this.get_mouseY(),true);
+		if(group != null && group.format.url != "") {
+			return "button";
+		} else if(this.__textEngine.selectable) {
+			return "ibeam";
+		}
+		return null;
+	}
+	,__getGroup: function(x,y,precise) {
+		if(precise == null) {
+			precise = false;
+		}
+		this.__updateLayout();
+		x += this.get_scrollH();
+		var _g = 0;
+		var _g1 = this.get_scrollV() - 1;
+		while(_g < _g1) {
+			var i = _g++;
+			y += this.__textEngine.lineHeights.get(i);
+		}
+		if(!precise && y > this.__textEngine.textHeight) {
+			y = this.__textEngine.textHeight;
+		}
+		var firstGroup = true;
+		var group;
+		var nextGroup;
+		var _g = 0;
+		var _g1 = this.__textEngine.layoutGroups.get_length();
+		while(_g < _g1) {
+			var i = _g++;
+			group = this.__textEngine.layoutGroups.get(i);
+			if(i < this.__textEngine.layoutGroups.get_length() - 1) {
+				nextGroup = this.__textEngine.layoutGroups.get(i + 1);
+			} else {
+				nextGroup = null;
+			}
+			if(firstGroup) {
+				if(y < group.offsetY) {
+					y = group.offsetY;
+				}
+				if(x < group.offsetX) {
+					x = group.offsetX;
+				}
+				firstGroup = false;
+			}
+			if(y >= group.offsetY && y <= group.offsetY + group.height || !precise && nextGroup == null) {
+				if(x >= group.offsetX && x <= group.offsetX + group.width || !precise && (nextGroup == null || nextGroup.lineIndex != group.lineIndex)) {
+					return group;
+				}
+			}
+		}
+		return null;
+	}
+	,__getPosition: function(x,y) {
+		var group = this.__getGroup(x,y);
+		if(group == null) {
+			return this.__text.length;
+		}
+		var advance = 0.0;
+		var _g = 0;
+		var _g1 = group.positions.length;
+		while(_g < _g1) {
+			var i = _g++;
+			advance += group.positions[i];
+			if(x <= group.offsetX + advance) {
+				if(x <= group.offsetX + (advance - group.positions[i]) + group.positions[i] / 2) {
+					return group.startIndex + i;
+				} else if(group.startIndex + i < group.endIndex) {
+					return group.startIndex + i + 1;
+				} else {
+					return group.endIndex;
+				}
+			}
+		}
+		return group.endIndex;
+	}
+	,__getPositionByIdentifier: function(x,y,line) {
+		var position = this.__getPosition(x,y);
+		var delimiters = line ? "\n" : " .,;:!?()[]{}<>/\\|-=+*&^%$#@~`'\"";
+		var char = this.__text.charAt(position);
+		if(this.__specialSelectionInitialIndex <= position) {
+			while(delimiters.indexOf(char) == -1 && position < this.__text.length) {
+				++position;
+				char = this.__text.charAt(position);
+			}
+		} else {
+			while(delimiters.indexOf(char) == -1 && position > 0) {
+				--position;
+				char = this.__text.charAt(position);
+			}
+			if(position == 0) {
+				return position;
+			}
+			++position;
+		}
+		return position;
+	}
+	,__getOppositeIdentifierBound: function(charIndex,line) {
+		var position = charIndex;
+		var delimiters = line ? "\n" : " .,;:!?()[]{}<>/\\|-=+*&^%$#@~`'\"";
+		var char = this.__text.charAt(position);
+		if(position <= this.__caretIndex) {
+			while(delimiters.indexOf(char) == -1 && position > 0) {
+				--position;
+				char = this.__text.charAt(position);
+			}
+			if(position == 0) {
+				return position;
+			}
+			++position;
+		} else {
+			while(delimiters.indexOf(char) == -1 && position < this.__text.length) {
+				++position;
+				char = this.__text.charAt(position);
+			}
+		}
+		return position;
+	}
+	,__hitTest: function(x,y,shapeFlag,stack,interactiveOnly,hitObject) {
+		if(!hitObject.get_visible() || this.__isMask || interactiveOnly && !this.mouseEnabled) {
+			return false;
+		}
+		if(this.get_mask() != null && !this.get_mask().__hitTestMask(x,y)) {
+			return false;
+		}
+		this.__getRenderTransform();
+		this.__updateLayout();
+		var _this = this.__renderTransform;
+		var norm = _this.a * _this.d - _this.b * _this.c;
+		var px = norm == 0 ? -_this.tx : 1.0 / norm * (_this.c * (_this.ty - y) + _this.d * (x - _this.tx));
+		var _this = this.__renderTransform;
+		var norm = _this.a * _this.d - _this.b * _this.c;
+		var py = norm == 0 ? -_this.ty : 1.0 / norm * (_this.a * (y - _this.ty) + _this.b * (_this.tx - x));
+		if(this.__textEngine.bounds.contains(px,py)) {
+			if(stack != null) {
+				stack.push(hitObject);
+			}
+			return true;
+		}
+		return false;
+	}
+	,__hitTestMask: function(x,y) {
+		this.__getRenderTransform();
+		this.__updateLayout();
+		var _this = this.__renderTransform;
+		var norm = _this.a * _this.d - _this.b * _this.c;
+		var px = norm == 0 ? -_this.tx : 1.0 / norm * (_this.c * (_this.ty - y) + _this.d * (x - _this.tx));
+		var _this = this.__renderTransform;
+		var norm = _this.a * _this.d - _this.b * _this.c;
+		var py = norm == 0 ? -_this.ty : 1.0 / norm * (_this.a * (y - _this.ty) + _this.b * (_this.tx - x));
+		if(this.__textEngine.bounds.contains(px,py)) {
+			return true;
+		}
+		return false;
+	}
+	,__replaceSelectedText: function(value,restrict) {
+		if(restrict == null) {
+			restrict = true;
+		}
+		if(value == null) {
+			value = "";
+		}
+		if(value == "" && this.__selectionIndex == this.__caretIndex) {
+			return;
+		}
+		var startIndex = this.__caretIndex < this.__selectionIndex ? this.__caretIndex : this.__selectionIndex;
+		var endIndex = this.__caretIndex > this.__selectionIndex ? this.__caretIndex : this.__selectionIndex;
+		if(startIndex == endIndex && this.__textEngine.maxChars > 0 && this.__text.length == this.__textEngine.maxChars) {
+			return;
+		}
+		if(startIndex > this.__text.length) {
+			startIndex = this.__text.length;
+		}
+		if(endIndex > this.__text.length) {
+			endIndex = this.__text.length;
+		}
+		if(endIndex < startIndex) {
+			var cache = endIndex;
+			endIndex = startIndex;
+			startIndex = cache;
+		}
+		if(startIndex < 0) {
+			startIndex = 0;
+		}
+		this.__replaceText(startIndex,endIndex,value,restrict);
+	}
+	,__replaceText: function(beginIndex,endIndex,newText,restrict) {
+		if(endIndex < beginIndex || beginIndex < 0 || endIndex > this.__text.length || newText == null) {
+			return;
+		}
+		if(restrict) {
+			newText = this.__textEngine.restrictText(newText);
+			if(this.__textEngine.maxChars > 0) {
+				var removeLength = endIndex - beginIndex;
+				var maxLength = this.__textEngine.maxChars - this.__text.length + removeLength;
+				if(maxLength <= 0) {
+					newText = "";
+				} else if(maxLength < newText.length) {
+					newText = HxOverrides.substr(newText,0,maxLength);
+				}
+			}
+		}
+		this.__updateText(this.__text.substring(0,beginIndex) + newText + this.__text.substring(endIndex));
+		var offset = newText.length - (endIndex - beginIndex);
+		var i = 0;
+		var range;
+		while(i < this.__textEngine.textFormatRanges.get_length()) {
+			range = this.__textEngine.textFormatRanges.get(i);
+			if(beginIndex == endIndex) {
+				if(range.start == range.end) {
+					if(range.start != 0) {
+						lime_utils_Log.warn("You found a bug in OpenFL's text code! Please save a copy of your project and create an issue on GitHub so we can fix this.",{ fileName : "openfl/text/TextField.hx", lineNumber : 2184, className : "openfl.text.TextField", methodName : "__replaceText"});
+					} else {
+						range.end += offset;
+					}
+				} else if(range.end >= beginIndex) {
+					if(range.start >= beginIndex) {
+						range.start += offset;
+						range.end += offset;
+					} else if(range.start < beginIndex && range.end >= endIndex) {
+						range.end += offset;
+					}
+				}
+			} else if(range.end > beginIndex) {
+				if(range.start > endIndex) {
+					range.start += offset;
+					range.end += offset;
+				} else if(range.start <= beginIndex && range.end > endIndex) {
+					range.end += offset;
+				} else if(range.start >= beginIndex && range.end <= endIndex) {
+					var this1 = this.__textEngine.textFormatRanges;
+					this1.__tempIndex = i--;
+					var _g_current = 0;
+					var _g_args = [];
+					while(_g_current < _g_args.length) {
+						var item = _g_args[_g_current++];
+						this1.insertAt(this1.__tempIndex,item);
+						this1.__tempIndex++;
+					}
+					this1.splice(this1.__tempIndex,1);
+				} else if(range.end > endIndex && range.start > beginIndex && range.start <= endIndex) {
+					range.start = beginIndex;
+					range.end += offset;
+				} else if(range.start < beginIndex && range.end > beginIndex && range.end <= endIndex) {
+					range.end = beginIndex;
+				}
+			}
+			++i;
+		}
+		if(this.__textEngine.textFormatRanges.get_length() == 0) {
+			this.__textEngine.textFormatRanges.push(new openfl_text__$internal_TextFormatRange(this.get_defaultTextFormat().clone(),0,newText.length));
+		} else if(beginIndex == endIndex && this.__textEngine.textFormatRanges.get(0).start > 0) {
+			this.__textEngine.textFormatRanges.unshift(new openfl_text__$internal_TextFormatRange(this.get_defaultTextFormat().clone(),0,this.__textEngine.textFormatRanges.get(0).start));
+		} else if(beginIndex != endIndex && this.__textEngine.textFormatRanges.get(this.__textEngine.textFormatRanges.get_length() - 1).end < this.__text.length) {
+			this.__textEngine.textFormatRanges.push(new openfl_text__$internal_TextFormatRange(this.get_defaultTextFormat().clone(),this.__textEngine.textFormatRanges.get(this.__textEngine.textFormatRanges.get_length() - 1).end,this.__text.length));
+		}
+		this.__selectionIndex = this.__caretIndex = beginIndex + newText.length;
+		this.__dirty = true;
+		this.__layoutDirty = true;
+		if(!this.__renderDirty) {
+			this.__renderDirty = true;
+			this.__setParentRenderDirty();
+		}
+	}
+	,__startCursorTimer: function() {
+		if(this.get_type() == 1) {
+			if(this.__inputEnabled) {
+				this.__cursorTimer = haxe_Timer.delay($bind(this,this.__startCursorTimer),600);
+				this.__showCursor = !this.__showCursor;
+			}
+			this.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		} else if(this.get_selectable()) {
+			this.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+	}
+	,__startTextInput: function() {
+		if(this.__caretIndex < 0) {
+			this.__caretIndex = this.__text.length;
+			this.__selectionIndex = this.__caretIndex;
+		}
+		var enableInput = openfl_display_DisplayObject.__supportDOM ? this.__renderedOnCanvasWhileOnDOM : true;
+		if(enableInput) {
+			this.__enableInput();
+		}
+	}
+	,__stopCursorTimer: function() {
+		if(this.__cursorTimer != null) {
+			this.__cursorTimer.stop();
+			this.__cursorTimer = null;
+		}
+		if(this.__showCursor) {
+			this.__showCursor = false;
+			this.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+	}
+	,__stopTextInput: function() {
+		var disableInput = openfl_display_DisplayObject.__supportDOM ? this.__renderedOnCanvasWhileOnDOM : true;
+		if(disableInput) {
+			this.__disableInput();
+		}
+	}
+	,__updateLayout: function() {
+		if(this.__layoutDirty) {
+			var cacheWidth = this.__textEngine.width;
+			this.__textEngine.update();
+			if(this.__textEngine.autoSize != 2) {
+				if(this.__textEngine.width != cacheWidth) {
+					switch(this.__textEngine.autoSize) {
+					case 0:
+						this.set_x(this.get_x() + (cacheWidth - this.__textEngine.width) / 2);
+						break;
+					case 3:
+						this.set_x(this.get_x() + (cacheWidth - this.__textEngine.width));
+						break;
+					default:
+					}
+				}
+				this.__textEngine.getBounds();
+			}
+			this.__layoutDirty = false;
+			this.setSelection(this.__selectionIndex,this.__caretIndex);
+		}
+	}
+	,__updateMouseDrag: function() {
+		if(this.stage == null) {
+			return;
+		}
+		var bounds = this.getBounds(this);
+		if(this.get_mouseX() > bounds.width - 1) {
+			this.set_scrollH(this.get_scrollH() + (Math.max(Math.min((this.get_mouseX() - bounds.width) * .1,10),1) | 0));
+		} else if(this.get_mouseX() < 1) {
+			this.set_scrollH(this.get_scrollH() - (Math.max(Math.min(this.get_mouseX() * -.1,10),1) | 0));
+		}
+		this.__mouseScrollVCounter++;
+		if(this.__mouseScrollVCounter > this.stage.get_frameRate() / 10) {
+			if(this.get_mouseY() > bounds.height - 2) {
+				this.set_scrollV(Math.min(this.get_scrollV() + Math.max(Math.min((this.get_mouseY() - bounds.height) * .03,5),1),this.get_maxScrollV()) | 0);
+			} else if(this.get_mouseY() < 2) {
+				this.set_scrollV(this.get_scrollV() - (Math.max(Math.min(this.get_mouseY() * -.03,5),1) | 0));
+			}
+			this.__mouseScrollVCounter = 0;
+		}
+		this.stage_onMouseMove(null);
+	}
+	,__updateScrollH: function() {
+		this.__updateLayout();
+		var bounds = this.getBounds(this);
+		if(this.get_textWidth() <= bounds.width - 4) {
+			this.set_scrollH(0);
+			return;
+		}
+		var tempScrollH = this.get_scrollH();
+		if(this.__caretIndex == 0 || this.getLineOffset(this.getLineIndexOfChar(this.__caretIndex)) == this.__caretIndex) {
+			tempScrollH = 0;
+		} else {
+			var caret = openfl_geom_Rectangle.__pool.get();
+			var written = false;
+			if(this.__caretIndex < this.__text.length) {
+				written = this.__getCharBoundaries(this.__caretIndex,caret);
+			}
+			if(!written) {
+				this.__getCharBoundaries(this.__caretIndex - 1,caret);
+				caret.x += caret.width;
+			}
+			while(caret.x < tempScrollH && tempScrollH > 0) tempScrollH -= 24;
+			while(caret.x > tempScrollH + bounds.width - 4) tempScrollH += 24;
+			openfl_geom_Rectangle.__pool.release(caret);
+		}
+		if(tempScrollH > 0 && this.get_type() != 1) {
+			var lineLength = this.getLineLength(this.getLineIndexOfChar(this.__caretIndex));
+			if(this.get_scrollH() + bounds.width - 4 > lineLength) {
+				this.set_scrollH(Math.ceil(lineLength - bounds.width + 4));
+			}
+		}
+		if(tempScrollH < 0) {
+			this.set_scrollH(0);
+		} else if(tempScrollH > this.get_maxScrollH()) {
+			this.set_scrollH(this.get_maxScrollH());
+		} else {
+			this.set_scrollH(tempScrollH);
+		}
+	}
+	,__updateScrollV: function() {
+		this.__updateLayout();
+		if(this.get_textHeight() <= this.get_height() - 4) {
+			this.set_scrollV(1);
+			return;
+		}
+		var lineIndex = this.getLineIndexOfChar(this.__caretIndex);
+		if(lineIndex == -1 && this.__caretIndex > 0) {
+			lineIndex = this.getLineIndexOfChar(this.__caretIndex - 1) + 1;
+		}
+		if(lineIndex + 1 < this.get_scrollV()) {
+			this.set_scrollV(lineIndex + 1);
+		} else if(lineIndex + 1 > this.get_bottomScrollV()) {
+			var i = lineIndex;
+			var tempHeight = 0.0;
+			if(i >= this.__textEngine.lineHeights.get_length()) {
+				i = this.__textEngine.lineHeights.get_length() - 1;
+			}
+			while(i >= 0) {
+				tempHeight += this.__textEngine.lineHeights.get(i);
+				if(tempHeight > this.get_height() - 4) {
+					i += tempHeight - this.get_height() < 0 ? 1 : 2;
+					break;
+				}
+				--i;
+			}
+			this.set_scrollV(i);
+		} else {
+			this.set_scrollV(this.get_scrollV());
+		}
+	}
+	,__updateText: function(value) {
+		if(openfl_display_DisplayObject.__supportDOM && this.__renderedOnCanvasWhileOnDOM) {
+			this.__forceCachedBitmapUpdate = this.__text != value;
+		}
+		this.__textEngine.set_text(value);
+		this.__text = this.__textEngine.text;
+		if(this.stage != null && this.stage.get_focus() == this) {
+			if(this.__text.length < this.__selectionIndex) {
+				this.__selectionIndex = this.__text.length;
+			}
+			if(this.__text.length < this.__caretIndex) {
+				this.__caretIndex = this.__text.length;
+			}
+		} else if(this.__isHTML) {
+			this.__selectionIndex = this.__caretIndex = this.__text.length;
+		} else {
+			this.__selectionIndex = 0;
+			this.__caretIndex = 0;
+		}
+		if(!this.__displayAsPassword || openfl_display_DisplayObject.__supportDOM && !this.__renderedOnCanvasWhileOnDOM) {
+			this.__textEngine.set_text(this.__text);
+		} else {
+			var length = this.get_text().length;
+			var mask = "";
+			var _g = 0;
+			var _g1 = length;
+			while(_g < _g1) {
+				var i = _g++;
+				mask += "*";
+			}
+			this.__textEngine.set_text(mask);
+		}
+	}
+	,__updateTransforms: function(overrideTransform) {
+		openfl_display_InteractiveObject.prototype.__updateTransforms.call(this,overrideTransform);
+		var _this = this.__renderTransform;
+		var px = this.__offsetX;
+		var py = this.__offsetY;
+		_this.tx = px * _this.a + py * _this.c + _this.tx;
+		_this.ty = px * _this.b + py * _this.d + _this.ty;
+	}
+	,get_antiAliasType: function() {
+		return this.__textEngine.antiAliasType;
+	}
+	,set_antiAliasType: function(value) {
+		var tmp = value != this.__textEngine.antiAliasType;
+		return this.__textEngine.antiAliasType = value;
+	}
+	,get_autoSize: function() {
+		return this.__textEngine.autoSize;
+	}
+	,set_autoSize: function(value) {
+		if(value != this.__textEngine.autoSize) {
+			this.__dirty = true;
+			this.__layoutDirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+		return this.__textEngine.autoSize = value;
+	}
+	,get_background: function() {
+		return this.__textEngine.background;
+	}
+	,set_background: function(value) {
+		if(value != this.__textEngine.background) {
+			this.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+		return this.__textEngine.background = value;
+	}
+	,get_backgroundColor: function() {
+		return this.__textEngine.backgroundColor;
+	}
+	,set_backgroundColor: function(value) {
+		if(value != this.__textEngine.backgroundColor) {
+			this.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+		return this.__textEngine.backgroundColor = value;
+	}
+	,get_border: function() {
+		return this.__textEngine.border;
+	}
+	,set_border: function(value) {
+		if(value != this.__textEngine.border) {
+			this.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+		return this.__textEngine.border = value;
+	}
+	,get_borderColor: function() {
+		return this.__textEngine.borderColor;
+	}
+	,set_borderColor: function(value) {
+		if(value != this.__textEngine.borderColor) {
+			this.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+		return this.__textEngine.borderColor = value;
+	}
+	,get_bottomScrollV: function() {
+		this.__updateLayout();
+		return this.__textEngine.get_bottomScrollV();
+	}
+	,get_caretIndex: function() {
+		return this.__caretIndex;
+	}
+	,get_defaultTextFormat: function() {
+		return this.__textFormat.clone();
+	}
+	,set_defaultTextFormat: function(value) {
+		this.__textFormat.__merge(value);
+		this.__layoutDirty = true;
+		this.__dirty = true;
+		if(!this.__renderDirty) {
+			this.__renderDirty = true;
+			this.__setParentRenderDirty();
+		}
+		return value;
+	}
+	,get_displayAsPassword: function() {
+		return this.__displayAsPassword;
+	}
+	,set_displayAsPassword: function(value) {
+		if(value != this.__displayAsPassword) {
+			this.__dirty = true;
+			this.__layoutDirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+			this.__displayAsPassword = value;
+			this.__updateText(this.__text);
+		}
+		return value;
+	}
+	,get_embedFonts: function() {
+		return this.__textEngine.embedFonts;
+	}
+	,set_embedFonts: function(value) {
+		return this.__textEngine.embedFonts = value;
+	}
+	,get_gridFitType: function() {
+		return this.__textEngine.gridFitType;
+	}
+	,set_gridFitType: function(value) {
+		return this.__textEngine.gridFitType = value;
+	}
+	,get_height: function() {
+		this.__updateLayout();
+		return this.__textEngine.height * Math.abs(this.get_scaleY());
+	}
+	,set_height: function(value) {
+		if(value != this.__textEngine.height) {
+			this.__setTransformDirty();
+			this.__dirty = true;
+			this.__layoutDirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+			this.__textEngine.height = value;
+		}
+		return this.__textEngine.height * Math.abs(this.get_scaleY());
+	}
+	,get_htmlText: function() {
+		if(this.__isHTML) {
+			return this.__htmlText;
+		} else {
+			return this.__text;
+		}
+	}
+	,set_htmlText: function(value) {
+		if(value == null) {
+			var error = new openfl_errors_TypeError("Error #2007: Parameter text must be non-null.");
+			error.errorID = 2007;
+			throw error;
+		}
+		if(!this.__isHTML || this.__text != value) {
+			this.__dirty = true;
+			this.__layoutDirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+		this.__isHTML = true;
+		if(this.condenseWhite) {
+			var _this_r = new RegExp("\\s+","g".split("u").join(""));
+			value = value.replace(_this_r," ");
+		}
+		this.__htmlText = value;
+		value = openfl_text__$internal_HTMLParser.parse(value,this.get_multiline(),this.__styleSheet,this.__textFormat,this.__textEngine.textFormatRanges);
+		this.__updateText(value);
+		return value;
+	}
+	,get_length: function() {
+		if(this.__text != null) {
+			return this.__text.length;
+		}
+		return 0;
+	}
+	,get_maxChars: function() {
+		return this.__textEngine.maxChars;
+	}
+	,set_maxChars: function(value) {
+		if(value != this.__textEngine.maxChars) {
+			this.__textEngine.maxChars = value;
+			this.__dirty = true;
+			this.__layoutDirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+		return value;
+	}
+	,get_maxScrollH: function() {
+		this.__updateLayout();
+		return this.__textEngine.maxScrollH;
+	}
+	,get_maxScrollV: function() {
+		this.__updateLayout();
+		return this.__textEngine.get_maxScrollV();
+	}
+	,get_mouseWheelEnabled: function() {
+		return this.__mouseWheelEnabled;
+	}
+	,set_mouseWheelEnabled: function(value) {
+		return this.__mouseWheelEnabled = value;
+	}
+	,get_multiline: function() {
+		return this.__textEngine.multiline;
+	}
+	,set_multiline: function(value) {
+		return this.__textEngine.multiline = value;
+	}
+	,get_numLines: function() {
+		this.__updateLayout();
+		return this.__textEngine.numLines;
+	}
+	,get_restrict: function() {
+		return this.__textEngine.restrict;
+	}
+	,set_restrict: function(value) {
+		if(this.__textEngine.restrict != value) {
+			this.__textEngine.set_restrict(value);
+			this.__updateText(this.__text);
+		}
+		return value;
+	}
+	,get_scrollH: function() {
+		return this.__textEngine.scrollH;
+	}
+	,set_scrollH: function(value) {
+		this.__updateLayout();
+		if(value > this.__textEngine.maxScrollH) {
+			value = this.__textEngine.maxScrollH;
+		}
+		if(value < 0) {
+			value = 0;
+		}
+		if(value != this.__textEngine.scrollH) {
+			this.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+			this.__textEngine.scrollH = value;
+			this.dispatchEvent(new openfl_events_Event("scroll"));
+		}
+		return this.__textEngine.scrollH;
+	}
+	,get_scrollV: function() {
+		return this.__textEngine.get_scrollV();
+	}
+	,set_scrollV: function(value) {
+		this.__updateLayout();
+		if(value > this.__textEngine.get_maxScrollV()) {
+			value = this.__textEngine.get_maxScrollV();
+		}
+		if(value < 1) {
+			value = 1;
+		}
+		if(value != this.__textEngine.get_scrollV() || this.__textEngine.get_scrollV() == 0) {
+			this.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+			this.__textEngine.set_scrollV(value);
+			this.dispatchEvent(new openfl_events_Event("scroll"));
+		}
+		return this.__textEngine.get_scrollV();
+	}
+	,get_selectable: function() {
+		return this.__textEngine.selectable;
+	}
+	,set_selectable: function(value) {
+		if(value != this.__textEngine.selectable && this.get_type() == 1) {
+			if(this.stage != null && this.stage.get_focus() == this) {
+				this.__startTextInput();
+			} else if(!value) {
+				this.__stopTextInput();
+			}
+		}
+		return this.__textEngine.selectable = value;
+	}
+	,get_selectionBeginIndex: function() {
+		return Math.min(this.__caretIndex,this.__selectionIndex) | 0;
+	}
+	,get_selectionEndIndex: function() {
+		return Math.max(this.__caretIndex,this.__selectionIndex) | 0;
+	}
+	,get_sharpness: function() {
+		return this.__textEngine.sharpness;
+	}
+	,set_sharpness: function(value) {
+		if(value != this.__textEngine.sharpness) {
+			this.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+		return this.__textEngine.sharpness = value;
+	}
+	,get_styleSheet: function() {
+		return this.__styleSheet;
+	}
+	,set_styleSheet: function(value) {
+		if(!(this.__styleSheet != null && value == null)) {
+			if(value != null) {
+				if(this.__isHTML && value != this.__styleSheet) {
+					this.__dirty = true;
+					this.__layoutDirty = true;
+					if(!this.__renderDirty) {
+						this.__renderDirty = true;
+						this.__setParentRenderDirty();
+					}
+					this.set_htmlText(this.__htmlText);
+				}
+				this.set_type(0);
+			}
+		}
+		return this.__styleSheet = value;
+	}
+	,get_tabEnabled: function() {
+		if(this.__tabEnabled == null) {
+			return this.__textEngine.type == 1;
+		} else {
+			return this.__tabEnabled;
+		}
+	}
+	,get_text: function() {
+		return this.__text;
+	}
+	,set_text: function(value) {
+		if(value == null) {
+			var error = new openfl_errors_TypeError("Error #2007: Parameter text must be non-null.");
+			error.errorID = 2007;
+			throw error;
+		}
+		if(this.__styleSheet != null) {
+			return this.set_htmlText(value);
+		}
+		if(this.__isHTML || this.__text != value) {
+			this.__dirty = true;
+			this.__layoutDirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		} else {
+			return value;
+		}
+		if(this.__textEngine.textFormatRanges.get_length() > 1) {
+			var this1 = this.__textEngine.textFormatRanges;
+			var deleteCount = this.__textEngine.textFormatRanges.get_length() - 1;
+			this1.__tempIndex = 1;
+			var _g_current = 0;
+			var _g_args = [];
+			while(_g_current < _g_args.length) {
+				var item = _g_args[_g_current++];
+				this1.insertAt(this1.__tempIndex,item);
+				this1.__tempIndex++;
+			}
+			this1.splice(this1.__tempIndex,deleteCount);
+		}
+		var utfValue = value;
+		var range = this.__textEngine.textFormatRanges.get(0);
+		range.format = this.__textFormat;
+		range.start = 0;
+		range.end = utfValue.length;
+		this.__isHTML = false;
+		this.__updateText(value);
+		return value;
+	}
+	,get_textColor: function() {
+		return this.__textFormat.color;
+	}
+	,set_textColor: function(value) {
+		if(value != this.__textFormat.color) {
+			this.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+		var range = this.__textEngine.textFormatRanges.iterator();
+		while(range.hasNext()) {
+			var range1 = range.next();
+			range1.format.color = value;
+		}
+		return this.__textFormat.color = value;
+	}
+	,get_textWidth: function() {
+		this.__updateLayout();
+		return this.__textEngine.textWidth;
+	}
+	,get_textHeight: function() {
+		this.__updateLayout();
+		return this.__textEngine.textHeight;
+	}
+	,get_type: function() {
+		return this.__textEngine.type;
+	}
+	,set_type: function(value) {
+		if(this.__styleSheet != null) {
+			value = 0;
+		}
+		if(value != this.__textEngine.type) {
+			this.__textEngine.type = value;
+			if(value == 1) {
+				this.addEventListener("addedToStage",$bind(this,this.this_onAddedToStage));
+				this.this_onFocusIn(null);
+				this.__textEngine.__useIntAdvances = true;
+			} else {
+				this.removeEventListener("addedToStage",$bind(this,this.this_onAddedToStage));
+				this.__stopTextInput();
+				this.__textEngine.__useIntAdvances = null;
+			}
+			this.__dirty = true;
+			this.__layoutDirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+		return this.__textEngine.type;
+	}
+	,get_width: function() {
+		this.__updateLayout();
+		return this.__textEngine.width * Math.abs(this.__scaleX);
+	}
+	,set_width: function(value) {
+		if(value != this.__textEngine.width) {
+			this.__setTransformDirty();
+			this.__dirty = true;
+			this.__layoutDirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+			this.__textEngine.width = value;
+		}
+		return this.__textEngine.width * Math.abs(this.__scaleX);
+	}
+	,get_wordWrap: function() {
+		return this.__textEngine.wordWrap;
+	}
+	,set_wordWrap: function(value) {
+		if(value != this.__textEngine.wordWrap) {
+			this.__dirty = true;
+			this.__layoutDirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+		return this.__textEngine.wordWrap = value;
+	}
+	,get_x: function() {
+		return this.__transform.tx + this.__offsetX;
+	}
+	,set_x: function(value) {
+		if(value != this.__transform.tx + this.__offsetX) {
+			this.__setTransformDirty();
+		}
+		this.__transform.tx = value - this.__offsetX;
+		return value;
+	}
+	,get_y: function() {
+		return this.__transform.ty + this.__offsetY;
+	}
+	,set_y: function(value) {
+		if(value != this.__transform.ty + this.__offsetY) {
+			this.__setTransformDirty();
+		}
+		this.__transform.ty = value - this.__offsetY;
+		return value;
+	}
+	,stage_onMouseMove: function(event) {
+		if(this.stage == null) {
+			return;
+		}
+		if(this.get_selectable() && this.__selectionIndex >= 0) {
+			this.__updateLayout();
+			var position = this.__lineSelection ? this.__getPositionByIdentifier(this.get_mouseX() + this.get_scrollH(),this.get_mouseY(),true) : this.__wordSelection ? this.__getPositionByIdentifier(this.get_mouseX() + this.get_scrollH(),this.get_mouseY(),false) : this.__getPosition(this.get_mouseX() + this.get_scrollH(),this.get_mouseY());
+			if(position != this.__caretIndex) {
+				this.__caretIndex = position;
+				if(this.__wordSelection || this.__lineSelection) {
+					this.__selectionIndex = this.__getOppositeIdentifierBound(this.__specialSelectionInitialIndex,this.__lineSelection);
+				}
+				var setDirty = true;
+				if(openfl_display_DisplayObject.__supportDOM) {
+					if(this.__renderedOnCanvasWhileOnDOM) {
+						this.__forceCachedBitmapUpdate = true;
+					}
+					setDirty = false;
+				}
+				if(setDirty) {
+					this.__dirty = true;
+					if(!this.__renderDirty) {
+						this.__renderDirty = true;
+						this.__setParentRenderDirty();
+					}
+				}
+			}
+		}
+	}
+	,stage_onMouseUp: function(event) {
+		var stage = event.currentTarget;
+		stage.removeEventListener("enterFrame",$bind(this,this.this_onEnterFrame));
+		stage.removeEventListener("mouseMove",$bind(this,this.stage_onMouseMove));
+		stage.removeEventListener("mouseUp",$bind(this,this.stage_onMouseUp));
+		if(this.stage != stage) {
+			return;
+		}
+		if(stage.get_focus() == this) {
+			this.__getWorldTransform();
+			this.__updateLayout();
+			var upPos = this.__lineSelection ? this.__getPositionByIdentifier(this.get_mouseX() + this.get_scrollH(),this.get_mouseY(),true) : this.__wordSelection ? this.__getPositionByIdentifier(this.get_mouseX() + this.get_scrollH(),this.get_mouseY(),false) : this.__getPosition(this.get_mouseX() + this.get_scrollH(),this.get_mouseY());
+			var leftPos = Math.min(this.__selectionIndex,upPos) | 0;
+			var rightPos = Math.max(this.__selectionIndex,upPos) | 0;
+			this.__selectionIndex = leftPos;
+			this.__caretIndex = rightPos;
+			this.__wordSelection = this.__lineSelection = false;
+			if(this.__inputEnabled) {
+				this.this_onFocusIn(null);
+				this.__stopCursorTimer();
+				this.__startCursorTimer();
+				if(openfl_display_DisplayObject.__supportDOM && this.__renderedOnCanvasWhileOnDOM) {
+					this.__forceCachedBitmapUpdate = true;
+				}
+			}
+		}
+	}
+	,this_onAddedToStage: function(event) {
+		this.this_onFocusIn(null);
+	}
+	,this_onEnterFrame: function(e) {
+		this.__updateMouseDrag();
+	}
+	,this_onFocusIn: function(event) {
+		if(this.get_type() == 1 && this.stage != null && this.stage.get_focus() == this) {
+			this.__startTextInput();
+		} else if(this.get_type() != 1 && this.get_selectable() && this.stage != null && this.stage.get_focus() == this) {
+			this.__startCursorTimer();
+		}
+	}
+	,this_onFocusOut: function(event) {
+		this.__stopCursorTimer();
+		this.__stopTextInput();
+		if(this.__selectionIndex != this.__caretIndex) {
+			this.__selectionIndex = this.__caretIndex;
+			this.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+	}
+	,this_onKeyDown: function(event) {
+		if(this.get_selectable() && this.get_type() != 1 && event.keyCode == 67 && (event.commandKey || event.ctrlKey)) {
+			if(this.__caretIndex != this.__selectionIndex && !this.get_displayAsPassword()) {
+				lime_system_Clipboard.set_text(this.__text.substring(this.__caretIndex,this.__selectionIndex));
+			}
+		}
+	}
+	,this_onMouseDown: function(event) {
+		if(!this.get_selectable() && this.get_type() != 1) {
+			return;
+		}
+		this.__lineSelection = event.clickCount == 3;
+		this.__wordSelection = event.clickCount == 2;
+		if(this.__lineSelection) {
+			var prevCaretIndex = this.__caretIndex;
+			this.__caretIndex = this.__getPositionByIdentifier(event.stageX + this.get_scrollH(),event.stageY,true);
+			this.__selectionIndex = this.__getOppositeIdentifierBound(prevCaretIndex,true);
+			this.setSelection(this.__caretIndex,this.__selectionIndex);
+		} else if(this.__wordSelection) {
+			var prevCaretIndex = this.__caretIndex;
+			this.__caretIndex = this.__getPositionByIdentifier(event.stageX + this.get_scrollH(),event.stageY,false);
+			this.__selectionIndex = this.__getOppositeIdentifierBound(prevCaretIndex,false);
+			this.__specialSelectionInitialIndex = prevCaretIndex;
+			this.setSelection(this.__caretIndex,this.__selectionIndex);
+		} else {
+			this.__caretIndex = this.__getPosition(this.get_mouseX() + this.get_scrollH(),this.get_mouseY());
+			this.__selectionIndex = this.__caretIndex;
+			this.setSelection(this.__caretIndex,this.__selectionIndex);
+		}
+		this.__updateLayout();
+		if(!openfl_display_DisplayObject.__supportDOM) {
+			this.__dirty = true;
+			if(!this.__renderDirty) {
+				this.__renderDirty = true;
+				this.__setParentRenderDirty();
+			}
+		}
+		if(this.stage == null) {
+			return;
+		}
+		this.stage.addEventListener("enterFrame",$bind(this,this.this_onEnterFrame));
+		this.stage.addEventListener("mouseMove",$bind(this,this.stage_onMouseMove));
+		this.stage.addEventListener("mouseUp",$bind(this,this.stage_onMouseUp));
+	}
+	,this_onMouseWheel: function(event) {
+		if(this.get_mouseWheelEnabled()) {
+			this.set_scrollV(Math.min(this.get_scrollV() - event.delta,this.get_maxScrollV()) | 0);
+		}
+	}
+	,window_onKeyDown: function(key,modifier) {
+		switch(key) {
+		case 8:
+			if(this.__selectionIndex == this.__caretIndex && this.__caretIndex > 0) {
+				this.__selectionIndex = this.__caretIndex - 1;
+			}
+			if(this.__selectionIndex != this.__caretIndex) {
+				this.replaceSelectedText("");
+				this.__selectionIndex = this.__caretIndex;
+				this.dispatchEvent(new openfl_events_Event("change",true));
+			} else {
+				this.__stopCursorTimer();
+				this.__startCursorTimer();
+			}
+			break;
+		case 97:
+			if(this.get_selectable()) {
+				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
+					this.setSelection(0,this.__text.length);
+				}
+			}
+			break;
+		case 99:
+			if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
+				if(this.__caretIndex != this.__selectionIndex && !this.get_displayAsPassword()) {
+					lime_system_Clipboard.set_text(this.__text.substring(this.__caretIndex,this.__selectionIndex));
+				}
+			}
+			break;
+		case 120:
+			if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
+				if(this.__caretIndex != this.__selectionIndex && !this.get_displayAsPassword()) {
+					lime_system_Clipboard.set_text(this.__text.substring(this.__caretIndex,this.__selectionIndex));
+					this.replaceSelectedText("");
+					this.dispatchEvent(new openfl_events_Event("change",true));
+				}
+			}
+			break;
+		case 127:
+			if(this.__selectionIndex == this.__caretIndex && this.__caretIndex < this.__text.length) {
+				this.__selectionIndex = this.__caretIndex + 1;
+			}
+			if(this.__selectionIndex != this.__caretIndex) {
+				this.replaceSelectedText("");
+				this.__selectionIndex = this.__caretIndex;
+				this.dispatchEvent(new openfl_events_Event("change",true));
+			} else {
+				this.__stopCursorTimer();
+				this.__startCursorTimer();
+			}
+			break;
+		case 1073741898:
+			if(this.get_selectable()) {
+				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
+					this.__caretIndex = 0;
+				} else {
+					this.__caretBeginningOfLine();
+				}
+				if(!lime_ui_KeyModifier.get_shiftKey(modifier)) {
+					this.__selectionIndex = this.__caretIndex;
+				}
+				this.setSelection(this.__selectionIndex,this.__caretIndex);
+			}
+			break;
+		case 1073741901:
+			if(this.get_selectable()) {
+				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
+					this.__caretIndex = this.__text.length;
+				} else {
+					this.__caretEndOfLine();
+				}
+				if(!lime_ui_KeyModifier.get_shiftKey(modifier)) {
+					this.__selectionIndex = this.__caretIndex;
+				}
+				this.setSelection(this.__selectionIndex,this.__caretIndex);
+			}
+			break;
+		case 1073741903:
+			if(this.get_selectable()) {
+				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
+					this.__caretBeginningOfNextLine();
+				} else {
+					this.__caretNextCharacter();
+				}
+				if(!lime_ui_KeyModifier.get_shiftKey(modifier)) {
+					this.__selectionIndex = this.__caretIndex;
+				}
+				this.setSelection(this.__selectionIndex,this.__caretIndex);
+			}
+			break;
+		case 1073741904:
+			if(this.get_selectable()) {
+				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
+					this.__caretBeginningOfPreviousLine();
+				} else {
+					this.__caretPreviousCharacter();
+				}
+				if(!lime_ui_KeyModifier.get_shiftKey(modifier)) {
+					this.__selectionIndex = this.__caretIndex;
+				}
+				this.setSelection(this.__selectionIndex,this.__caretIndex);
+			}
+			break;
+		case 1073741905:
+			if(this.get_selectable()) {
+				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
+					this.__caretIndex = this.__text.length;
+				} else {
+					this.__caretNextLine();
+				}
+				if(!lime_ui_KeyModifier.get_shiftKey(modifier)) {
+					this.__selectionIndex = this.__caretIndex;
+				}
+				this.setSelection(this.__selectionIndex,this.__caretIndex);
+			}
+			break;
+		case 1073741906:
+			if(this.get_selectable()) {
+				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
+					this.__caretIndex = 0;
+				} else {
+					this.__caretPreviousLine();
+				}
+				if(!lime_ui_KeyModifier.get_shiftKey(modifier)) {
+					this.__selectionIndex = this.__caretIndex;
+				}
+				this.setSelection(this.__selectionIndex,this.__caretIndex);
+			}
+			break;
+		case 13:case 1073741912:
+			if(this.__textEngine.multiline) {
+				var te = new openfl_events_TextEvent("textInput",true,true,"\n");
+				this.dispatchEvent(te);
+				if(!te.isDefaultPrevented()) {
+					this.__replaceSelectedText("\n",true);
+					this.dispatchEvent(new openfl_events_Event("change",true));
+				}
+			} else {
+				this.__stopCursorTimer();
+				this.__startCursorTimer();
+			}
+			break;
+		default:
+		}
+	}
+	,window_onTextInput: function(value) {
+		this.__replaceSelectedText(value,true);
+		this.dispatchEvent(new openfl_events_Event("change",true));
+	}
+	,__class__: openfl_text_TextField
+	,__properties__: $extend(openfl_display_InteractiveObject.prototype.__properties__,{set_wordWrap:"set_wordWrap",get_wordWrap:"get_wordWrap",set_type:"set_type",get_type:"get_type",get_textWidth:"get_textWidth",get_textHeight:"get_textHeight",set_textColor:"set_textColor",get_textColor:"get_textColor",set_text:"set_text",get_text:"get_text",set_styleSheet:"set_styleSheet",get_styleSheet:"get_styleSheet",set_sharpness:"set_sharpness",get_sharpness:"get_sharpness",get_selectionEndIndex:"get_selectionEndIndex",get_selectionBeginIndex:"get_selectionBeginIndex",set_selectable:"set_selectable",get_selectable:"get_selectable",set_scrollV:"set_scrollV",get_scrollV:"get_scrollV",set_scrollH:"set_scrollH",get_scrollH:"get_scrollH",set_restrict:"set_restrict",get_restrict:"get_restrict",get_numLines:"get_numLines",set_multiline:"set_multiline",get_multiline:"get_multiline",set_mouseWheelEnabled:"set_mouseWheelEnabled",get_mouseWheelEnabled:"get_mouseWheelEnabled",get_maxScrollV:"get_maxScrollV",get_maxScrollH:"get_maxScrollH",set_maxChars:"set_maxChars",get_maxChars:"get_maxChars",get_length:"get_length",set_htmlText:"set_htmlText",get_htmlText:"get_htmlText",set_gridFitType:"set_gridFitType",get_gridFitType:"get_gridFitType",set_embedFonts:"set_embedFonts",get_embedFonts:"get_embedFonts",set_displayAsPassword:"set_displayAsPassword",get_displayAsPassword:"get_displayAsPassword",set_defaultTextFormat:"set_defaultTextFormat",get_defaultTextFormat:"get_defaultTextFormat",get_caretIndex:"get_caretIndex",get_bottomScrollV:"get_bottomScrollV",set_borderColor:"set_borderColor",get_borderColor:"get_borderColor",set_border:"set_border",get_border:"get_border",set_backgroundColor:"set_backgroundColor",get_backgroundColor:"get_backgroundColor",set_background:"set_background",get_background:"get_background",set_autoSize:"set_autoSize",get_autoSize:"get_autoSize",set_antiAliasType:"set_antiAliasType",get_antiAliasType:"get_antiAliasType"})
+});
+var openfl_display_FPS = function(x,y,color) {
+	if(color == null) {
+		color = 0;
+	}
+	if(y == null) {
+		y = 10;
+	}
+	if(x == null) {
+		x = 10;
+	}
+	openfl_text_TextField.call(this);
+	this.set_x(x);
+	this.set_y(y);
+	this.currentFPS = 0;
+	this.set_selectable(false);
+	this.mouseEnabled = false;
+	this.set_defaultTextFormat(new openfl_text_TextFormat("_sans",12,color));
+	this.set_text("FPS: ");
+	this.cacheCount = 0;
+	this.currentTime = 0;
+	this.times = [];
+};
+$hxClasses["openfl.display.FPS"] = openfl_display_FPS;
+openfl_display_FPS.__name__ = "openfl.display.FPS";
+openfl_display_FPS.__super__ = openfl_text_TextField;
+openfl_display_FPS.prototype = $extend(openfl_text_TextField.prototype,{
+	__enterFrame: function(deltaTime) {
+		this.currentTime += deltaTime;
+		this.times.push(this.currentTime);
+		while(this.times[0] < this.currentTime - 1000) this.times.shift();
+		var currentCount = this.times.length;
+		this.currentFPS = Math.round((currentCount + this.cacheCount) / 2);
+		if(currentCount != this.cacheCount) {
+			this.set_text("FPS: " + this.currentFPS);
+		}
+		this.cacheCount = currentCount;
+	}
+	,__class__: openfl_display_FPS
 });
 var openfl_display_FrameLabel = function(name,frame) {
 	openfl_events_EventDispatcher.call(this);
@@ -66501,204 +67915,6 @@ openfl_filters_BitmapFilter.prototype = {
 	}
 	,__class__: openfl_filters_BitmapFilter
 };
-var openfl_filters_BitmapFilterShader = function(code) {
-	if(this.__glFragmentSource == null) {
-		this.__glFragmentSource = "varying vec2 openfl_TextureCoordv;\n\n\t\tuniform sampler2D openfl_Texture;\n\t\tuniform vec2 openfl_TextureSize;\n\n\t\tvoid main(void) {\n\n\t\t\tgl_FragColor = texture2D (openfl_Texture, openfl_TextureCoordv);\n\n\t\t}";
-	}
-	if(this.__glVertexSource == null) {
-		this.__glVertexSource = "attribute vec4 openfl_Position;\n\t\tattribute vec2 openfl_TextureCoord;\n\n\t\tvarying vec2 openfl_TextureCoordv;\n\n\t\tuniform mat4 openfl_Matrix;\n\t\tuniform vec2 openfl_TextureSize;\n\n\t\tvoid main(void) {\n\n\t\t\topenfl_TextureCoordv = openfl_TextureCoord;\n\n\t\tgl_Position = openfl_Matrix * openfl_Position;\n\n\t\t}";
-	}
-	openfl_display_Shader.call(this,code);
-	this.__isGenerated = true;
-	this.__initGL();
-};
-$hxClasses["openfl.filters.BitmapFilterShader"] = openfl_filters_BitmapFilterShader;
-openfl_filters_BitmapFilterShader.__name__ = "openfl.filters.BitmapFilterShader";
-openfl_filters_BitmapFilterShader.__super__ = openfl_display_Shader;
-openfl_filters_BitmapFilterShader.prototype = $extend(openfl_display_Shader.prototype,{
-	__class__: openfl_filters_BitmapFilterShader
-});
-var openfl_filters__$ColorMatrixFilter_ColorMatrixShader = function() {
-	if(this.__glFragmentSource == null) {
-		this.__glFragmentSource = "varying vec2 openfl_TextureCoordv;\n\t\tuniform sampler2D openfl_Texture;\n\n\t\tuniform mat4 uMultipliers;\n\t\tuniform vec4 uOffsets;\n\n\t\tvoid main(void) {\n\n\t\t\tvec4 color = texture2D (openfl_Texture, openfl_TextureCoordv);\n\n\t\t\tif (color.a == 0.0) {\n\n\t\t\t\tgl_FragColor = vec4 (0.0, 0.0, 0.0, 0.0);\n\n\t\t\t} else {\n\n\t\t\t\tcolor = vec4 (color.rgb / color.a, color.a);\n\t\t\t\tcolor = uOffsets + color * uMultipliers;\n\n\t\t\t\tgl_FragColor = vec4 (color.rgb * color.a, color.a);\n\n\t\t\t}\n\n\t\t}";
-	}
-	if(this.__glVertexSource == null) {
-		this.__glVertexSource = "attribute vec4 openfl_Position;\n\t\tattribute vec2 openfl_TextureCoord;\n\n\t\tvarying vec2 openfl_TextureCoordv;\n\n\t\tuniform mat4 openfl_Matrix;\n\t\tuniform vec2 openfl_TextureSize;\n\n\n\t\tvoid main(void) {\n\n\t\t\topenfl_TextureCoordv = openfl_TextureCoord;\n\n\t\tgl_Position = openfl_Matrix * openfl_Position;\n\n\n\t\t}";
-	}
-	openfl_filters_BitmapFilterShader.call(this);
-	this.uMultipliers.value = [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
-	this.uOffsets.value = [0,0,0,0];
-	this.__isGenerated = true;
-	this.__initGL();
-};
-$hxClasses["openfl.filters._ColorMatrixFilter.ColorMatrixShader"] = openfl_filters__$ColorMatrixFilter_ColorMatrixShader;
-openfl_filters__$ColorMatrixFilter_ColorMatrixShader.__name__ = "openfl.filters._ColorMatrixFilter.ColorMatrixShader";
-openfl_filters__$ColorMatrixFilter_ColorMatrixShader.__super__ = openfl_filters_BitmapFilterShader;
-openfl_filters__$ColorMatrixFilter_ColorMatrixShader.prototype = $extend(openfl_filters_BitmapFilterShader.prototype,{
-	init: function(matrix) {
-		var multipliers = this.uMultipliers.value;
-		var offsets = this.uOffsets.value;
-		multipliers[0] = matrix[0];
-		multipliers[1] = matrix[1];
-		multipliers[2] = matrix[2];
-		multipliers[3] = matrix[3];
-		multipliers[4] = matrix[5];
-		multipliers[5] = matrix[6];
-		multipliers[6] = matrix[7];
-		multipliers[7] = matrix[8];
-		multipliers[8] = matrix[10];
-		multipliers[9] = matrix[11];
-		multipliers[10] = matrix[12];
-		multipliers[11] = matrix[13];
-		multipliers[12] = matrix[15];
-		multipliers[13] = matrix[16];
-		multipliers[14] = matrix[17];
-		multipliers[15] = matrix[18];
-		offsets[0] = matrix[4] / 255.0;
-		offsets[1] = matrix[9] / 255.0;
-		offsets[2] = matrix[14] / 255.0;
-		offsets[3] = matrix[19] / 255.0;
-	}
-	,__class__: openfl_filters__$ColorMatrixFilter_ColorMatrixShader
-});
-var openfl_filters_ColorMatrixFilter = function(matrix) {
-	openfl_filters_BitmapFilter.call(this);
-	this.set_matrix(matrix);
-	this.__numShaderPasses = 1;
-	this.__needSecondBitmapData = false;
-};
-$hxClasses["openfl.filters.ColorMatrixFilter"] = openfl_filters_ColorMatrixFilter;
-openfl_filters_ColorMatrixFilter.__name__ = "openfl.filters.ColorMatrixFilter";
-openfl_filters_ColorMatrixFilter.__super__ = openfl_filters_BitmapFilter;
-openfl_filters_ColorMatrixFilter.prototype = $extend(openfl_filters_BitmapFilter.prototype,{
-	clone: function() {
-		return new openfl_filters_ColorMatrixFilter(this.__matrix);
-	}
-	,__applyFilter: function(destBitmapData,sourceBitmapData,sourceRect,destPoint) {
-		var sourceImage = sourceBitmapData.image;
-		var image = destBitmapData.image;
-		lime__$internal_graphics_ImageCanvasUtil.convertToData(sourceImage);
-		lime__$internal_graphics_ImageCanvasUtil.convertToData(image);
-		var sourceData = sourceImage.get_data();
-		var destData = image.get_data();
-		var offsetX = destPoint.x - sourceRect.x | 0;
-		var offsetY = destPoint.y - sourceRect.y | 0;
-		var sourceStride = sourceBitmapData.width * 4;
-		var destStride = destBitmapData.width * 4;
-		var sourceFormat = sourceImage.buffer.format;
-		var destFormat = image.buffer.format;
-		var sourcePremultiplied = sourceImage.buffer.premultiplied;
-		var destPremultiplied = image.buffer.premultiplied;
-		var sourcePixel = 0;
-		var destPixel = 0;
-		var sourceOffset;
-		var destOffset;
-		var _g = sourceRect.y | 0;
-		var _g1 = sourceRect.height | 0;
-		while(_g < _g1) {
-			var row = _g++;
-			var _g2 = sourceRect.x | 0;
-			var _g3 = sourceRect.width | 0;
-			while(_g2 < _g3) {
-				var column = _g2++;
-				sourceOffset = row * sourceStride + column * 4;
-				destOffset = (row + offsetX) * destStride + (column + offsetY) * 4;
-				var format = sourceFormat;
-				var premultiplied = sourcePremultiplied;
-				if(premultiplied == null) {
-					premultiplied = false;
-				}
-				if(format == null) {
-					format = 0;
-				}
-				switch(format) {
-				case 0:
-					sourcePixel = (sourceData[sourceOffset] & 255) << 24 | (sourceData[sourceOffset + 1] & 255) << 16 | (sourceData[sourceOffset + 2] & 255) << 8 | sourceData[sourceOffset + 3] & 255;
-					break;
-				case 1:
-					sourcePixel = (sourceData[sourceOffset + 1] & 255) << 24 | (sourceData[sourceOffset + 2] & 255) << 16 | (sourceData[sourceOffset + 3] & 255) << 8 | sourceData[sourceOffset] & 255;
-					break;
-				case 2:
-					sourcePixel = (sourceData[sourceOffset + 2] & 255) << 24 | (sourceData[sourceOffset + 1] & 255) << 16 | (sourceData[sourceOffset] & 255) << 8 | sourceData[sourceOffset + 3] & 255;
-					break;
-				}
-				if(premultiplied) {
-					if((sourcePixel & 255) != 0 && (sourcePixel & 255) != 255) {
-						lime_math_RGBA.unmult = 255.0 / (sourcePixel & 255);
-						sourcePixel = (lime_math_RGBA.__clamp[Math.round((sourcePixel >>> 24 & 255) * lime_math_RGBA.unmult)] & 255) << 24 | (lime_math_RGBA.__clamp[Math.round((sourcePixel >>> 16 & 255) * lime_math_RGBA.unmult)] & 255) << 16 | (lime_math_RGBA.__clamp[Math.round((sourcePixel >>> 8 & 255) * lime_math_RGBA.unmult)] & 255) << 8 | sourcePixel & 255 & 255;
-					}
-				}
-				if((sourcePixel & 255) == 0) {
-					destPixel = 0;
-				} else {
-					var value = Math.max(0,Math.min(this.__matrix[0] * (sourcePixel >>> 24 & 255) + this.__matrix[1] * (sourcePixel >>> 16 & 255) + this.__matrix[2] * (sourcePixel >>> 8 & 255) + this.__matrix[3] * (sourcePixel & 255) + this.__matrix[4],255)) | 0;
-					destPixel = (value & 255) << 24 | (destPixel >>> 16 & 255 & 255) << 16 | (destPixel >>> 8 & 255 & 255) << 8 | destPixel & 255 & 255;
-					var value1 = Math.max(0,Math.min(this.__matrix[5] * (sourcePixel >>> 24 & 255) + this.__matrix[6] * (sourcePixel >>> 16 & 255) + this.__matrix[7] * (sourcePixel >>> 8 & 255) + this.__matrix[8] * (sourcePixel & 255) + this.__matrix[9],255)) | 0;
-					destPixel = (destPixel >>> 24 & 255 & 255) << 24 | (value1 & 255) << 16 | (destPixel >>> 8 & 255 & 255) << 8 | destPixel & 255 & 255;
-					var value2 = Math.max(0,Math.min(this.__matrix[10] * (sourcePixel >>> 24 & 255) + this.__matrix[11] * (sourcePixel >>> 16 & 255) + this.__matrix[12] * (sourcePixel >>> 8 & 255) + this.__matrix[13] * (sourcePixel & 255) + this.__matrix[14],255)) | 0;
-					destPixel = (destPixel >>> 24 & 255 & 255) << 24 | (destPixel >>> 16 & 255 & 255) << 16 | (value2 & 255) << 8 | destPixel & 255 & 255;
-					var value3 = Math.max(0,Math.min(this.__matrix[15] * (sourcePixel >>> 24 & 255) + this.__matrix[16] * (sourcePixel >>> 16 & 255) + this.__matrix[17] * (sourcePixel >>> 8 & 255) + this.__matrix[18] * (sourcePixel & 255) + this.__matrix[19],255)) | 0;
-					destPixel = (destPixel >>> 24 & 255 & 255) << 24 | (destPixel >>> 16 & 255 & 255) << 16 | (destPixel >>> 8 & 255 & 255) << 8 | value3 & 255;
-				}
-				var format1 = destFormat;
-				var premultiplied1 = destPremultiplied;
-				if(premultiplied1 == null) {
-					premultiplied1 = false;
-				}
-				if(format1 == null) {
-					format1 = 0;
-				}
-				if(premultiplied1) {
-					if((destPixel & 255) == 0) {
-						if(destPixel != 0) {
-							destPixel = 0;
-						}
-					} else if((destPixel & 255) != 255) {
-						lime_math_RGBA.a16 = lime_math_RGBA.__alpha16[destPixel & 255];
-						destPixel = ((destPixel >>> 24 & 255) * lime_math_RGBA.a16 >> 16 & 255) << 24 | ((destPixel >>> 16 & 255) * lime_math_RGBA.a16 >> 16 & 255) << 16 | ((destPixel >>> 8 & 255) * lime_math_RGBA.a16 >> 16 & 255) << 8 | destPixel & 255 & 255;
-					}
-				}
-				switch(format1) {
-				case 0:
-					destData[destOffset] = destPixel >>> 24 & 255;
-					destData[destOffset + 1] = destPixel >>> 16 & 255;
-					destData[destOffset + 2] = destPixel >>> 8 & 255;
-					destData[destOffset + 3] = destPixel & 255;
-					break;
-				case 1:
-					destData[destOffset] = destPixel & 255;
-					destData[destOffset + 1] = destPixel >>> 24 & 255;
-					destData[destOffset + 2] = destPixel >>> 16 & 255;
-					destData[destOffset + 3] = destPixel >>> 8 & 255;
-					break;
-				case 2:
-					destData[destOffset] = destPixel >>> 8 & 255;
-					destData[destOffset + 1] = destPixel >>> 16 & 255;
-					destData[destOffset + 2] = destPixel >>> 24 & 255;
-					destData[destOffset + 3] = destPixel & 255;
-					break;
-				}
-			}
-		}
-		destBitmapData.image.dirty = true;
-		return destBitmapData;
-	}
-	,__initShader: function(renderer,pass,sourceBitmapData) {
-		openfl_filters_ColorMatrixFilter.__colorMatrixShader.init(this.get_matrix());
-		return openfl_filters_ColorMatrixFilter.__colorMatrixShader;
-	}
-	,get_matrix: function() {
-		return this.__matrix;
-	}
-	,set_matrix: function(value) {
-		if(value == null) {
-			value = [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0];
-		}
-		return this.__matrix = value;
-	}
-	,__class__: openfl_filters_ColorMatrixFilter
-	,__properties__: {set_matrix:"set_matrix",get_matrix:"get_matrix"}
-});
 var openfl_geom_Matrix3D = function(v) {
 	if(v != null && v.get_length() == 16) {
 		this.rawData = v.concat(null);
@@ -69574,1857 +70790,6 @@ openfl_text_StyleSheet.prototype = $extend(openfl_events_EventDispatcher.prototy
 	}
 	,__class__: openfl_text_StyleSheet
 	,__properties__: {get_styleNames:"get_styleNames"}
-});
-var openfl_text_TextField = function() {
-	this.__forceCachedBitmapUpdate = false;
-	this.__renderedOnCanvasWhileOnDOM = false;
-	this.__mouseScrollVCounter = 0;
-	this.condenseWhite = false;
-	openfl_display_InteractiveObject.call(this);
-	this.__wordSelection = false;
-	this.__drawableType = 7;
-	this.__caretIndex = -1;
-	this.__selectionIndex = -1;
-	this.__displayAsPassword = false;
-	this.__graphics = new openfl_display_Graphics(this);
-	this.__textEngine = new openfl_text__$internal_TextEngine(this);
-	this.__layoutDirty = true;
-	this.__offsetX = 0;
-	this.__offsetY = 0;
-	this.__mouseWheelEnabled = true;
-	this.__text = "";
-	if(openfl_text_TextField.__defaultTextFormat == null) {
-		openfl_text_TextField.__defaultTextFormat = new openfl_text_TextFormat("Times New Roman",12,0,false,false,false,"","",3,0,0,0,0);
-		openfl_text_TextField.__defaultTextFormat.blockIndent = 0;
-		openfl_text_TextField.__defaultTextFormat.bullet = false;
-		openfl_text_TextField.__defaultTextFormat.letterSpacing = 0;
-		openfl_text_TextField.__defaultTextFormat.kerning = false;
-	}
-	this.__textFormat = openfl_text_TextField.__defaultTextFormat.clone();
-	this.__textEngine.textFormatRanges.push(new openfl_text__$internal_TextFormatRange(this.__textFormat,0,0));
-	this.addEventListener("mouseDown",$bind(this,this.this_onMouseDown));
-	this.addEventListener("focusIn",$bind(this,this.this_onFocusIn));
-	this.addEventListener("focusOut",$bind(this,this.this_onFocusOut));
-	this.addEventListener("keyDown",$bind(this,this.this_onKeyDown));
-	this.addEventListener("mouseWheel",$bind(this,this.this_onMouseWheel));
-};
-$hxClasses["openfl.text.TextField"] = openfl_text_TextField;
-openfl_text_TextField.__name__ = "openfl.text.TextField";
-openfl_text_TextField.__super__ = openfl_display_InteractiveObject;
-openfl_text_TextField.prototype = $extend(openfl_display_InteractiveObject.prototype,{
-	appendText: function(text) {
-		if(text == null || text == "") {
-			return;
-		}
-		this.__dirty = true;
-		this.__layoutDirty = true;
-		if(!this.__renderDirty) {
-			this.__renderDirty = true;
-			this.__setParentRenderDirty();
-		}
-		this.__updateText(this.__text + text);
-		this.__textEngine.textFormatRanges.get(this.__textEngine.textFormatRanges.get_length() - 1).end = this.__text.length;
-		this.__selectionIndex = this.__caretIndex = this.__text.length;
-	}
-	,getCharBoundaries: function(charIndex) {
-		if(charIndex < 0 || charIndex > this.__text.length - 1) {
-			return null;
-		}
-		var rect = new openfl_geom_Rectangle();
-		if(this.__getCharBoundaries(charIndex,rect)) {
-			return rect;
-		} else {
-			return null;
-		}
-	}
-	,getCharIndexAtPoint: function(x,y) {
-		if(x <= 2 || x > this.get_width() + 4 || y <= 0 || y > this.get_height() + 4) {
-			return -1;
-		}
-		this.__updateLayout();
-		x += this.get_scrollH();
-		var _g = 0;
-		var _g1 = this.get_scrollV() - 1;
-		while(_g < _g1) {
-			var i = _g++;
-			y += this.__textEngine.lineHeights.get(i);
-		}
-		var group = this.__textEngine.layoutGroups.iterator();
-		while(group.hasNext()) {
-			var group1 = group.next();
-			if(y >= group1.offsetY && y <= group1.offsetY + group1.height) {
-				if(x >= group1.offsetX && x <= group1.offsetX + group1.width) {
-					var advance = 0.0;
-					var _g = 0;
-					var _g1 = group1.positions.length;
-					while(_g < _g1) {
-						var i = _g++;
-						advance += group1.positions[i];
-						if(x <= group1.offsetX + advance) {
-							return group1.startIndex + i;
-						}
-					}
-					return group1.endIndex;
-				}
-			}
-		}
-		return -1;
-	}
-	,getFirstCharInParagraph: function(charIndex) {
-		if(charIndex < 0 || charIndex > this.get_text().length) {
-			return -1;
-		}
-		if(this.__textEngine.lineBreaks.get_length() == 0) {
-			return 0;
-		}
-		var _g = 0;
-		var _g1 = this.__textEngine.lineBreaks.get_length();
-		while(_g < _g1) {
-			var i = _g++;
-			if(charIndex <= this.__textEngine.lineBreaks.get(i)) {
-				if(i == 0) {
-					return 0;
-				} else {
-					return this.__textEngine.lineBreaks.get(i - 1) + 1;
-				}
-			}
-		}
-		return this.__textEngine.lineBreaks.get(this.__textEngine.lineBreaks.get_length() - 1) + 1;
-	}
-	,getLineIndexAtPoint: function(x,y) {
-		this.__updateLayout();
-		if(x <= 2 || x > this.get_width() + 4 || y <= 0 || y > this.get_height() + 4) {
-			return -1;
-		}
-		var _g = 0;
-		var _g1 = this.get_scrollV() - 1;
-		while(_g < _g1) {
-			var i = _g++;
-			y += this.__textEngine.lineHeights.get(i);
-		}
-		var group = this.__textEngine.layoutGroups.iterator();
-		while(group.hasNext()) {
-			var group1 = group.next();
-			if(y >= group1.offsetY && y <= group1.offsetY + group1.height) {
-				return group1.lineIndex;
-			}
-		}
-		return -1;
-	}
-	,getLineIndexOfChar: function(charIndex) {
-		if(charIndex < 0 || charIndex > this.__text.length) {
-			return -1;
-		}
-		this.__updateLayout();
-		var group = this.__textEngine.layoutGroups.iterator();
-		while(group.hasNext()) {
-			var group1 = group.next();
-			if(group1.startIndex <= charIndex && group1.endIndex >= charIndex) {
-				return group1.lineIndex;
-			}
-		}
-		return -1;
-	}
-	,getLineLength: function(lineIndex) {
-		this.__updateLayout();
-		if(lineIndex < 0 || lineIndex > this.__textEngine.numLines - 1) {
-			return 0;
-		}
-		var startIndex = -1;
-		var endIndex = -1;
-		var group = this.__textEngine.layoutGroups.iterator();
-		while(group.hasNext()) {
-			var group1 = group.next();
-			if(group1.lineIndex == lineIndex) {
-				if(startIndex == -1) {
-					startIndex = group1.startIndex;
-				}
-			} else if(group1.lineIndex == lineIndex + 1) {
-				endIndex = group1.startIndex;
-				break;
-			}
-		}
-		if(endIndex == -1) {
-			endIndex = this.__text.length;
-		}
-		return endIndex - startIndex;
-	}
-	,getLineMetrics: function(lineIndex) {
-		this.__updateLayout();
-		var ascender = this.__textEngine.lineAscents.get(lineIndex);
-		var descender = this.__textEngine.lineDescents.get(lineIndex);
-		var leading = this.__textEngine.lineLeadings.get(lineIndex);
-		var lineHeight = this.__textEngine.lineHeights.get(lineIndex);
-		var lineWidth = this.__textEngine.lineWidths.get(lineIndex);
-		var margin;
-		switch(this.__textFormat.align) {
-		case 0:
-			margin = (this.__textEngine.width - lineWidth) / 2;
-			break;
-		case 1:case 4:
-			margin = this.__textEngine.width - lineWidth - 2;
-			break;
-		case 2:case 3:case 5:
-			margin = 2;
-			break;
-		}
-		return new openfl_text_TextLineMetrics(margin,lineWidth,lineHeight,ascender,descender,leading);
-	}
-	,getLineOffset: function(lineIndex) {
-		this.__updateLayout();
-		if(lineIndex < 0 || lineIndex > this.__textEngine.numLines - 1) {
-			return -1;
-		}
-		var group = this.__textEngine.layoutGroups.iterator();
-		while(group.hasNext()) {
-			var group1 = group.next();
-			if(group1.lineIndex == lineIndex) {
-				return group1.startIndex;
-			}
-		}
-		return 0;
-	}
-	,getLineText: function(lineIndex) {
-		this.__updateLayout();
-		if(lineIndex < 0 || lineIndex > this.__textEngine.numLines - 1) {
-			return null;
-		}
-		var startIndex = -1;
-		var endIndex = -1;
-		var group = this.__textEngine.layoutGroups.iterator();
-		while(group.hasNext()) {
-			var group1 = group.next();
-			if(group1.lineIndex == lineIndex) {
-				if(startIndex == -1) {
-					startIndex = group1.startIndex;
-				}
-			} else if(group1.lineIndex == lineIndex + 1) {
-				endIndex = group1.startIndex;
-				break;
-			}
-		}
-		if(endIndex == -1) {
-			endIndex = this.__text.length;
-		}
-		return this.__textEngine.text.substring(startIndex,endIndex);
-	}
-	,getParagraphLength: function(charIndex) {
-		if(charIndex < 0 || charIndex > this.get_text().length) {
-			return -1;
-		}
-		var startIndex = this.getFirstCharInParagraph(charIndex);
-		if(charIndex >= this.get_text().length) {
-			return this.get_text().length - startIndex + 1;
-		}
-		var endIndex = this.__textEngine.getLineBreakIndex(charIndex) + 1;
-		if(endIndex == 0) {
-			endIndex = this.__text.length;
-		}
-		return endIndex - startIndex;
-	}
-	,getTextFormat: function(beginIndex,endIndex) {
-		if(endIndex == null) {
-			endIndex = -1;
-		}
-		if(beginIndex == null) {
-			beginIndex = -1;
-		}
-		var format = null;
-		if(beginIndex >= this.get_text().length || beginIndex < -1 || endIndex > this.get_text().length || endIndex < -1) {
-			throw new openfl_errors_RangeError("The supplied index is out of bounds");
-		}
-		if(beginIndex == -1) {
-			beginIndex = 0;
-		}
-		if(endIndex == -1) {
-			endIndex = this.get_text().length;
-		}
-		if(beginIndex >= endIndex) {
-			return new openfl_text_TextFormat();
-		}
-		var group = this.__textEngine.textFormatRanges.iterator();
-		while(group.hasNext()) {
-			var group1 = group.next();
-			if(group1.start <= beginIndex && group1.end > beginIndex || group1.start < endIndex && group1.end >= endIndex) {
-				if(format == null) {
-					format = group1.format.clone();
-				} else {
-					if(group1.format.font != format.font) {
-						format.font = null;
-					}
-					if(group1.format.size != format.size) {
-						format.size = null;
-					}
-					if(group1.format.color != format.color) {
-						format.color = null;
-					}
-					if(group1.format.bold != format.bold) {
-						format.bold = null;
-					}
-					if(group1.format.italic != format.italic) {
-						format.italic = null;
-					}
-					if(group1.format.underline != format.underline) {
-						format.underline = null;
-					}
-					if(group1.format.url != format.url) {
-						format.url = null;
-					}
-					if(group1.format.target != format.target) {
-						format.target = null;
-					}
-					if(group1.format.align != format.align) {
-						format.align = null;
-					}
-					if(group1.format.leftMargin != format.leftMargin) {
-						format.leftMargin = null;
-					}
-					if(group1.format.rightMargin != format.rightMargin) {
-						format.rightMargin = null;
-					}
-					if(group1.format.indent != format.indent) {
-						format.indent = null;
-					}
-					if(group1.format.leading != format.leading) {
-						format.leading = null;
-					}
-					if(group1.format.blockIndent != format.blockIndent) {
-						format.blockIndent = null;
-					}
-					if(group1.format.bullet != format.bullet) {
-						format.bullet = null;
-					}
-					if(group1.format.kerning != format.kerning) {
-						format.kerning = null;
-					}
-					if(group1.format.letterSpacing != format.letterSpacing) {
-						format.letterSpacing = null;
-					}
-					if(group1.format.tabStops != format.tabStops) {
-						format.tabStops = null;
-					}
-				}
-			}
-		}
-		if(format == null) {
-			format = new openfl_text_TextFormat();
-		}
-		return format;
-	}
-	,replaceSelectedText: function(value) {
-		this.__replaceSelectedText(value,false);
-	}
-	,replaceText: function(beginIndex,endIndex,newText) {
-		this.__replaceText(beginIndex,endIndex,newText,false);
-	}
-	,setSelection: function(beginIndex,endIndex) {
-		this.__selectionIndex = beginIndex;
-		this.__caretIndex = endIndex;
-		this.__updateScrollV();
-		this.__updateScrollH();
-		if(this.stage != null && this.stage.get_focus() == this) {
-			this.__stopCursorTimer();
-			this.__startCursorTimer();
-		}
-	}
-	,setTextFormat: function(format,beginIndex,endIndex) {
-		if(endIndex == null) {
-			endIndex = -1;
-		}
-		if(beginIndex == null) {
-			beginIndex = -1;
-		}
-		var max = this.get_text().length;
-		var range;
-		if(beginIndex == -1) {
-			if(endIndex == -1) {
-				endIndex = max;
-			}
-			beginIndex = 0;
-		} else if(endIndex == -1) {
-			endIndex = beginIndex + 1;
-		}
-		if(beginIndex == endIndex) {
-			return;
-		}
-		if(beginIndex < 0 || endIndex <= 0 || endIndex < beginIndex || beginIndex >= max || endIndex > max) {
-			throw new openfl_errors_RangeError();
-		}
-		if(beginIndex == 0 && endIndex == max) {
-			this.__textEngine.textFormatRanges.set_length(1);
-			range = this.__textEngine.textFormatRanges.get(0);
-			range.start = 0;
-			range.end = max;
-			range.format.__merge(format);
-		} else {
-			var index = 0;
-			var newRange;
-			while(index < this.__textEngine.textFormatRanges.get_length()) {
-				range = this.__textEngine.textFormatRanges.get(index);
-				if(range.end <= beginIndex) {
-					++index;
-				} else if(range.start >= endIndex) {
-					break;
-				} else if(range.start <= beginIndex && range.end >= endIndex) {
-					if(range.start == beginIndex && range.end == endIndex) {
-						range.format = range.format.clone();
-						range.format.__merge(format);
-						break;
-					} else if(range.start == beginIndex) {
-						newRange = new openfl_text__$internal_TextFormatRange(range.format.clone(),beginIndex,endIndex);
-						newRange.format.__merge(format);
-						this.__textEngine.textFormatRanges.insertAt(index,newRange);
-						range.start = endIndex;
-						index += 2;
-					} else if(range.end == endIndex) {
-						newRange = new openfl_text__$internal_TextFormatRange(range.format.clone(),beginIndex,endIndex);
-						newRange.format.__merge(format);
-						this.__textEngine.textFormatRanges.insertAt(index + 1,newRange);
-						range.end = beginIndex;
-						break;
-					} else {
-						newRange = new openfl_text__$internal_TextFormatRange(range.format.clone(),beginIndex,endIndex);
-						newRange.format.__merge(format);
-						this.__textEngine.textFormatRanges.insertAt(index + 1,newRange);
-						newRange = new openfl_text__$internal_TextFormatRange(range.format.clone(),endIndex,range.end);
-						this.__textEngine.textFormatRanges.insertAt(index + 2,newRange);
-						range.end = beginIndex;
-						break;
-					}
-				} else if(range.start >= beginIndex && range.end <= endIndex) {
-					if(range.start == beginIndex) {
-						range.format = range.format.clone();
-						range.format.__merge(format);
-						range.end = endIndex;
-					} else {
-						this.__textEngine.textFormatRanges.removeAt(index);
-					}
-				} else if(range.start > beginIndex && range.end > beginIndex) {
-					range.start = endIndex;
-					break;
-				} else if(range.start < beginIndex && range.end <= endIndex) {
-					newRange = new openfl_text__$internal_TextFormatRange(range.format.clone(),beginIndex,endIndex);
-					newRange.format.__merge(format);
-					this.__textEngine.textFormatRanges.insertAt(index + 1,newRange);
-					range.end = beginIndex;
-					index += 2;
-				} else {
-					++index;
-					lime_utils_Log.warn("You found a bug in OpenFL's text code! Please save a copy of your project and create an issue on GitHub so we can fix this.",{ fileName : "openfl/text/TextField.hx", lineNumber : 1610, className : "openfl.text.TextField", methodName : "setTextFormat"});
-				}
-			}
-		}
-		this.__dirty = true;
-		this.__layoutDirty = true;
-		if(!this.__renderDirty) {
-			this.__renderDirty = true;
-			this.__setParentRenderDirty();
-		}
-	}
-	,__setStageReference: function(stage) {
-		this.__stopTextInput();
-		openfl_display_InteractiveObject.prototype.__setStageReference.call(this,stage);
-	}
-	,__allowMouseFocus: function() {
-		return this.mouseEnabled;
-	}
-	,__caretBeginningOfLine: function() {
-		this.__caretIndex = this.getLineOffset(this.getLineIndexOfChar(this.__caretIndex));
-	}
-	,__caretBeginningOfNextLine: function() {
-		var lineIndex = this.getLineIndexOfChar(this.__caretIndex);
-		if(lineIndex < this.__textEngine.numLines - 1) {
-			this.__caretIndex = this.getLineOffset(lineIndex + 1);
-		} else {
-			this.__caretIndex = this.__text.length;
-		}
-	}
-	,__caretBeginningOfPreviousLine: function() {
-		var lineIndex = this.getLineIndexOfChar(this.__caretIndex);
-		if(lineIndex > 0) {
-			var index = this.getLineOffset(this.getLineIndexOfChar(this.__caretIndex));
-			if(this.__caretIndex == index) {
-				this.__caretIndex = this.getLineOffset(lineIndex - 1);
-			} else {
-				this.__caretIndex = index;
-			}
-		}
-	}
-	,__caretEndOfLine: function() {
-		var lineIndex = this.getLineIndexOfChar(this.__caretIndex);
-		if(lineIndex < this.__textEngine.numLines - 1) {
-			this.__caretIndex = this.getLineOffset(lineIndex + 1) - 1;
-		} else {
-			this.__caretIndex = this.__text.length;
-		}
-	}
-	,__caretNextCharacter: function() {
-		if(this.__caretIndex < this.__text.length) {
-			this.__caretIndex++;
-		}
-	}
-	,__caretNextLine: function() {
-		var lineIndex = this.getLineIndexOfChar(this.__caretIndex);
-		if(lineIndex < this.__textEngine.numLines - 1) {
-			this.__caretIndex = this.__getCharIndexOnDifferentLine(this.get_caretIndex(),lineIndex + 1);
-		}
-	}
-	,__caretPreviousCharacter: function() {
-		if(this.__caretIndex > 0) {
-			this.__caretIndex--;
-		}
-	}
-	,__caretPreviousLine: function() {
-		var lineIndex = this.getLineIndexOfChar(this.__caretIndex);
-		if(lineIndex > 0) {
-			this.__caretIndex = this.__getCharIndexOnDifferentLine(this.get_caretIndex(),lineIndex - 1);
-		}
-	}
-	,__disableInput: function() {
-		if(this.__inputEnabled && this.stage != null) {
-			this.stage.window.__backend.setTextInputEnabled(false);
-			this.stage.window.onTextInput.remove($bind(this,this.window_onTextInput));
-			this.stage.window.onKeyDown.remove($bind(this,this.window_onKeyDown));
-			this.__inputEnabled = false;
-			this.__stopCursorTimer();
-		}
-	}
-	,__dispatch: function(event) {
-		if(event.eventPhase == 2 && event.type == "mouseUp") {
-			var event1 = event;
-			var group = this.__getGroup(this.get_mouseX(),this.get_mouseY(),true);
-			if(group != null) {
-				var url = group.format.url;
-				if(url != null && url != "") {
-					if(StringTools.startsWith(url,"event:")) {
-						this.dispatchEvent(new openfl_events_TextEvent("link",true,false,HxOverrides.substr(url,6,null)));
-					} else {
-						openfl_Lib.getURL(new openfl_net_URLRequest(url));
-					}
-				}
-			}
-		}
-		return openfl_display_InteractiveObject.prototype.__dispatch.call(this,event);
-	}
-	,__enableInput: function() {
-		if(this.stage != null) {
-			var bounds = this.getBounds(this.stage);
-			var limeRect = new lime_math_Rectangle(bounds.x,bounds.y,bounds.width,bounds.height);
-			this.stage.window.setTextInputRect(limeRect);
-			this.stage.window.__backend.setTextInputEnabled(true);
-			if(!this.__inputEnabled) {
-				this.stage.window.__backend.setTextInputEnabled(true);
-				if(!this.stage.window.onTextInput.has($bind(this,this.window_onTextInput))) {
-					this.stage.window.onTextInput.add($bind(this,this.window_onTextInput));
-					this.stage.window.onKeyDown.add($bind(this,this.window_onKeyDown));
-				}
-				this.__inputEnabled = true;
-				this.__stopCursorTimer();
-				this.__startCursorTimer();
-			}
-		}
-	}
-	,__getAdvance: function(position) {
-		return position;
-	}
-	,__getBounds: function(rect,matrix) {
-		this.__updateLayout();
-		var bounds = openfl_geom_Rectangle.__pool.get();
-		bounds.copyFrom(this.__textEngine.bounds);
-		bounds.offset(this.__offsetX,this.__offsetY);
-		bounds.__transform(bounds,matrix);
-		rect.__expand(bounds.x,bounds.y,bounds.width,bounds.height);
-		openfl_geom_Rectangle.__pool.release(bounds);
-	}
-	,__getCharBoundaries: function(charIndex,rect) {
-		if(charIndex < 0 || charIndex > this.__text.length - 1) {
-			return false;
-		}
-		this.__updateLayout();
-		var group = this.__textEngine.layoutGroups.iterator();
-		while(group.hasNext()) {
-			var group1 = group.next();
-			if(charIndex >= group1.startIndex && charIndex < group1.endIndex) {
-				try {
-					var x = group1.offsetX;
-					var _g = 0;
-					var _g1 = charIndex - group1.startIndex;
-					while(_g < _g1) {
-						var i = _g++;
-						x += group1.positions[i];
-					}
-					var lastPosition = group1.positions[charIndex - group1.startIndex];
-					rect.setTo(x,group1.offsetY,lastPosition,group1.ascent + group1.descent);
-					return true;
-				} catch( _g2 ) {
-					haxe_NativeStackTrace.lastError = _g2;
-				}
-			}
-		}
-		return false;
-	}
-	,__getCharIndexOnDifferentLine: function(charIndex,lineIndex) {
-		if(charIndex < 0 || charIndex > this.__text.length) {
-			return -1;
-		}
-		if(lineIndex < 0 || lineIndex > this.__textEngine.numLines - 1) {
-			return -1;
-		}
-		var x = null;
-		var y = null;
-		var group = this.__textEngine.layoutGroups.iterator();
-		while(group.hasNext()) {
-			var group1 = group.next();
-			if(charIndex >= group1.startIndex && charIndex <= group1.endIndex) {
-				x = group1.offsetX;
-				var _g = 0;
-				var _g1 = charIndex - group1.startIndex;
-				while(_g < _g1) {
-					var i = _g++;
-					x += group1.positions[i];
-				}
-				if(y != null) {
-					return this.__getPosition(x,y);
-				}
-			}
-			if(group1.lineIndex == lineIndex) {
-				y = group1.offsetY + group1.height / 2;
-				var _g2 = 0;
-				var _g3 = this.get_scrollV() - 1;
-				while(_g2 < _g3) {
-					var i1 = _g2++;
-					y -= this.__textEngine.lineHeights.get(i1);
-				}
-				if(x != null) {
-					return this.__getPosition(x,y);
-				}
-			}
-		}
-		return -1;
-	}
-	,__getCursor: function() {
-		var group = this.__getGroup(this.get_mouseX(),this.get_mouseY(),true);
-		if(group != null && group.format.url != "") {
-			return "button";
-		} else if(this.__textEngine.selectable) {
-			return "ibeam";
-		}
-		return null;
-	}
-	,__getGroup: function(x,y,precise) {
-		if(precise == null) {
-			precise = false;
-		}
-		this.__updateLayout();
-		x += this.get_scrollH();
-		var _g = 0;
-		var _g1 = this.get_scrollV() - 1;
-		while(_g < _g1) {
-			var i = _g++;
-			y += this.__textEngine.lineHeights.get(i);
-		}
-		if(!precise && y > this.__textEngine.textHeight) {
-			y = this.__textEngine.textHeight;
-		}
-		var firstGroup = true;
-		var group;
-		var nextGroup;
-		var _g = 0;
-		var _g1 = this.__textEngine.layoutGroups.get_length();
-		while(_g < _g1) {
-			var i = _g++;
-			group = this.__textEngine.layoutGroups.get(i);
-			if(i < this.__textEngine.layoutGroups.get_length() - 1) {
-				nextGroup = this.__textEngine.layoutGroups.get(i + 1);
-			} else {
-				nextGroup = null;
-			}
-			if(firstGroup) {
-				if(y < group.offsetY) {
-					y = group.offsetY;
-				}
-				if(x < group.offsetX) {
-					x = group.offsetX;
-				}
-				firstGroup = false;
-			}
-			if(y >= group.offsetY && y <= group.offsetY + group.height || !precise && nextGroup == null) {
-				if(x >= group.offsetX && x <= group.offsetX + group.width || !precise && (nextGroup == null || nextGroup.lineIndex != group.lineIndex)) {
-					return group;
-				}
-			}
-		}
-		return null;
-	}
-	,__getPosition: function(x,y) {
-		var group = this.__getGroup(x,y);
-		if(group == null) {
-			return this.__text.length;
-		}
-		var advance = 0.0;
-		var _g = 0;
-		var _g1 = group.positions.length;
-		while(_g < _g1) {
-			var i = _g++;
-			advance += group.positions[i];
-			if(x <= group.offsetX + advance) {
-				if(x <= group.offsetX + (advance - group.positions[i]) + group.positions[i] / 2) {
-					return group.startIndex + i;
-				} else if(group.startIndex + i < group.endIndex) {
-					return group.startIndex + i + 1;
-				} else {
-					return group.endIndex;
-				}
-			}
-		}
-		return group.endIndex;
-	}
-	,__getPositionByIdentifier: function(x,y,line) {
-		var position = this.__getPosition(x,y);
-		var delimiters = line ? "\n" : " .,;:!?()[]{}<>/\\|-=+*&^%$#@~`'\"";
-		var char = this.__text.charAt(position);
-		if(this.__specialSelectionInitialIndex <= position) {
-			while(delimiters.indexOf(char) == -1 && position < this.__text.length) {
-				++position;
-				char = this.__text.charAt(position);
-			}
-		} else {
-			while(delimiters.indexOf(char) == -1 && position > 0) {
-				--position;
-				char = this.__text.charAt(position);
-			}
-			if(position == 0) {
-				return position;
-			}
-			++position;
-		}
-		return position;
-	}
-	,__getOppositeIdentifierBound: function(charIndex,line) {
-		var position = charIndex;
-		var delimiters = line ? "\n" : " .,;:!?()[]{}<>/\\|-=+*&^%$#@~`'\"";
-		var char = this.__text.charAt(position);
-		if(position <= this.__caretIndex) {
-			while(delimiters.indexOf(char) == -1 && position > 0) {
-				--position;
-				char = this.__text.charAt(position);
-			}
-			if(position == 0) {
-				return position;
-			}
-			++position;
-		} else {
-			while(delimiters.indexOf(char) == -1 && position < this.__text.length) {
-				++position;
-				char = this.__text.charAt(position);
-			}
-		}
-		return position;
-	}
-	,__hitTest: function(x,y,shapeFlag,stack,interactiveOnly,hitObject) {
-		if(!hitObject.get_visible() || this.__isMask || interactiveOnly && !this.mouseEnabled) {
-			return false;
-		}
-		if(this.get_mask() != null && !this.get_mask().__hitTestMask(x,y)) {
-			return false;
-		}
-		this.__getRenderTransform();
-		this.__updateLayout();
-		var _this = this.__renderTransform;
-		var norm = _this.a * _this.d - _this.b * _this.c;
-		var px = norm == 0 ? -_this.tx : 1.0 / norm * (_this.c * (_this.ty - y) + _this.d * (x - _this.tx));
-		var _this = this.__renderTransform;
-		var norm = _this.a * _this.d - _this.b * _this.c;
-		var py = norm == 0 ? -_this.ty : 1.0 / norm * (_this.a * (y - _this.ty) + _this.b * (_this.tx - x));
-		if(this.__textEngine.bounds.contains(px,py)) {
-			if(stack != null) {
-				stack.push(hitObject);
-			}
-			return true;
-		}
-		return false;
-	}
-	,__hitTestMask: function(x,y) {
-		this.__getRenderTransform();
-		this.__updateLayout();
-		var _this = this.__renderTransform;
-		var norm = _this.a * _this.d - _this.b * _this.c;
-		var px = norm == 0 ? -_this.tx : 1.0 / norm * (_this.c * (_this.ty - y) + _this.d * (x - _this.tx));
-		var _this = this.__renderTransform;
-		var norm = _this.a * _this.d - _this.b * _this.c;
-		var py = norm == 0 ? -_this.ty : 1.0 / norm * (_this.a * (y - _this.ty) + _this.b * (_this.tx - x));
-		if(this.__textEngine.bounds.contains(px,py)) {
-			return true;
-		}
-		return false;
-	}
-	,__replaceSelectedText: function(value,restrict) {
-		if(restrict == null) {
-			restrict = true;
-		}
-		if(value == null) {
-			value = "";
-		}
-		if(value == "" && this.__selectionIndex == this.__caretIndex) {
-			return;
-		}
-		var startIndex = this.__caretIndex < this.__selectionIndex ? this.__caretIndex : this.__selectionIndex;
-		var endIndex = this.__caretIndex > this.__selectionIndex ? this.__caretIndex : this.__selectionIndex;
-		if(startIndex == endIndex && this.__textEngine.maxChars > 0 && this.__text.length == this.__textEngine.maxChars) {
-			return;
-		}
-		if(startIndex > this.__text.length) {
-			startIndex = this.__text.length;
-		}
-		if(endIndex > this.__text.length) {
-			endIndex = this.__text.length;
-		}
-		if(endIndex < startIndex) {
-			var cache = endIndex;
-			endIndex = startIndex;
-			startIndex = cache;
-		}
-		if(startIndex < 0) {
-			startIndex = 0;
-		}
-		this.__replaceText(startIndex,endIndex,value,restrict);
-	}
-	,__replaceText: function(beginIndex,endIndex,newText,restrict) {
-		if(endIndex < beginIndex || beginIndex < 0 || endIndex > this.__text.length || newText == null) {
-			return;
-		}
-		if(restrict) {
-			newText = this.__textEngine.restrictText(newText);
-			if(this.__textEngine.maxChars > 0) {
-				var removeLength = endIndex - beginIndex;
-				var maxLength = this.__textEngine.maxChars - this.__text.length + removeLength;
-				if(maxLength <= 0) {
-					newText = "";
-				} else if(maxLength < newText.length) {
-					newText = HxOverrides.substr(newText,0,maxLength);
-				}
-			}
-		}
-		this.__updateText(this.__text.substring(0,beginIndex) + newText + this.__text.substring(endIndex));
-		var offset = newText.length - (endIndex - beginIndex);
-		var i = 0;
-		var range;
-		while(i < this.__textEngine.textFormatRanges.get_length()) {
-			range = this.__textEngine.textFormatRanges.get(i);
-			if(beginIndex == endIndex) {
-				if(range.start == range.end) {
-					if(range.start != 0) {
-						lime_utils_Log.warn("You found a bug in OpenFL's text code! Please save a copy of your project and create an issue on GitHub so we can fix this.",{ fileName : "openfl/text/TextField.hx", lineNumber : 2184, className : "openfl.text.TextField", methodName : "__replaceText"});
-					} else {
-						range.end += offset;
-					}
-				} else if(range.end >= beginIndex) {
-					if(range.start >= beginIndex) {
-						range.start += offset;
-						range.end += offset;
-					} else if(range.start < beginIndex && range.end >= endIndex) {
-						range.end += offset;
-					}
-				}
-			} else if(range.end > beginIndex) {
-				if(range.start > endIndex) {
-					range.start += offset;
-					range.end += offset;
-				} else if(range.start <= beginIndex && range.end > endIndex) {
-					range.end += offset;
-				} else if(range.start >= beginIndex && range.end <= endIndex) {
-					var this1 = this.__textEngine.textFormatRanges;
-					this1.__tempIndex = i--;
-					var _g_current = 0;
-					var _g_args = [];
-					while(_g_current < _g_args.length) {
-						var item = _g_args[_g_current++];
-						this1.insertAt(this1.__tempIndex,item);
-						this1.__tempIndex++;
-					}
-					this1.splice(this1.__tempIndex,1);
-				} else if(range.end > endIndex && range.start > beginIndex && range.start <= endIndex) {
-					range.start = beginIndex;
-					range.end += offset;
-				} else if(range.start < beginIndex && range.end > beginIndex && range.end <= endIndex) {
-					range.end = beginIndex;
-				}
-			}
-			++i;
-		}
-		if(this.__textEngine.textFormatRanges.get_length() == 0) {
-			this.__textEngine.textFormatRanges.push(new openfl_text__$internal_TextFormatRange(this.get_defaultTextFormat().clone(),0,newText.length));
-		} else if(beginIndex == endIndex && this.__textEngine.textFormatRanges.get(0).start > 0) {
-			this.__textEngine.textFormatRanges.unshift(new openfl_text__$internal_TextFormatRange(this.get_defaultTextFormat().clone(),0,this.__textEngine.textFormatRanges.get(0).start));
-		} else if(beginIndex != endIndex && this.__textEngine.textFormatRanges.get(this.__textEngine.textFormatRanges.get_length() - 1).end < this.__text.length) {
-			this.__textEngine.textFormatRanges.push(new openfl_text__$internal_TextFormatRange(this.get_defaultTextFormat().clone(),this.__textEngine.textFormatRanges.get(this.__textEngine.textFormatRanges.get_length() - 1).end,this.__text.length));
-		}
-		this.__selectionIndex = this.__caretIndex = beginIndex + newText.length;
-		this.__dirty = true;
-		this.__layoutDirty = true;
-		if(!this.__renderDirty) {
-			this.__renderDirty = true;
-			this.__setParentRenderDirty();
-		}
-	}
-	,__startCursorTimer: function() {
-		if(this.get_type() == 1) {
-			if(this.__inputEnabled) {
-				this.__cursorTimer = haxe_Timer.delay($bind(this,this.__startCursorTimer),600);
-				this.__showCursor = !this.__showCursor;
-			}
-			this.__dirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		} else if(this.get_selectable()) {
-			this.__dirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-	}
-	,__startTextInput: function() {
-		if(this.__caretIndex < 0) {
-			this.__caretIndex = this.__text.length;
-			this.__selectionIndex = this.__caretIndex;
-		}
-		var enableInput = openfl_display_DisplayObject.__supportDOM ? this.__renderedOnCanvasWhileOnDOM : true;
-		if(enableInput) {
-			this.__enableInput();
-		}
-	}
-	,__stopCursorTimer: function() {
-		if(this.__cursorTimer != null) {
-			this.__cursorTimer.stop();
-			this.__cursorTimer = null;
-		}
-		if(this.__showCursor) {
-			this.__showCursor = false;
-			this.__dirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-	}
-	,__stopTextInput: function() {
-		var disableInput = openfl_display_DisplayObject.__supportDOM ? this.__renderedOnCanvasWhileOnDOM : true;
-		if(disableInput) {
-			this.__disableInput();
-		}
-	}
-	,__updateLayout: function() {
-		if(this.__layoutDirty) {
-			var cacheWidth = this.__textEngine.width;
-			this.__textEngine.update();
-			if(this.__textEngine.autoSize != 2) {
-				if(this.__textEngine.width != cacheWidth) {
-					switch(this.__textEngine.autoSize) {
-					case 0:
-						this.set_x(this.get_x() + (cacheWidth - this.__textEngine.width) / 2);
-						break;
-					case 3:
-						this.set_x(this.get_x() + (cacheWidth - this.__textEngine.width));
-						break;
-					default:
-					}
-				}
-				this.__textEngine.getBounds();
-			}
-			this.__layoutDirty = false;
-			this.setSelection(this.__selectionIndex,this.__caretIndex);
-		}
-	}
-	,__updateMouseDrag: function() {
-		if(this.stage == null) {
-			return;
-		}
-		var bounds = this.getBounds(this);
-		if(this.get_mouseX() > bounds.width - 1) {
-			this.set_scrollH(this.get_scrollH() + (Math.max(Math.min((this.get_mouseX() - bounds.width) * .1,10),1) | 0));
-		} else if(this.get_mouseX() < 1) {
-			this.set_scrollH(this.get_scrollH() - (Math.max(Math.min(this.get_mouseX() * -.1,10),1) | 0));
-		}
-		this.__mouseScrollVCounter++;
-		if(this.__mouseScrollVCounter > this.stage.get_frameRate() / 10) {
-			if(this.get_mouseY() > bounds.height - 2) {
-				this.set_scrollV(Math.min(this.get_scrollV() + Math.max(Math.min((this.get_mouseY() - bounds.height) * .03,5),1),this.get_maxScrollV()) | 0);
-			} else if(this.get_mouseY() < 2) {
-				this.set_scrollV(this.get_scrollV() - (Math.max(Math.min(this.get_mouseY() * -.03,5),1) | 0));
-			}
-			this.__mouseScrollVCounter = 0;
-		}
-		this.stage_onMouseMove(null);
-	}
-	,__updateScrollH: function() {
-		this.__updateLayout();
-		var bounds = this.getBounds(this);
-		if(this.get_textWidth() <= bounds.width - 4) {
-			this.set_scrollH(0);
-			return;
-		}
-		var tempScrollH = this.get_scrollH();
-		if(this.__caretIndex == 0 || this.getLineOffset(this.getLineIndexOfChar(this.__caretIndex)) == this.__caretIndex) {
-			tempScrollH = 0;
-		} else {
-			var caret = openfl_geom_Rectangle.__pool.get();
-			var written = false;
-			if(this.__caretIndex < this.__text.length) {
-				written = this.__getCharBoundaries(this.__caretIndex,caret);
-			}
-			if(!written) {
-				this.__getCharBoundaries(this.__caretIndex - 1,caret);
-				caret.x += caret.width;
-			}
-			while(caret.x < tempScrollH && tempScrollH > 0) tempScrollH -= 24;
-			while(caret.x > tempScrollH + bounds.width - 4) tempScrollH += 24;
-			openfl_geom_Rectangle.__pool.release(caret);
-		}
-		if(tempScrollH > 0 && this.get_type() != 1) {
-			var lineLength = this.getLineLength(this.getLineIndexOfChar(this.__caretIndex));
-			if(this.get_scrollH() + bounds.width - 4 > lineLength) {
-				this.set_scrollH(Math.ceil(lineLength - bounds.width + 4));
-			}
-		}
-		if(tempScrollH < 0) {
-			this.set_scrollH(0);
-		} else if(tempScrollH > this.get_maxScrollH()) {
-			this.set_scrollH(this.get_maxScrollH());
-		} else {
-			this.set_scrollH(tempScrollH);
-		}
-	}
-	,__updateScrollV: function() {
-		this.__updateLayout();
-		if(this.get_textHeight() <= this.get_height() - 4) {
-			this.set_scrollV(1);
-			return;
-		}
-		var lineIndex = this.getLineIndexOfChar(this.__caretIndex);
-		if(lineIndex == -1 && this.__caretIndex > 0) {
-			lineIndex = this.getLineIndexOfChar(this.__caretIndex - 1) + 1;
-		}
-		if(lineIndex + 1 < this.get_scrollV()) {
-			this.set_scrollV(lineIndex + 1);
-		} else if(lineIndex + 1 > this.get_bottomScrollV()) {
-			var i = lineIndex;
-			var tempHeight = 0.0;
-			if(i >= this.__textEngine.lineHeights.get_length()) {
-				i = this.__textEngine.lineHeights.get_length() - 1;
-			}
-			while(i >= 0) {
-				tempHeight += this.__textEngine.lineHeights.get(i);
-				if(tempHeight > this.get_height() - 4) {
-					i += tempHeight - this.get_height() < 0 ? 1 : 2;
-					break;
-				}
-				--i;
-			}
-			this.set_scrollV(i);
-		} else {
-			this.set_scrollV(this.get_scrollV());
-		}
-	}
-	,__updateText: function(value) {
-		if(openfl_display_DisplayObject.__supportDOM && this.__renderedOnCanvasWhileOnDOM) {
-			this.__forceCachedBitmapUpdate = this.__text != value;
-		}
-		this.__textEngine.set_text(value);
-		this.__text = this.__textEngine.text;
-		if(this.stage != null && this.stage.get_focus() == this) {
-			if(this.__text.length < this.__selectionIndex) {
-				this.__selectionIndex = this.__text.length;
-			}
-			if(this.__text.length < this.__caretIndex) {
-				this.__caretIndex = this.__text.length;
-			}
-		} else if(this.__isHTML) {
-			this.__selectionIndex = this.__caretIndex = this.__text.length;
-		} else {
-			this.__selectionIndex = 0;
-			this.__caretIndex = 0;
-		}
-		if(!this.__displayAsPassword || openfl_display_DisplayObject.__supportDOM && !this.__renderedOnCanvasWhileOnDOM) {
-			this.__textEngine.set_text(this.__text);
-		} else {
-			var length = this.get_text().length;
-			var mask = "";
-			var _g = 0;
-			var _g1 = length;
-			while(_g < _g1) {
-				var i = _g++;
-				mask += "*";
-			}
-			this.__textEngine.set_text(mask);
-		}
-	}
-	,__updateTransforms: function(overrideTransform) {
-		openfl_display_InteractiveObject.prototype.__updateTransforms.call(this,overrideTransform);
-		var _this = this.__renderTransform;
-		var px = this.__offsetX;
-		var py = this.__offsetY;
-		_this.tx = px * _this.a + py * _this.c + _this.tx;
-		_this.ty = px * _this.b + py * _this.d + _this.ty;
-	}
-	,get_antiAliasType: function() {
-		return this.__textEngine.antiAliasType;
-	}
-	,set_antiAliasType: function(value) {
-		var tmp = value != this.__textEngine.antiAliasType;
-		return this.__textEngine.antiAliasType = value;
-	}
-	,get_autoSize: function() {
-		return this.__textEngine.autoSize;
-	}
-	,set_autoSize: function(value) {
-		if(value != this.__textEngine.autoSize) {
-			this.__dirty = true;
-			this.__layoutDirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-		return this.__textEngine.autoSize = value;
-	}
-	,get_background: function() {
-		return this.__textEngine.background;
-	}
-	,set_background: function(value) {
-		if(value != this.__textEngine.background) {
-			this.__dirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-		return this.__textEngine.background = value;
-	}
-	,get_backgroundColor: function() {
-		return this.__textEngine.backgroundColor;
-	}
-	,set_backgroundColor: function(value) {
-		if(value != this.__textEngine.backgroundColor) {
-			this.__dirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-		return this.__textEngine.backgroundColor = value;
-	}
-	,get_border: function() {
-		return this.__textEngine.border;
-	}
-	,set_border: function(value) {
-		if(value != this.__textEngine.border) {
-			this.__dirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-		return this.__textEngine.border = value;
-	}
-	,get_borderColor: function() {
-		return this.__textEngine.borderColor;
-	}
-	,set_borderColor: function(value) {
-		if(value != this.__textEngine.borderColor) {
-			this.__dirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-		return this.__textEngine.borderColor = value;
-	}
-	,get_bottomScrollV: function() {
-		this.__updateLayout();
-		return this.__textEngine.get_bottomScrollV();
-	}
-	,get_caretIndex: function() {
-		return this.__caretIndex;
-	}
-	,get_defaultTextFormat: function() {
-		return this.__textFormat.clone();
-	}
-	,set_defaultTextFormat: function(value) {
-		this.__textFormat.__merge(value);
-		this.__layoutDirty = true;
-		this.__dirty = true;
-		if(!this.__renderDirty) {
-			this.__renderDirty = true;
-			this.__setParentRenderDirty();
-		}
-		return value;
-	}
-	,get_displayAsPassword: function() {
-		return this.__displayAsPassword;
-	}
-	,set_displayAsPassword: function(value) {
-		if(value != this.__displayAsPassword) {
-			this.__dirty = true;
-			this.__layoutDirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-			this.__displayAsPassword = value;
-			this.__updateText(this.__text);
-		}
-		return value;
-	}
-	,get_embedFonts: function() {
-		return this.__textEngine.embedFonts;
-	}
-	,set_embedFonts: function(value) {
-		return this.__textEngine.embedFonts = value;
-	}
-	,get_gridFitType: function() {
-		return this.__textEngine.gridFitType;
-	}
-	,set_gridFitType: function(value) {
-		return this.__textEngine.gridFitType = value;
-	}
-	,get_height: function() {
-		this.__updateLayout();
-		return this.__textEngine.height * Math.abs(this.get_scaleY());
-	}
-	,set_height: function(value) {
-		if(value != this.__textEngine.height) {
-			this.__setTransformDirty();
-			this.__dirty = true;
-			this.__layoutDirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-			this.__textEngine.height = value;
-		}
-		return this.__textEngine.height * Math.abs(this.get_scaleY());
-	}
-	,get_htmlText: function() {
-		if(this.__isHTML) {
-			return this.__htmlText;
-		} else {
-			return this.__text;
-		}
-	}
-	,set_htmlText: function(value) {
-		if(value == null) {
-			var error = new openfl_errors_TypeError("Error #2007: Parameter text must be non-null.");
-			error.errorID = 2007;
-			throw error;
-		}
-		if(!this.__isHTML || this.__text != value) {
-			this.__dirty = true;
-			this.__layoutDirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-		this.__isHTML = true;
-		if(this.condenseWhite) {
-			var _this_r = new RegExp("\\s+","g".split("u").join(""));
-			value = value.replace(_this_r," ");
-		}
-		this.__htmlText = value;
-		value = openfl_text__$internal_HTMLParser.parse(value,this.get_multiline(),this.__styleSheet,this.__textFormat,this.__textEngine.textFormatRanges);
-		this.__updateText(value);
-		return value;
-	}
-	,get_length: function() {
-		if(this.__text != null) {
-			return this.__text.length;
-		}
-		return 0;
-	}
-	,get_maxChars: function() {
-		return this.__textEngine.maxChars;
-	}
-	,set_maxChars: function(value) {
-		if(value != this.__textEngine.maxChars) {
-			this.__textEngine.maxChars = value;
-			this.__dirty = true;
-			this.__layoutDirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-		return value;
-	}
-	,get_maxScrollH: function() {
-		this.__updateLayout();
-		return this.__textEngine.maxScrollH;
-	}
-	,get_maxScrollV: function() {
-		this.__updateLayout();
-		return this.__textEngine.get_maxScrollV();
-	}
-	,get_mouseWheelEnabled: function() {
-		return this.__mouseWheelEnabled;
-	}
-	,set_mouseWheelEnabled: function(value) {
-		return this.__mouseWheelEnabled = value;
-	}
-	,get_multiline: function() {
-		return this.__textEngine.multiline;
-	}
-	,set_multiline: function(value) {
-		return this.__textEngine.multiline = value;
-	}
-	,get_numLines: function() {
-		this.__updateLayout();
-		return this.__textEngine.numLines;
-	}
-	,get_restrict: function() {
-		return this.__textEngine.restrict;
-	}
-	,set_restrict: function(value) {
-		if(this.__textEngine.restrict != value) {
-			this.__textEngine.set_restrict(value);
-			this.__updateText(this.__text);
-		}
-		return value;
-	}
-	,get_scrollH: function() {
-		return this.__textEngine.scrollH;
-	}
-	,set_scrollH: function(value) {
-		this.__updateLayout();
-		if(value > this.__textEngine.maxScrollH) {
-			value = this.__textEngine.maxScrollH;
-		}
-		if(value < 0) {
-			value = 0;
-		}
-		if(value != this.__textEngine.scrollH) {
-			this.__dirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-			this.__textEngine.scrollH = value;
-			this.dispatchEvent(new openfl_events_Event("scroll"));
-		}
-		return this.__textEngine.scrollH;
-	}
-	,get_scrollV: function() {
-		return this.__textEngine.get_scrollV();
-	}
-	,set_scrollV: function(value) {
-		this.__updateLayout();
-		if(value > this.__textEngine.get_maxScrollV()) {
-			value = this.__textEngine.get_maxScrollV();
-		}
-		if(value < 1) {
-			value = 1;
-		}
-		if(value != this.__textEngine.get_scrollV() || this.__textEngine.get_scrollV() == 0) {
-			this.__dirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-			this.__textEngine.set_scrollV(value);
-			this.dispatchEvent(new openfl_events_Event("scroll"));
-		}
-		return this.__textEngine.get_scrollV();
-	}
-	,get_selectable: function() {
-		return this.__textEngine.selectable;
-	}
-	,set_selectable: function(value) {
-		if(value != this.__textEngine.selectable && this.get_type() == 1) {
-			if(this.stage != null && this.stage.get_focus() == this) {
-				this.__startTextInput();
-			} else if(!value) {
-				this.__stopTextInput();
-			}
-		}
-		return this.__textEngine.selectable = value;
-	}
-	,get_selectionBeginIndex: function() {
-		return Math.min(this.__caretIndex,this.__selectionIndex) | 0;
-	}
-	,get_selectionEndIndex: function() {
-		return Math.max(this.__caretIndex,this.__selectionIndex) | 0;
-	}
-	,get_sharpness: function() {
-		return this.__textEngine.sharpness;
-	}
-	,set_sharpness: function(value) {
-		if(value != this.__textEngine.sharpness) {
-			this.__dirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-		return this.__textEngine.sharpness = value;
-	}
-	,get_styleSheet: function() {
-		return this.__styleSheet;
-	}
-	,set_styleSheet: function(value) {
-		if(!(this.__styleSheet != null && value == null)) {
-			if(value != null) {
-				if(this.__isHTML && value != this.__styleSheet) {
-					this.__dirty = true;
-					this.__layoutDirty = true;
-					if(!this.__renderDirty) {
-						this.__renderDirty = true;
-						this.__setParentRenderDirty();
-					}
-					this.set_htmlText(this.__htmlText);
-				}
-				this.set_type(0);
-			}
-		}
-		return this.__styleSheet = value;
-	}
-	,get_tabEnabled: function() {
-		if(this.__tabEnabled == null) {
-			return this.__textEngine.type == 1;
-		} else {
-			return this.__tabEnabled;
-		}
-	}
-	,get_text: function() {
-		return this.__text;
-	}
-	,set_text: function(value) {
-		if(value == null) {
-			var error = new openfl_errors_TypeError("Error #2007: Parameter text must be non-null.");
-			error.errorID = 2007;
-			throw error;
-		}
-		if(this.__styleSheet != null) {
-			return this.set_htmlText(value);
-		}
-		if(this.__isHTML || this.__text != value) {
-			this.__dirty = true;
-			this.__layoutDirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		} else {
-			return value;
-		}
-		if(this.__textEngine.textFormatRanges.get_length() > 1) {
-			var this1 = this.__textEngine.textFormatRanges;
-			var deleteCount = this.__textEngine.textFormatRanges.get_length() - 1;
-			this1.__tempIndex = 1;
-			var _g_current = 0;
-			var _g_args = [];
-			while(_g_current < _g_args.length) {
-				var item = _g_args[_g_current++];
-				this1.insertAt(this1.__tempIndex,item);
-				this1.__tempIndex++;
-			}
-			this1.splice(this1.__tempIndex,deleteCount);
-		}
-		var utfValue = value;
-		var range = this.__textEngine.textFormatRanges.get(0);
-		range.format = this.__textFormat;
-		range.start = 0;
-		range.end = utfValue.length;
-		this.__isHTML = false;
-		this.__updateText(value);
-		return value;
-	}
-	,get_textColor: function() {
-		return this.__textFormat.color;
-	}
-	,set_textColor: function(value) {
-		if(value != this.__textFormat.color) {
-			this.__dirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-		var range = this.__textEngine.textFormatRanges.iterator();
-		while(range.hasNext()) {
-			var range1 = range.next();
-			range1.format.color = value;
-		}
-		return this.__textFormat.color = value;
-	}
-	,get_textWidth: function() {
-		this.__updateLayout();
-		return this.__textEngine.textWidth;
-	}
-	,get_textHeight: function() {
-		this.__updateLayout();
-		return this.__textEngine.textHeight;
-	}
-	,get_type: function() {
-		return this.__textEngine.type;
-	}
-	,set_type: function(value) {
-		if(this.__styleSheet != null) {
-			value = 0;
-		}
-		if(value != this.__textEngine.type) {
-			this.__textEngine.type = value;
-			if(value == 1) {
-				this.addEventListener("addedToStage",$bind(this,this.this_onAddedToStage));
-				this.this_onFocusIn(null);
-				this.__textEngine.__useIntAdvances = true;
-			} else {
-				this.removeEventListener("addedToStage",$bind(this,this.this_onAddedToStage));
-				this.__stopTextInput();
-				this.__textEngine.__useIntAdvances = null;
-			}
-			this.__dirty = true;
-			this.__layoutDirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-		return this.__textEngine.type;
-	}
-	,get_width: function() {
-		this.__updateLayout();
-		return this.__textEngine.width * Math.abs(this.__scaleX);
-	}
-	,set_width: function(value) {
-		if(value != this.__textEngine.width) {
-			this.__setTransformDirty();
-			this.__dirty = true;
-			this.__layoutDirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-			this.__textEngine.width = value;
-		}
-		return this.__textEngine.width * Math.abs(this.__scaleX);
-	}
-	,get_wordWrap: function() {
-		return this.__textEngine.wordWrap;
-	}
-	,set_wordWrap: function(value) {
-		if(value != this.__textEngine.wordWrap) {
-			this.__dirty = true;
-			this.__layoutDirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-		return this.__textEngine.wordWrap = value;
-	}
-	,get_x: function() {
-		return this.__transform.tx + this.__offsetX;
-	}
-	,set_x: function(value) {
-		if(value != this.__transform.tx + this.__offsetX) {
-			this.__setTransformDirty();
-		}
-		this.__transform.tx = value - this.__offsetX;
-		return value;
-	}
-	,get_y: function() {
-		return this.__transform.ty + this.__offsetY;
-	}
-	,set_y: function(value) {
-		if(value != this.__transform.ty + this.__offsetY) {
-			this.__setTransformDirty();
-		}
-		this.__transform.ty = value - this.__offsetY;
-		return value;
-	}
-	,stage_onMouseMove: function(event) {
-		if(this.stage == null) {
-			return;
-		}
-		if(this.get_selectable() && this.__selectionIndex >= 0) {
-			this.__updateLayout();
-			var position = this.__lineSelection ? this.__getPositionByIdentifier(this.get_mouseX() + this.get_scrollH(),this.get_mouseY(),true) : this.__wordSelection ? this.__getPositionByIdentifier(this.get_mouseX() + this.get_scrollH(),this.get_mouseY(),false) : this.__getPosition(this.get_mouseX() + this.get_scrollH(),this.get_mouseY());
-			if(position != this.__caretIndex) {
-				this.__caretIndex = position;
-				if(this.__wordSelection || this.__lineSelection) {
-					this.__selectionIndex = this.__getOppositeIdentifierBound(this.__specialSelectionInitialIndex,this.__lineSelection);
-				}
-				var setDirty = true;
-				if(openfl_display_DisplayObject.__supportDOM) {
-					if(this.__renderedOnCanvasWhileOnDOM) {
-						this.__forceCachedBitmapUpdate = true;
-					}
-					setDirty = false;
-				}
-				if(setDirty) {
-					this.__dirty = true;
-					if(!this.__renderDirty) {
-						this.__renderDirty = true;
-						this.__setParentRenderDirty();
-					}
-				}
-			}
-		}
-	}
-	,stage_onMouseUp: function(event) {
-		var stage = event.currentTarget;
-		stage.removeEventListener("enterFrame",$bind(this,this.this_onEnterFrame));
-		stage.removeEventListener("mouseMove",$bind(this,this.stage_onMouseMove));
-		stage.removeEventListener("mouseUp",$bind(this,this.stage_onMouseUp));
-		if(this.stage != stage) {
-			return;
-		}
-		if(stage.get_focus() == this) {
-			this.__getWorldTransform();
-			this.__updateLayout();
-			var upPos = this.__lineSelection ? this.__getPositionByIdentifier(this.get_mouseX() + this.get_scrollH(),this.get_mouseY(),true) : this.__wordSelection ? this.__getPositionByIdentifier(this.get_mouseX() + this.get_scrollH(),this.get_mouseY(),false) : this.__getPosition(this.get_mouseX() + this.get_scrollH(),this.get_mouseY());
-			var leftPos = Math.min(this.__selectionIndex,upPos) | 0;
-			var rightPos = Math.max(this.__selectionIndex,upPos) | 0;
-			this.__selectionIndex = leftPos;
-			this.__caretIndex = rightPos;
-			this.__wordSelection = this.__lineSelection = false;
-			if(this.__inputEnabled) {
-				this.this_onFocusIn(null);
-				this.__stopCursorTimer();
-				this.__startCursorTimer();
-				if(openfl_display_DisplayObject.__supportDOM && this.__renderedOnCanvasWhileOnDOM) {
-					this.__forceCachedBitmapUpdate = true;
-				}
-			}
-		}
-	}
-	,this_onAddedToStage: function(event) {
-		this.this_onFocusIn(null);
-	}
-	,this_onEnterFrame: function(e) {
-		this.__updateMouseDrag();
-	}
-	,this_onFocusIn: function(event) {
-		if(this.get_type() == 1 && this.stage != null && this.stage.get_focus() == this) {
-			this.__startTextInput();
-		} else if(this.get_type() != 1 && this.get_selectable() && this.stage != null && this.stage.get_focus() == this) {
-			this.__startCursorTimer();
-		}
-	}
-	,this_onFocusOut: function(event) {
-		this.__stopCursorTimer();
-		this.__stopTextInput();
-		if(this.__selectionIndex != this.__caretIndex) {
-			this.__selectionIndex = this.__caretIndex;
-			this.__dirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-	}
-	,this_onKeyDown: function(event) {
-		if(this.get_selectable() && this.get_type() != 1 && event.keyCode == 67 && (event.commandKey || event.ctrlKey)) {
-			if(this.__caretIndex != this.__selectionIndex && !this.get_displayAsPassword()) {
-				lime_system_Clipboard.set_text(this.__text.substring(this.__caretIndex,this.__selectionIndex));
-			}
-		}
-	}
-	,this_onMouseDown: function(event) {
-		if(!this.get_selectable() && this.get_type() != 1) {
-			return;
-		}
-		this.__lineSelection = event.clickCount == 3;
-		this.__wordSelection = event.clickCount == 2;
-		if(this.__lineSelection) {
-			var prevCaretIndex = this.__caretIndex;
-			this.__caretIndex = this.__getPositionByIdentifier(event.stageX + this.get_scrollH(),event.stageY,true);
-			this.__selectionIndex = this.__getOppositeIdentifierBound(prevCaretIndex,true);
-			this.setSelection(this.__caretIndex,this.__selectionIndex);
-		} else if(this.__wordSelection) {
-			var prevCaretIndex = this.__caretIndex;
-			this.__caretIndex = this.__getPositionByIdentifier(event.stageX + this.get_scrollH(),event.stageY,false);
-			this.__selectionIndex = this.__getOppositeIdentifierBound(prevCaretIndex,false);
-			this.__specialSelectionInitialIndex = prevCaretIndex;
-			this.setSelection(this.__caretIndex,this.__selectionIndex);
-		} else {
-			this.__caretIndex = this.__getPosition(this.get_mouseX() + this.get_scrollH(),this.get_mouseY());
-			this.__selectionIndex = this.__caretIndex;
-			this.setSelection(this.__caretIndex,this.__selectionIndex);
-		}
-		this.__updateLayout();
-		if(!openfl_display_DisplayObject.__supportDOM) {
-			this.__dirty = true;
-			if(!this.__renderDirty) {
-				this.__renderDirty = true;
-				this.__setParentRenderDirty();
-			}
-		}
-		if(this.stage == null) {
-			return;
-		}
-		this.stage.addEventListener("enterFrame",$bind(this,this.this_onEnterFrame));
-		this.stage.addEventListener("mouseMove",$bind(this,this.stage_onMouseMove));
-		this.stage.addEventListener("mouseUp",$bind(this,this.stage_onMouseUp));
-	}
-	,this_onMouseWheel: function(event) {
-		if(this.get_mouseWheelEnabled()) {
-			this.set_scrollV(Math.min(this.get_scrollV() - event.delta,this.get_maxScrollV()) | 0);
-		}
-	}
-	,window_onKeyDown: function(key,modifier) {
-		switch(key) {
-		case 8:
-			if(this.__selectionIndex == this.__caretIndex && this.__caretIndex > 0) {
-				this.__selectionIndex = this.__caretIndex - 1;
-			}
-			if(this.__selectionIndex != this.__caretIndex) {
-				this.replaceSelectedText("");
-				this.__selectionIndex = this.__caretIndex;
-				this.dispatchEvent(new openfl_events_Event("change",true));
-			} else {
-				this.__stopCursorTimer();
-				this.__startCursorTimer();
-			}
-			break;
-		case 97:
-			if(this.get_selectable()) {
-				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
-					this.setSelection(0,this.__text.length);
-				}
-			}
-			break;
-		case 99:
-			if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
-				if(this.__caretIndex != this.__selectionIndex && !this.get_displayAsPassword()) {
-					lime_system_Clipboard.set_text(this.__text.substring(this.__caretIndex,this.__selectionIndex));
-				}
-			}
-			break;
-		case 120:
-			if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
-				if(this.__caretIndex != this.__selectionIndex && !this.get_displayAsPassword()) {
-					lime_system_Clipboard.set_text(this.__text.substring(this.__caretIndex,this.__selectionIndex));
-					this.replaceSelectedText("");
-					this.dispatchEvent(new openfl_events_Event("change",true));
-				}
-			}
-			break;
-		case 127:
-			if(this.__selectionIndex == this.__caretIndex && this.__caretIndex < this.__text.length) {
-				this.__selectionIndex = this.__caretIndex + 1;
-			}
-			if(this.__selectionIndex != this.__caretIndex) {
-				this.replaceSelectedText("");
-				this.__selectionIndex = this.__caretIndex;
-				this.dispatchEvent(new openfl_events_Event("change",true));
-			} else {
-				this.__stopCursorTimer();
-				this.__startCursorTimer();
-			}
-			break;
-		case 1073741898:
-			if(this.get_selectable()) {
-				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
-					this.__caretIndex = 0;
-				} else {
-					this.__caretBeginningOfLine();
-				}
-				if(!lime_ui_KeyModifier.get_shiftKey(modifier)) {
-					this.__selectionIndex = this.__caretIndex;
-				}
-				this.setSelection(this.__selectionIndex,this.__caretIndex);
-			}
-			break;
-		case 1073741901:
-			if(this.get_selectable()) {
-				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
-					this.__caretIndex = this.__text.length;
-				} else {
-					this.__caretEndOfLine();
-				}
-				if(!lime_ui_KeyModifier.get_shiftKey(modifier)) {
-					this.__selectionIndex = this.__caretIndex;
-				}
-				this.setSelection(this.__selectionIndex,this.__caretIndex);
-			}
-			break;
-		case 1073741903:
-			if(this.get_selectable()) {
-				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
-					this.__caretBeginningOfNextLine();
-				} else {
-					this.__caretNextCharacter();
-				}
-				if(!lime_ui_KeyModifier.get_shiftKey(modifier)) {
-					this.__selectionIndex = this.__caretIndex;
-				}
-				this.setSelection(this.__selectionIndex,this.__caretIndex);
-			}
-			break;
-		case 1073741904:
-			if(this.get_selectable()) {
-				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
-					this.__caretBeginningOfPreviousLine();
-				} else {
-					this.__caretPreviousCharacter();
-				}
-				if(!lime_ui_KeyModifier.get_shiftKey(modifier)) {
-					this.__selectionIndex = this.__caretIndex;
-				}
-				this.setSelection(this.__selectionIndex,this.__caretIndex);
-			}
-			break;
-		case 1073741905:
-			if(this.get_selectable()) {
-				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
-					this.__caretIndex = this.__text.length;
-				} else {
-					this.__caretNextLine();
-				}
-				if(!lime_ui_KeyModifier.get_shiftKey(modifier)) {
-					this.__selectionIndex = this.__caretIndex;
-				}
-				this.setSelection(this.__selectionIndex,this.__caretIndex);
-			}
-			break;
-		case 1073741906:
-			if(this.get_selectable()) {
-				if(lime_ui_KeyModifier.get_metaKey(modifier) || lime_ui_KeyModifier.get_ctrlKey(modifier)) {
-					this.__caretIndex = 0;
-				} else {
-					this.__caretPreviousLine();
-				}
-				if(!lime_ui_KeyModifier.get_shiftKey(modifier)) {
-					this.__selectionIndex = this.__caretIndex;
-				}
-				this.setSelection(this.__selectionIndex,this.__caretIndex);
-			}
-			break;
-		case 13:case 1073741912:
-			if(this.__textEngine.multiline) {
-				var te = new openfl_events_TextEvent("textInput",true,true,"\n");
-				this.dispatchEvent(te);
-				if(!te.isDefaultPrevented()) {
-					this.__replaceSelectedText("\n",true);
-					this.dispatchEvent(new openfl_events_Event("change",true));
-				}
-			} else {
-				this.__stopCursorTimer();
-				this.__startCursorTimer();
-			}
-			break;
-		default:
-		}
-	}
-	,window_onTextInput: function(value) {
-		this.__replaceSelectedText(value,true);
-		this.dispatchEvent(new openfl_events_Event("change",true));
-	}
-	,__class__: openfl_text_TextField
-	,__properties__: $extend(openfl_display_InteractiveObject.prototype.__properties__,{set_wordWrap:"set_wordWrap",get_wordWrap:"get_wordWrap",set_type:"set_type",get_type:"get_type",get_textWidth:"get_textWidth",get_textHeight:"get_textHeight",set_textColor:"set_textColor",get_textColor:"get_textColor",set_text:"set_text",get_text:"get_text",set_styleSheet:"set_styleSheet",get_styleSheet:"get_styleSheet",set_sharpness:"set_sharpness",get_sharpness:"get_sharpness",get_selectionEndIndex:"get_selectionEndIndex",get_selectionBeginIndex:"get_selectionBeginIndex",set_selectable:"set_selectable",get_selectable:"get_selectable",set_scrollV:"set_scrollV",get_scrollV:"get_scrollV",set_scrollH:"set_scrollH",get_scrollH:"get_scrollH",set_restrict:"set_restrict",get_restrict:"get_restrict",get_numLines:"get_numLines",set_multiline:"set_multiline",get_multiline:"get_multiline",set_mouseWheelEnabled:"set_mouseWheelEnabled",get_mouseWheelEnabled:"get_mouseWheelEnabled",get_maxScrollV:"get_maxScrollV",get_maxScrollH:"get_maxScrollH",set_maxChars:"set_maxChars",get_maxChars:"get_maxChars",get_length:"get_length",set_htmlText:"set_htmlText",get_htmlText:"get_htmlText",set_gridFitType:"set_gridFitType",get_gridFitType:"get_gridFitType",set_embedFonts:"set_embedFonts",get_embedFonts:"get_embedFonts",set_displayAsPassword:"set_displayAsPassword",get_displayAsPassword:"get_displayAsPassword",set_defaultTextFormat:"set_defaultTextFormat",get_defaultTextFormat:"get_defaultTextFormat",get_caretIndex:"get_caretIndex",get_bottomScrollV:"get_bottomScrollV",set_borderColor:"set_borderColor",get_borderColor:"get_borderColor",set_border:"set_border",get_border:"get_border",set_backgroundColor:"set_backgroundColor",get_backgroundColor:"get_backgroundColor",set_background:"set_background",get_background:"get_background",set_autoSize:"set_autoSize",get_autoSize:"get_autoSize",set_antiAliasType:"set_antiAliasType",get_antiAliasType:"get_antiAliasType"})
 });
 var openfl_text_TextFieldAutoSize = {};
 openfl_text_TextFieldAutoSize.fromString = function(value) {
@@ -78809,8 +78174,6 @@ var Enum = { };
 com_gskinner_motion_GTween.plugins = { };
 com_gskinner_motion_GTween.tickList = new haxe_ds_ObjectMap();
 com_gskinner_motion_GTween.gcLockList = new haxe_ds_ObjectMap();
-com_gskinner_motion_GTweener.instance = new com_gskinner_motion_GTweener();
-com_gskinner_motion_GTween.installPlugin(com_gskinner_motion_GTweener.instance,["*"]);
 js_Boot.__toStr = ({ }).toString;
 if(ArrayBuffer.prototype.slice == null) {
 	ArrayBuffer.prototype.slice = js_lib__$ArrayBuffer_ArrayBufferCompat.sliceImpl;
@@ -78883,18 +78246,12 @@ Xml.Comment = 3;
 Xml.DocType = 4;
 Xml.ProcessingInstruction = 5;
 Xml.Document = 6;
-com_gskinner_geom_ColorMatrix.DELTA_INDEX = [0,0.01,0.02,0.04,0.05,0.06,0.07,0.08,0.1,0.11,0.12,0.14,0.15,0.16,0.17,0.18,0.20,0.21,0.22,0.24,0.25,0.27,0.28,0.30,0.32,0.34,0.36,0.38,0.40,0.42,0.44,0.46,0.48,0.5,0.53,0.56,0.59,0.62,0.65,0.68,0.71,0.74,0.77,0.80,0.83,0.86,0.89,0.92,0.95,0.98,1.0,1.06,1.12,1.18,1.24,1.30,1.36,1.42,1.48,1.54,1.60,1.66,1.72,1.78,1.84,1.90,1.96,2.0,2.12,2.25,2.37,2.50,2.62,2.75,2.87,3.0,3.2,3.4,3.6,3.8,4.0,4.3,4.7,4.9,5.0,5.5,6.0,6.5,6.8,7.0,7.3,7.5,7.8,8.0,8.4,8.7,9.0,9.4,9.6,9.8,10.0];
-com_gskinner_geom_ColorMatrix.IDENTITY_MATRIX = [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1];
-com_gskinner_geom_ColorMatrix.LENGTH = com_gskinner_geom_ColorMatrix.IDENTITY_MATRIX.length;
 com_gskinner_motion_GTween.version = 2.01;
 com_gskinner_motion_GTween.defaultDispatchEvents = false;
 com_gskinner_motion_GTween.defaultEase = com_gskinner_motion_GTween.linearEase;
 com_gskinner_motion_GTween.pauseAll = false;
 com_gskinner_motion_GTween.timeScaleAll = 1;
 com_gskinner_motion_GTween.hasStarPlugins = false;
-com_gskinner_motion_GTweener.tweens = new haxe_ds_ObjectMap();
-com_gskinner_motion_plugins_ColorAdjustPlugin.enabled = true;
-com_gskinner_motion_plugins_ColorAdjustPlugin.tweenProperties = ["brightness","contrast","hue","saturation"];
 haxe_Serializer.USE_CACHE = false;
 haxe_Serializer.USE_ENUM_INDEX = false;
 haxe_Serializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
@@ -80314,6 +79671,7 @@ openfl_display_CapsStyle.SQUARE = 2;
 openfl_display_DOMElement.__meta__ = { fields : { __element : { SuppressWarnings : ["checkstyle:Dynamic"]}, _ : { SuppressWarnings : ["checkstyle:Dynamic"]}}};
 openfl_display_DOMRenderer.__meta__ = { fields : { element : { SuppressWarnings : ["checkstyle:Dynamic"]}, applyStyle : { SuppressWarnings : ["checkstyle:Dynamic"]}, clearStyle : { SuppressWarnings : ["checkstyle:Dynamic"]}, _ : { SuppressWarnings : ["checkstyle:Dynamic"]}}};
 openfl_display_Shader.__meta__ = { fields : { glProgram : { SuppressWarnings : ["checkstyle:Dynamic"]}}};
+openfl_text_TextField.__missingFontWarning = new haxe_ds_StringMap();
 openfl_display_GradientType.LINEAR = 0;
 openfl_display_GradientType.RADIAL = 1;
 openfl_display_Graphics.__meta__ = { fields : { overrideBlendMode : { SuppressWarnings : ["checkstyle:FieldDocComment"]}}};
@@ -80671,8 +80029,6 @@ openfl_events_TouchEvent.TOUCH_ROLL_OUT = "touchRollOut";
 openfl_events_TouchEvent.TOUCH_ROLL_OVER = "touchRollOver";
 openfl_events_TouchEvent.TOUCH_TAP = "touchTap";
 openfl_events_UncaughtErrorEvent.UNCAUGHT_ERROR = "uncaughtError";
-openfl_filters__$ColorMatrixFilter_ColorMatrixShader.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
-openfl_filters_ColorMatrixFilter.__colorMatrixShader = new openfl_filters__$ColorMatrixFilter_ColorMatrixShader();
 openfl_geom_Matrix3D.__meta__ = { statics : { create2D : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, createABCD : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, createOrtho : { SuppressWarnings : ["checkstyle:FieldDocComment"]}}};
 openfl_geom_Orientation3D.AXIS_ANGLE = 0;
 openfl_geom_Orientation3D.EULER_ANGLES = 1;
@@ -80715,7 +80071,6 @@ openfl_text_GridFitType.NONE = 0;
 openfl_text_GridFitType.PIXEL = 1;
 openfl_text_GridFitType.SUBPIXEL = 2;
 openfl_text_StyleSheet.__supportedStyles = ["color","display","font-family","font-size","font-style","font-weight","kerning","leading","letter-spacing","margin-left","margin-right","text-align","text-decoration","text-indent"];
-openfl_text_TextField.__missingFontWarning = new haxe_ds_StringMap();
 openfl_text_TextFieldAutoSize.CENTER = 0;
 openfl_text_TextFieldAutoSize.LEFT = 1;
 openfl_text_TextFieldAutoSize.NONE = 2;
@@ -81184,7 +80539,7 @@ ApplicationMain.main();
 	} else {
 		$hx_exports.lime = $hx_exports.lime || {};
 		$hx_exports.lime.$scripts = $hx_exports.lime.$scripts || {};
-		$hx_exports.lime.$scripts["GTweenColorAdjust"] = $hx_script;
+		$hx_exports.lime.$scripts["GTweenSpeedDemo"] = $hx_script;
 		$hx_exports.lime.embed = function (projectName) {
 			var exports = {};
 			var script = $hx_exports.lime.$scripts[projectName];

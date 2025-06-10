@@ -887,18 +887,18 @@ var ApplicationMain = function() { };
 $hxClasses["ApplicationMain"] = ApplicationMain;
 ApplicationMain.__name__ = "ApplicationMain";
 ApplicationMain.main = function() {
-	lime_system_System.__registerEntryPoint("GTweenTimelineDemo",ApplicationMain.create);
+	lime_system_System.__registerEntryPoint("GTweenerDemo",ApplicationMain.create);
 };
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
 	app.meta.h["build"] = "1";
 	app.meta.h["company"] = "";
-	app.meta.h["file"] = "GTweenTimelineDemo";
-	app.meta.h["name"] = "GTween Timeline Demo";
-	app.meta.h["packageName"] = "com.gskinner.gtween-haxe.timeline-demo";
+	app.meta.h["file"] = "GTweenerDemo";
+	app.meta.h["name"] = "GTweener Demo";
+	app.meta.h["packageName"] = "com.gskinner.gtween-haxe.gtweener-demo";
 	app.meta.h["version"] = "1.0.0";
-	var attributes = { allowHighDPI : true, alwaysOnTop : false, borderless : false, element : null, frameRate : 0, height : 0, hidden : false, maximized : false, minimized : false, parameters : { }, resizable : true, title : "GTween Timeline Demo", width : 0, x : null, y : null};
-	attributes.context = { antialiasing : 0, background : 2434341, colorDepth : 32, depth : true, hardware : true, stencil : true, type : null, vsync : false};
+	var attributes = { allowHighDPI : true, alwaysOnTop : false, borderless : false, element : null, frameRate : 0, height : 0, hidden : false, maximized : false, minimized : false, parameters : { }, resizable : true, title : "GTweener Demo", width : 0, x : null, y : null};
+	attributes.context = { antialiasing : 0, background : 16777215, colorDepth : 32, depth : true, hardware : true, stencil : true, type : null, vsync : false};
 	if(app.__window == null) {
 		if(config != null) {
 			var _g = 0;
@@ -3366,204 +3366,36 @@ openfl_display_Sprite.prototype = $extend(openfl_display_DisplayObjectContainer.
 	,__class__: openfl_display_Sprite
 	,__properties__: $extend(openfl_display_DisplayObjectContainer.prototype.__properties__,{get_graphics:"get_graphics",set_buttonMode:"set_buttonMode",get_buttonMode:"get_buttonMode"})
 });
-var GTweenTimelineDemo = function() {
-	this.buttons = [];
+var GTweenerDemo = function() {
 	openfl_display_Sprite.call(this);
-	com_gskinner_motion_plugins_MotionBlurPlugin.install();
-	com_gskinner_motion_plugins_MotionBlurPlugin.strength = 2;
-	this.createChildren();
-	this.timeline = new com_gskinner_motion_GTweenTimeline(null,0,null,{ repeatCount : 0, ease : com_gskinner_motion_easing_Bounce.easeOut, reflect : true});
-	var tween = new com_gskinner_motion_GTween(this.pod,1,{ scaleX : 0, scaleY : 0},{ ease : com_gskinner_motion_easing_Circular.easeOut});
-	var fh = tween.get_proxy();
-	com_gskinner_motion__$GTween_TargetProxy.fieldWrite(tween.get_proxy(),"x",com_gskinner_motion__$GTween_TargetProxy.fieldRead(fh,"x") + this.pod.get_width() / 2);
-	var fh = tween.get_proxy();
-	com_gskinner_motion__$GTween_TargetProxy.fieldWrite(tween.get_proxy(),"y",com_gskinner_motion__$GTween_TargetProxy.fieldRead(fh,"y") + this.pod.get_height() / 2);
-	tween.swapValues();
-	this.timeline.addTween(0,tween);
-	tween = new com_gskinner_motion_GTween(this.spinner,1,{ rotation : -360},{ repeatCount : 0, reflect : false});
-	this.timeline.addTween(1,tween);
-	tween = new com_gskinner_motion_GTween(this.spinner,2,{ alpha : 0},{ swapValues : true});
-	this.timeline.addTween(1,tween);
-	tween = new com_gskinner_motion_GTween(this.title,0.6,{ alpha : 0},{ ease : com_gskinner_motion_easing_Circular.easeOut});
-	var fh = tween.get_proxy();
-	com_gskinner_motion__$GTween_TargetProxy.fieldWrite(tween.get_proxy(),"x",com_gskinner_motion__$GTween_TargetProxy.fieldRead(fh,"x") + 100);
-	tween.swapValues();
-	this.timeline.addTween(0.9,tween);
-	tween = new com_gskinner_motion_GTween(this.newsPanel,0.5,{ height : 1, alpha : 0},{ ease : com_gskinner_motion_easing_Circular.easeOut, swapValues : true});
-	this.timeline.addTween(1.4,tween);
-	tween = new com_gskinner_motion_GTween(this.tickerPanel,0.8,{ width : 1, alpha : 0},{ ease : com_gskinner_motion_easing_Circular.easeOut, swapValues : true});
-	this.timeline.addTween(1.6,tween);
-	tween = new com_gskinner_motion_GTween(this.ticker,2,{ alpha : 0},{ swapValues : true});
-	this.timeline.addTween(2.2,tween);
-	tween = new com_gskinner_motion_GTween(this.news,1,{ alpha : 0},{ swapValues : true});
-	this.timeline.addTween(4,tween);
-	var _g = 0;
-	while(_g < 6) {
-		var i = _g++;
-		var btn = this.getChildByName("btn" + i);
-		tween = new com_gskinner_motion_GTween(btn,0.4,{ alpha : 0, scaleY : 4},{ ease : com_gskinner_motion_easing_Circular.easeOut});
-		var fh = tween.get_proxy();
-		com_gskinner_motion__$GTween_TargetProxy.fieldWrite(tween.get_proxy(),"y",com_gskinner_motion__$GTween_TargetProxy.fieldRead(fh,"y") - 120);
-		tween.swapValues();
-		this.timeline.addTween(3.2 - i * 0.1,tween);
-		tween = new com_gskinner_motion_GTween(this.getChildByName("label" + i),0.6,{ alpha : 0, x : 100},{ ease : com_gskinner_motion_easing_Circular.easeOut, swapValues : true},{ MotionBlurEnabled : true});
-		this.timeline.addTween(3.6 - i * 0.1,tween);
-	}
-	var pageObj = js_Boot.__cast(this.getChildByName("page" + 1) , openfl_text_TextField);
-	this.timeline.addCallback(5.15,com_gskinner_motion_GTweenTimeline.setPropertyValue,[pageObj,"visible",true],com_gskinner_motion_GTweenTimeline.setPropertyValue,[pageObj,"visible",false]);
-	pageObj.set_visible(false);
-	var pageObj = js_Boot.__cast(this.getChildByName("page" + 2) , openfl_text_TextField);
-	this.timeline.addCallback(5.3,com_gskinner_motion_GTweenTimeline.setPropertyValue,[pageObj,"visible",true],com_gskinner_motion_GTweenTimeline.setPropertyValue,[pageObj,"visible",false]);
-	pageObj.set_visible(false);
-	var pageObj = js_Boot.__cast(this.getChildByName("page" + 3) , openfl_text_TextField);
-	this.timeline.addCallback(5.45,com_gskinner_motion_GTweenTimeline.setPropertyValue,[pageObj,"visible",true],com_gskinner_motion_GTweenTimeline.setPropertyValue,[pageObj,"visible",false]);
-	pageObj.set_visible(false);
-	this.timeline.calculateDuration();
-	this.timeline.duration += 0.5;
+	this.ball = new openfl_display_Sprite();
+	this.ball.get_graphics().beginFill(0);
+	this.ball.get_graphics().drawCircle(40,40,40);
+	this.ball.get_graphics().endFill();
+	this.ball.set_x(130);
+	this.ball.set_y(80);
+	this.addChild(this.ball);
+	com_gskinner_motion_GTweener.to(this.ball,2,{ x : 200, y : 350},{ repeatCount : 0, reflect : true});
+	this.stage.addEventListener("click",$bind(this,this.handleClick));
 };
-$hxClasses["GTweenTimelineDemo"] = GTweenTimelineDemo;
-GTweenTimelineDemo.__name__ = "GTweenTimelineDemo";
-GTweenTimelineDemo.__super__ = openfl_display_Sprite;
-GTweenTimelineDemo.prototype = $extend(openfl_display_Sprite.prototype,{
-	createChildren: function() {
-		this.pod = new openfl_display_Sprite();
-		this.pod.get_graphics().lineStyle(1.0,6974058);
-		var matrix = new openfl_geom_Matrix();
-		matrix.createGradientBox(500,350,90 * Math.PI / 180);
-		this.pod.get_graphics().beginGradientFill(0,[1910567,1973790,855309],[1.0,1.0,1.0],[0,51,255],matrix);
-		this.pod.get_graphics().drawRoundRect(0,0,500,350,10);
-		this.pod.get_graphics().endFill();
-		this.pod.set_x(25);
-		this.pod.set_y(25);
-		this.addChild(this.pod);
-		this.title = new openfl_text_TextField();
-		this.title.set_autoSize(1);
-		this.title.set_defaultTextFormat(new openfl_text_TextFormat("_sans",36,52479));
-		this.title.set_text("Breaking News");
-		this.title.set_x(36);
-		this.title.set_y(34);
-		this.addChild(this.title);
-		this.spinner = new openfl_display_Sprite();
-		this.spinner.get_graphics().lineStyle(1,6710886);
-		var numLines = 8;
-		var _g = 0;
-		var _g1 = numLines;
-		while(_g < _g1) {
-			var i = _g++;
-			this.spinner.get_graphics().moveTo(0,0);
-			var p = openfl_geom_Point.polar(10,i * 2 * Math.PI / (numLines - 1));
-			this.spinner.get_graphics().lineTo(p.x,p.y);
-		}
-		this.spinner.set_x(500);
-		this.spinner.set_y(54);
-		this.addChild(this.spinner);
-		this.createButton("Top Stories",35,90);
-		this.createButton("World",35,130);
-		this.createButton("Politics",35,170);
-		this.createButton("Crime",35,210);
-		this.createButton("Entertainment",35,250);
-		this.createButton("Tech",35,290);
-		this.newsPanel = new openfl_display_Sprite();
-		this.newsPanel.get_graphics().lineStyle(1.0,3618615);
-		this.newsPanel.get_graphics().beginFill(1973790);
-		this.newsPanel.get_graphics().drawRoundRect(0,0,300,238,10);
-		this.newsPanel.get_graphics().endFill();
-		this.newsPanel.set_x(215);
-		this.newsPanel.set_y(90);
-		this.addChild(this.newsPanel);
-		this.tickerPanel = new openfl_display_Sprite();
-		this.tickerPanel.get_graphics().lineStyle(1.0,3618615);
-		this.tickerPanel.get_graphics().beginFill(1973790);
-		this.tickerPanel.get_graphics().drawRoundRect(0,0,480,30,10);
-		this.tickerPanel.get_graphics().endFill();
-		this.tickerPanel.set_x(35);
-		this.tickerPanel.set_y(334);
-		this.addChild(this.tickerPanel);
-		this.news = new openfl_text_TextField();
-		this.news.set_defaultTextFormat(new openfl_text_TextFormat("_sans",14,13421772));
-		this.news.set_multiline(true);
-		this.news.set_wordWrap(true);
-		this.news.set_text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-		this.news.set_x(224);
-		this.news.set_y(97);
-		this.news.set_width(283);
-		this.news.set_height(230);
-		this.addChild(this.news);
-		this.ticker = new openfl_text_TextField();
-		this.ticker.set_defaultTextFormat(new openfl_text_TextFormat("_sans",12,6710886));
-		this.ticker.set_text("are your kids safe? story at 11 - local dog wins election, in hot water for biting sheriff");
-		this.ticker.set_x(42);
-		this.ticker.set_y(340);
-		this.ticker.set_width(467);
-		this.ticker.set_height(32);
-		this.addChild(this.ticker);
-		var pageX = 462.0;
-		var page = new openfl_text_TextField();
-		page.set_name("page" + 1);
-		page.set_autoSize(1);
-		page.set_selectable(false);
-		page.set_defaultTextFormat(new openfl_text_TextFormat("_sans",18,52479));
-		page.set_text("1");
-		page.set_x(pageX);
-		page.set_y(298);
-		this.addChild(page);
-		pageX += 15;
-		var page = new openfl_text_TextField();
-		page.set_name("page" + 2);
-		page.set_autoSize(1);
-		page.set_selectable(false);
-		page.set_defaultTextFormat(new openfl_text_TextFormat("_sans",18,52479));
-		page.set_text("2");
-		page.set_x(pageX);
-		page.set_y(298);
-		this.addChild(page);
-		pageX += 15;
-		var page = new openfl_text_TextField();
-		page.set_name("page" + 3);
-		page.set_autoSize(1);
-		page.set_selectable(false);
-		page.set_defaultTextFormat(new openfl_text_TextFormat("_sans",18,52479));
-		page.set_text("3");
-		page.set_x(pageX);
-		page.set_y(298);
-		this.addChild(page);
-		pageX += 15;
+$hxClasses["GTweenerDemo"] = GTweenerDemo;
+GTweenerDemo.__name__ = "GTweenerDemo";
+GTweenerDemo.__super__ = openfl_display_Sprite;
+GTweenerDemo.prototype = $extend(openfl_display_Sprite.prototype,{
+	handleClick: function(evt) {
+		com_gskinner_motion_GTweener.to(this.ball,0.4,{ x : this.get_mouseX()});
 	}
-	,createButton: function(text,x,y) {
-		var button = new openfl_display_Sprite();
-		button.set_name("btn" + this.buttons.length);
-		var matrix = new openfl_geom_Matrix();
-		matrix.createGradientBox(175,35,90 * Math.PI / 180);
-		button.get_graphics().beginGradientFill(0,[2699572,855309,1381653],[1.0,1.0,1.0],[0,51,255],matrix);
-		button.get_graphics().drawRoundRect(0,0,175,35,10);
-		button.get_graphics().endFill();
-		button.set_x(x);
-		button.set_y(y);
-		button.set_buttonMode(true);
-		button.mouseChildren = false;
-		this.addChild(button);
-		var label = new openfl_text_TextField();
-		label.set_name("label" + this.buttons.length);
-		label.set_autoSize(1);
-		label.set_defaultTextFormat(new openfl_text_TextFormat("_sans",20,10066329));
-		label.set_text(text);
-		label.set_selectable(false);
-		label.set_x(button.get_x() + (button.get_width() - label.get_width()) / 2);
-		label.set_y(button.get_y() + (button.get_height() - label.get_height()) / 2);
-		this.addChild(label);
-		this.buttons.push(button);
-	}
-	,__class__: GTweenTimelineDemo
+	,__class__: GTweenerDemo
 });
 var DocumentClass = function(current) {
 	current.addChild(this);
-	GTweenTimelineDemo.call(this);
+	GTweenerDemo.call(this);
 	this.dispatchEvent(new openfl_events_Event("addedToStage",false,false));
 };
 $hxClasses["DocumentClass"] = DocumentClass;
 DocumentClass.__name__ = "DocumentClass";
-DocumentClass.__super__ = GTweenTimelineDemo;
-DocumentClass.prototype = $extend(GTweenTimelineDemo.prototype,{
+DocumentClass.__super__ = GTweenerDemo;
+DocumentClass.prototype = $extend(GTweenerDemo.prototype,{
 	__class__: DocumentClass
 });
 var EReg = function(r,opt) {
@@ -4627,271 +4459,6 @@ com_gskinner_motion__$GTween_TargetProxy.arrayWrite = function(this1,name,value)
 		this1.setValue(name,parseFloat(Std.string(value)));
 	}
 };
-var com_gskinner_motion_GTweenTimeline = function(target,duration,values,props,pluginData,tweens) {
-	if(duration == null) {
-		duration = 1;
-	}
-	this.suppressCallbacks = false;
-	this.tweens = [];
-	this.tweenStartPositions = [];
-	this.callbacks = [];
-	this.labels = new haxe_ds_StringMap();
-	this.addTweens(tweens);
-	com_gskinner_motion_GTween.call(this,target,duration,values,props,pluginData);
-	if(this.autoPlay) {
-		this.set_paused(false);
-	}
-};
-$hxClasses["com.gskinner.motion.GTweenTimeline"] = com_gskinner_motion_GTweenTimeline;
-com_gskinner_motion_GTweenTimeline.__name__ = "com.gskinner.motion.GTweenTimeline";
-com_gskinner_motion_GTweenTimeline.setPropertyValue = function(target,propertyName,value) {
-	Reflect.setProperty(target,propertyName,value);
-};
-com_gskinner_motion_GTweenTimeline.__super__ = com_gskinner_motion_GTween;
-com_gskinner_motion_GTweenTimeline.prototype = $extend(com_gskinner_motion_GTween.prototype,{
-	set_position: function(value) {
-		var tmpSuppressEvents = this.suppressEvents;
-		this.suppressEvents = true;
-		com_gskinner_motion_GTween.prototype.set_position.call(this,value);
-		var repeatIndex = this._position / this.duration | 0;
-		var rev = this.reflect && repeatIndex % 2 >= 1;
-		var l = this.tweens.length;
-		if(rev) {
-			var _g = 0;
-			var _g1 = l;
-			while(_g < _g1) {
-				var i = _g++;
-				this.tweens[i].set_position(this.calculatedPosition - this.tweenStartPositions[i]);
-			}
-		} else {
-			var i = l - 1;
-			while(i >= 0) {
-				this.tweens[i].set_position(this.calculatedPosition - this.tweenStartPositions[i]);
-				--i;
-			}
-		}
-		if(!this.suppressCallbacks) {
-			this.checkCallbacks();
-		}
-		this.suppressEvents = tmpSuppressEvents;
-		if(this.onChange != null && !this.suppressEvents) {
-			this.onChange(this);
-		}
-		if(this.onComplete != null && !this.suppressEvents && value >= this.repeatCount * this.duration && this.repeatCount > 0) {
-			this.onComplete(this);
-		}
-		return value;
-	}
-	,addTween: function(position,tween) {
-		if(tween == null || isNaN(position)) {
-			return;
-		}
-		tween.autoPlay = false;
-		tween.set_paused(true);
-		var index = -1;
-		while(++index < this.tweens.length && this.tweenStartPositions[index] < position) {
-		}
-		this.tweens.splice(index,0,tween);
-		this.tweenStartPositions.splice(index,0,position);
-		tween.set_position(this.calculatedPosition - position);
-	}
-	,addTweens: function(tweens) {
-		if(tweens == null) {
-			return;
-		}
-		var i = 0;
-		while(i < tweens.length) {
-			var position = tweens[i];
-			var tween = js_Boot.__cast(tweens[i + 1] , com_gskinner_motion_GTween);
-			this.addTween(position,tween);
-			i += 2;
-		}
-	}
-	,removeTween: function(tween) {
-		var i = this.tweens.length;
-		while(i >= 0) {
-			if(this.tweens[i] == tween) {
-				this.tweens.splice(i,1);
-				this.tweenStartPositions.splice(i,1);
-			}
-			--i;
-		}
-	}
-	,addLabel: function(position,label) {
-		this.labels.h[label] = position;
-	}
-	,removeLabel: function(label) {
-		var _this = this.labels;
-		if(Object.prototype.hasOwnProperty.call(_this.h,label)) {
-			delete(_this.h[label]);
-		}
-	}
-	,addCallback: function(labelOrPosition,forwardCallback,forwardParameters,reverseCallback,reverseParameters) {
-		var position = this.resolveLabelOrPosition(labelOrPosition);
-		if(isNaN(position)) {
-			return;
-		}
-		var callback = new com_gskinner_motion__$GTweenTimeline_Callback(position,forwardCallback,forwardParameters,reverseCallback,reverseParameters);
-		var l = this.callbacks.length;
-		var i = l - 1;
-		while(i >= 0) {
-			if(position > this.callbacks[i].position) {
-				break;
-			}
-			--i;
-		}
-		this.callbacks.splice(i + 1,0,callback);
-	}
-	,removeCallback: function(labelOrPosition) {
-		var position = this.resolveLabelOrPosition(labelOrPosition);
-		if(isNaN(position)) {
-			return;
-		}
-		var l = this.callbacks.length;
-		var _g = 0;
-		var _g1 = l;
-		while(_g < _g1) {
-			var i = _g++;
-			if(position == this.callbacks[i].position) {
-				this.callbacks.splice(i,1);
-			}
-		}
-	}
-	,gotoAndPlay: function(labelOrPosition) {
-		this.goto(labelOrPosition);
-		this.set_paused(false);
-	}
-	,gotoAndStop: function(labelOrPosition) {
-		this.goto(labelOrPosition);
-		this.set_paused(true);
-	}
-	,goto: function(labelOrPosition) {
-		var pos = this.resolveLabelOrPosition(labelOrPosition);
-		if(!isNaN(pos)) {
-			this.set_position(pos);
-		}
-	}
-	,resolveLabelOrPosition: function(labelOrPosition) {
-		if(isNaN(labelOrPosition)) {
-			return this.labels.h[labelOrPosition == null ? "null" : Std.string(labelOrPosition)];
-		} else {
-			return labelOrPosition;
-		}
-	}
-	,calculateDuration: function() {
-		var d = 0;
-		if(this.callbacks.length > 0) {
-			d = this.callbacks[this.callbacks.length - 1].position;
-		}
-		var _g = 0;
-		var _g1 = this.tweens.length;
-		while(_g < _g1) {
-			var i = _g++;
-			if(this.tweens[i].duration + this.tweenStartPositions[i] > d) {
-				d = this.tweens[i].duration + this.tweenStartPositions[i];
-			}
-		}
-		this.duration = d;
-	}
-	,checkCallbacks: function() {
-		if(this.callbacks.length == 0) {
-			return;
-		}
-		var repeatIndex = this._position / this.duration | 0;
-		var previousRepeatIndex = this.positionOld / this.duration | 0;
-		if(repeatIndex == previousRepeatIndex || this.repeatCount > 0 && this._position >= this.duration * this.repeatCount) {
-			this.checkCallbackRange(this.calculatedPositionOld,this.calculatedPosition);
-		} else {
-			var rev = this.reflect && previousRepeatIndex % 2 >= 1;
-			this.checkCallbackRange(this.calculatedPositionOld,rev ? 0 : this.duration);
-			rev = this.reflect && repeatIndex % 2 >= 1;
-			this.checkCallbackRange(rev ? this.duration : 0,this.calculatedPosition,!this.reflect);
-		}
-	}
-	,checkCallbackRange: function(startPos,endPos,includeStart) {
-		if(includeStart == null) {
-			includeStart = false;
-		}
-		var sPos = startPos;
-		var ePos = endPos;
-		var i = -1;
-		var j = this.callbacks.length;
-		var k = 1;
-		if(startPos > endPos) {
-			sPos = endPos;
-			ePos = startPos;
-			i = j;
-			k = -1;
-			j = k;
-		}
-		while((i += k) != j) {
-			var callback = this.callbacks[i];
-			var pos = callback.position;
-			if(pos > sPos && pos < ePos || pos == endPos || includeStart && pos == startPos) {
-				if(k == 1) {
-					if(callback.forward != null) {
-						callback.forward.apply(this,callback.forwardParams);
-					}
-				} else if(callback.reverse != null) {
-					callback.reverse.apply(this,callback.reverseParams);
-				}
-			}
-		}
-	}
-	,__class__: com_gskinner_motion_GTweenTimeline
-});
-var com_gskinner_motion__$GTweenTimeline_Callback = function(position,forward,forwardParams,reverse,reverseParams) {
-	this.position = position;
-	this.forward = forward;
-	this.reverse = reverse;
-	this.forwardParams = forwardParams;
-	this.reverseParams = reverseParams;
-};
-$hxClasses["com.gskinner.motion._GTweenTimeline.Callback"] = com_gskinner_motion__$GTweenTimeline_Callback;
-com_gskinner_motion__$GTweenTimeline_Callback.__name__ = "com.gskinner.motion._GTweenTimeline.Callback";
-com_gskinner_motion__$GTweenTimeline_Callback.prototype = {
-	__class__: com_gskinner_motion__$GTweenTimeline_Callback
-};
-var com_gskinner_motion_easing_Bounce = function() { };
-$hxClasses["com.gskinner.motion.easing.Bounce"] = com_gskinner_motion_easing_Bounce;
-com_gskinner_motion_easing_Bounce.__name__ = "com.gskinner.motion.easing.Bounce";
-com_gskinner_motion_easing_Bounce.easeIn = function(ratio,unused1,unused2,unused3) {
-	return 1 - com_gskinner_motion_easing_Bounce.easeOut(1 - ratio,0,0,0);
-};
-com_gskinner_motion_easing_Bounce.easeOut = function(ratio,unused1,unused2,unused3) {
-	if(ratio < 0.363636363636363646) {
-		return 7.5625 * ratio * ratio;
-	} else if(ratio < 0.727272727272727293) {
-		return 7.5625 * (ratio -= 0.545454545454545414) * ratio + 0.75;
-	} else if(ratio < 0.909090909090909061) {
-		return 7.5625 * (ratio -= 0.818181818181818232) * ratio + 0.9375;
-	} else {
-		return 7.5625 * (ratio -= 0.954545454545454586) * ratio + 0.984375;
-	}
-};
-com_gskinner_motion_easing_Bounce.easeInOut = function(ratio,unused1,unused2,unused3) {
-	if((ratio *= 2) < 1) {
-		return 0.5 * com_gskinner_motion_easing_Bounce.easeIn(ratio,0,0,0);
-	} else {
-		return 0.5 * com_gskinner_motion_easing_Bounce.easeOut(ratio - 1,0,0,0) + 0.5;
-	}
-};
-var com_gskinner_motion_easing_Circular = function() { };
-$hxClasses["com.gskinner.motion.easing.Circular"] = com_gskinner_motion_easing_Circular;
-com_gskinner_motion_easing_Circular.__name__ = "com.gskinner.motion.easing.Circular";
-com_gskinner_motion_easing_Circular.easeIn = function(ratio,unused1,unused2,unused3) {
-	return -(Math.sqrt(1 - ratio * ratio) - 1);
-};
-com_gskinner_motion_easing_Circular.easeOut = function(ratio,unused1,unused2,unused3) {
-	return Math.sqrt(1 - (ratio - 1) * (ratio - 1));
-};
-com_gskinner_motion_easing_Circular.easeInOut = function(ratio,unused1,unused2,unused3) {
-	if((ratio *= 2) < 1) {
-		return -0.5 * (Math.sqrt(1 - ratio * ratio) - 1);
-	} else {
-		return 0.5 * (Math.sqrt(1 - (ratio -= 2) * ratio) + 1);
-	}
-};
 var com_gskinner_motion_plugins_IGTweenPlugin = function() { };
 $hxClasses["com.gskinner.motion.plugins.IGTweenPlugin"] = com_gskinner_motion_plugins_IGTweenPlugin;
 com_gskinner_motion_plugins_IGTweenPlugin.__name__ = "com.gskinner.motion.plugins.IGTweenPlugin";
@@ -4899,62 +4466,138 @@ com_gskinner_motion_plugins_IGTweenPlugin.__isInterface__ = true;
 com_gskinner_motion_plugins_IGTweenPlugin.prototype = {
 	__class__: com_gskinner_motion_plugins_IGTweenPlugin
 };
-var com_gskinner_motion_plugins_MotionBlurPlugin = function() {
+var com_gskinner_motion_GTweener = function() {
 };
-$hxClasses["com.gskinner.motion.plugins.MotionBlurPlugin"] = com_gskinner_motion_plugins_MotionBlurPlugin;
-com_gskinner_motion_plugins_MotionBlurPlugin.__name__ = "com.gskinner.motion.plugins.MotionBlurPlugin";
-com_gskinner_motion_plugins_MotionBlurPlugin.__interfaces__ = [com_gskinner_motion_plugins_IGTweenPlugin];
-com_gskinner_motion_plugins_MotionBlurPlugin.install = function() {
-	if(com_gskinner_motion_plugins_MotionBlurPlugin.instance != null) {
+$hxClasses["com.gskinner.motion.GTweener"] = com_gskinner_motion_GTweener;
+com_gskinner_motion_GTweener.__name__ = "com.gskinner.motion.GTweener";
+com_gskinner_motion_GTweener.__interfaces__ = [com_gskinner_motion_plugins_IGTweenPlugin];
+com_gskinner_motion_GTweener.to = function(target,duration,values,props,pluginData) {
+	if(duration == null) {
+		duration = 1;
+	}
+	var tween = new com_gskinner_motion_GTween(target,duration,values,props,pluginData);
+	com_gskinner_motion_GTweener.add(tween);
+	return tween;
+};
+com_gskinner_motion_GTweener.from = function(target,duration,values,props,pluginData) {
+	if(duration == null) {
+		duration = 1;
+	}
+	var tween = com_gskinner_motion_GTweener.to(target,duration,values,props,pluginData);
+	tween.swapValues();
+	return tween;
+};
+com_gskinner_motion_GTweener.add = function(tween) {
+	var target = tween.target;
+	var list = com_gskinner_motion_GTweener.tweens.h[target.__id__];
+	if(list != null) {
+		com_gskinner_motion_GTweener.clearValues(target,tween.getValues());
+	} else {
+		list = [];
+		com_gskinner_motion_GTweener.tweens.set(target,list);
+	}
+	list.push(tween);
+	tween.pluginData.GTweener = true;
+};
+com_gskinner_motion_GTweener.getTween = function(target,name) {
+	var list = com_gskinner_motion_GTweener.tweens.h[target.__id__];
+	if(list == null) {
+		return null;
+	}
+	var l = list.length;
+	var _g = 0;
+	var _g1 = l;
+	while(_g < _g1) {
+		var i = _g++;
+		var tween = list[i];
+		var f = tween.getValue(name);
+		if(!isNaN(f)) {
+			return tween;
+		}
+	}
+	return null;
+};
+com_gskinner_motion_GTweener.getTweens = function(target) {
+	var tweens = com_gskinner_motion_GTweener.tweens.h[target.__id__];
+	if(tweens != null) {
+		return tweens;
+	}
+	return [];
+};
+com_gskinner_motion_GTweener.pauseTweens = function(target,paused) {
+	if(paused == null) {
+		paused = true;
+	}
+	var list = com_gskinner_motion_GTweener.tweens.h[target.__id__];
+	if(list == null) {
 		return;
 	}
-	com_gskinner_motion_plugins_MotionBlurPlugin.instance = new com_gskinner_motion_plugins_MotionBlurPlugin();
-	com_gskinner_motion_GTween.installPlugin(com_gskinner_motion_plugins_MotionBlurPlugin.instance,["x","y"]);
+	var l = list.length;
+	var _g = 0;
+	var _g1 = l;
+	while(_g < _g1) {
+		var i = _g++;
+		list[i].set_paused(paused);
+	}
 };
-com_gskinner_motion_plugins_MotionBlurPlugin.prototype = {
+com_gskinner_motion_GTweener.resumeTweens = function(target) {
+	com_gskinner_motion_GTweener.pauseTweens(target,false);
+};
+com_gskinner_motion_GTweener.remove = function(tween) {
+	Reflect.deleteField(tween.pluginData,"GTweener");
+	var list = com_gskinner_motion_GTweener.tweens.h[tween.target.__id__];
+	if(list == null) {
+		return;
+	}
+	var l = list.length;
+	var _g = 0;
+	var _g1 = l;
+	while(_g < _g1) {
+		var i = _g++;
+		if(list[i] == tween) {
+			list.splice(i,1);
+			return;
+		}
+	}
+};
+com_gskinner_motion_GTweener.removeTweens = function(target) {
+	com_gskinner_motion_GTweener.pauseTweens(target);
+	var list = com_gskinner_motion_GTweener.tweens.h[target.__id__];
+	if(list == null) {
+		return;
+	}
+	var l = list.length;
+	var _g = 0;
+	var _g1 = l;
+	while(_g < _g1) {
+		var i = _g++;
+		Reflect.deleteField(list[i].pluginData,"GTweener");
+	}
+	com_gskinner_motion_GTweener.tweens.remove(target);
+};
+com_gskinner_motion_GTweener.clearValues = function(target,values) {
+	var _g = 0;
+	var _g1 = Reflect.fields(values);
+	while(_g < _g1.length) {
+		var n = _g1[_g];
+		++_g;
+		var tween = com_gskinner_motion_GTweener.getTween(target,n);
+		if(tween != null) {
+			tween.deleteValue(n);
+		}
+	}
+};
+com_gskinner_motion_GTweener.prototype = {
 	init: function(tween,name,value) {
 		return value;
 	}
 	,tween: function(tween,name,value,initValue,rangeValue,ratio,end) {
-		if(!(com_gskinner_motion_plugins_MotionBlurPlugin.enabled && tween.pluginData.MotionBlurEnabled == null || tween.pluginData.MotionBlurEnabled)) {
-			return value;
+		if(end && tween.pluginData.GTweener) {
+			com_gskinner_motion_GTweener.remove(tween);
 		}
-		var data = Reflect.field(tween.pluginData,"MotionBlurData");
-		if(data == null) {
-			data = this.initTarget(tween);
-		}
-		var tweenTarget = js_Boot.__cast(tween.target , openfl_display_DisplayObject);
-		var f = tweenTarget.get_filters();
-		var dataIndex = Reflect.field(data,"index");
-		var value1 = f[dataIndex];
-		var blurF = ((value1) instanceof openfl_filters_BlurFilter) ? value1 : null;
-		if(blurF == null) {
-			return value;
-		}
-		if(end) {
-			f.splice(dataIndex,1);
-			Reflect.deleteField(tween.pluginData,"MotionBlurData");
-		} else {
-			var blur = Math.abs((tween.ratioOld - ratio) * rangeValue * com_gskinner_motion_plugins_MotionBlurPlugin.strength);
-			if(name == "x") {
-				blurF.set_blurX(blur);
-			} else {
-				blurF.set_blurY(blur);
-			}
-		}
-		tweenTarget.set_filters(f);
 		return value;
 	}
-	,initTarget: function(tween) {
-		var tweenTarget = js_Boot.__cast(tween.target , openfl_display_DisplayObject);
-		var f = tweenTarget.get_filters();
-		f.push(new openfl_filters_BlurFilter(0,0,1));
-		tweenTarget.set_filters(f);
-		var result = { index : f.length - 1};
-		tween.pluginData["MotionBlurData"] = result;
-		return result;
-	}
-	,__class__: com_gskinner_motion_plugins_MotionBlurPlugin
+	,__class__: com_gskinner_motion_GTweener
 };
 var haxe_StackItem = $hxEnums["haxe.StackItem"] = { __ename__:"haxe.StackItem",__constructs__:null
 	,CFunction: {_hx_name:"CFunction",_hx_index:0,__enum__:"haxe.StackItem",toString:$estr}
@@ -25551,7 +25194,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 111269;
+	this.version = 65208;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -66508,130 +66151,6 @@ openfl_filters_BitmapFilter.prototype = {
 	}
 	,__class__: openfl_filters_BitmapFilter
 };
-var openfl_filters_BitmapFilterShader = function(code) {
-	if(this.__glFragmentSource == null) {
-		this.__glFragmentSource = "varying vec2 openfl_TextureCoordv;\n\n\t\tuniform sampler2D openfl_Texture;\n\t\tuniform vec2 openfl_TextureSize;\n\n\t\tvoid main(void) {\n\n\t\t\tgl_FragColor = texture2D (openfl_Texture, openfl_TextureCoordv);\n\n\t\t}";
-	}
-	if(this.__glVertexSource == null) {
-		this.__glVertexSource = "attribute vec4 openfl_Position;\n\t\tattribute vec2 openfl_TextureCoord;\n\n\t\tvarying vec2 openfl_TextureCoordv;\n\n\t\tuniform mat4 openfl_Matrix;\n\t\tuniform vec2 openfl_TextureSize;\n\n\t\tvoid main(void) {\n\n\t\t\topenfl_TextureCoordv = openfl_TextureCoord;\n\n\t\tgl_Position = openfl_Matrix * openfl_Position;\n\n\t\t}";
-	}
-	openfl_display_Shader.call(this,code);
-	this.__isGenerated = true;
-	this.__initGL();
-};
-$hxClasses["openfl.filters.BitmapFilterShader"] = openfl_filters_BitmapFilterShader;
-openfl_filters_BitmapFilterShader.__name__ = "openfl.filters.BitmapFilterShader";
-openfl_filters_BitmapFilterShader.__super__ = openfl_display_Shader;
-openfl_filters_BitmapFilterShader.prototype = $extend(openfl_display_Shader.prototype,{
-	__class__: openfl_filters_BitmapFilterShader
-});
-var openfl_filters__$BlurFilter_BlurShader = function() {
-	if(this.__glFragmentSource == null) {
-		this.__glFragmentSource = "uniform sampler2D openfl_Texture;\n\n\t\tvarying vec2 vBlurCoords[7];\n\n\t\tvoid main(void) {\n\n\t\t\tvec4 sum = vec4(0.0);\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[0]) * 0.00443;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[1]) * 0.05399;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[2]) * 0.24197;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[3]) * 0.39894;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[4]) * 0.24197;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[5]) * 0.05399;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[6]) * 0.00443;\n\n\t\t\tgl_FragColor = sum;\n\n\t\t}";
-	}
-	if(this.__glVertexSource == null) {
-		this.__glVertexSource = "attribute vec4 openfl_Position;\n\t\tattribute vec2 openfl_TextureCoord;\n\n\t\tuniform mat4 openfl_Matrix;\n\n\t\tuniform vec2 uRadius;\n\t\tvarying vec2 vBlurCoords[7];\n\t\tuniform vec2 uTextureSize;\n\n\t\tvoid main(void) {\n\n\t\t\tgl_Position = openfl_Matrix * openfl_Position;\n\n\t\t\tvec2 r = uRadius / uTextureSize;\n\t\t\tvBlurCoords[0] = openfl_TextureCoord - r;\n\t\t\tvBlurCoords[1] = openfl_TextureCoord - r * 0.75;\n\t\t\tvBlurCoords[2] = openfl_TextureCoord - r * 0.5;\n\t\t\tvBlurCoords[3] = openfl_TextureCoord;\n\t\t\tvBlurCoords[4] = openfl_TextureCoord + r * 0.5;\n\t\t\tvBlurCoords[5] = openfl_TextureCoord + r * 0.75;\n\t\t\tvBlurCoords[6] = openfl_TextureCoord + r;\n\n\t\t}";
-	}
-	openfl_filters_BitmapFilterShader.call(this);
-	this.uRadius.value = [0,0];
-	this.__isGenerated = true;
-	this.__initGL();
-};
-$hxClasses["openfl.filters._BlurFilter.BlurShader"] = openfl_filters__$BlurFilter_BlurShader;
-openfl_filters__$BlurFilter_BlurShader.__name__ = "openfl.filters._BlurFilter.BlurShader";
-openfl_filters__$BlurFilter_BlurShader.__super__ = openfl_filters_BitmapFilterShader;
-openfl_filters__$BlurFilter_BlurShader.prototype = $extend(openfl_filters_BitmapFilterShader.prototype,{
-	__update: function() {
-		this.uTextureSize.value = [this.__texture.input.width,this.__texture.input.height];
-		openfl_filters_BitmapFilterShader.prototype.__update.call(this);
-	}
-	,__class__: openfl_filters__$BlurFilter_BlurShader
-});
-var openfl_filters_BlurFilter = function(blurX,blurY,quality) {
-	if(quality == null) {
-		quality = 1;
-	}
-	if(blurY == null) {
-		blurY = 4;
-	}
-	if(blurX == null) {
-		blurX = 4;
-	}
-	openfl_filters_BitmapFilter.call(this);
-	this.set_blurX(blurX);
-	this.set_blurY(blurY);
-	this.set_quality(quality);
-	this.__needSecondBitmapData = true;
-	this.__preserveObject = false;
-	this.__renderDirty = true;
-};
-$hxClasses["openfl.filters.BlurFilter"] = openfl_filters_BlurFilter;
-openfl_filters_BlurFilter.__name__ = "openfl.filters.BlurFilter";
-openfl_filters_BlurFilter.__super__ = openfl_filters_BitmapFilter;
-openfl_filters_BlurFilter.prototype = $extend(openfl_filters_BitmapFilter.prototype,{
-	clone: function() {
-		return new openfl_filters_BlurFilter(this.__blurX,this.__blurY,this.__quality);
-	}
-	,__applyFilter: function(bitmapData,sourceBitmapData,sourceRect,destPoint) {
-		var time = new Date().getTime() / 1000;
-		var finalImage = lime__$internal_graphics_ImageDataUtil.gaussianBlur(bitmapData.image,sourceBitmapData.image,sourceRect.__toLimeRectangle(),destPoint.__toLimeVector2(),this.__blurX,this.__blurY,this.__quality);
-		var elapsed = new Date().getTime() / 1000 - time;
-		if(finalImage == bitmapData.image) {
-			return bitmapData;
-		}
-		return sourceBitmapData;
-	}
-	,__initShader: function(renderer,pass,sourceBitmapData) {
-		if(pass < this.__horizontalPasses) {
-			var scale = Math.pow(0.5,pass >> 1);
-			openfl_filters_BlurFilter.__blurShader.uRadius.value[0] = this.get_blurX() * scale;
-			openfl_filters_BlurFilter.__blurShader.uRadius.value[1] = 0;
-		} else {
-			var scale = Math.pow(0.5,pass - this.__horizontalPasses >> 1);
-			openfl_filters_BlurFilter.__blurShader.uRadius.value[0] = 0;
-			openfl_filters_BlurFilter.__blurShader.uRadius.value[1] = this.get_blurY() * scale;
-		}
-		return openfl_filters_BlurFilter.__blurShader;
-	}
-	,get_blurX: function() {
-		return this.__blurX;
-	}
-	,set_blurX: function(value) {
-		if(value != this.__blurX) {
-			this.__blurX = value;
-			this.__renderDirty = true;
-			this.__leftExtension = value > 0 ? Math.ceil(value) : 0;
-			this.__rightExtension = this.__leftExtension;
-		}
-		return value;
-	}
-	,get_blurY: function() {
-		return this.__blurY;
-	}
-	,set_blurY: function(value) {
-		if(value != this.__blurY) {
-			this.__blurY = value;
-			this.__renderDirty = true;
-			this.__topExtension = value > 0 ? Math.ceil(value) : 0;
-			this.__bottomExtension = this.__topExtension;
-		}
-		return value;
-	}
-	,get_quality: function() {
-		return this.__quality;
-	}
-	,set_quality: function(value) {
-		this.__horizontalPasses = this.__blurX <= 0 ? 0 : Math.round(this.__blurX * (value / 4)) + 1;
-		this.__verticalPasses = this.__blurY <= 0 ? 0 : Math.round(this.__blurY * (value / 4)) + 1;
-		this.__numShaderPasses = this.__horizontalPasses + this.__verticalPasses;
-		if(value != this.__quality) {
-			this.__renderDirty = true;
-		}
-		return this.__quality = value;
-	}
-	,__class__: openfl_filters_BlurFilter
-	,__properties__: {set_quality:"set_quality",get_quality:"get_quality",set_blurY:"set_blurY",get_blurY:"get_blurY",set_blurX:"set_blurX",get_blurX:"get_blurX"}
-});
 var openfl_geom_Matrix3D = function(v) {
 	if(v != null && v.get_length() == 16) {
 		this.rawData = v.concat(null);
@@ -78742,6 +78261,8 @@ var Enum = { };
 com_gskinner_motion_GTween.plugins = { };
 com_gskinner_motion_GTween.tickList = new haxe_ds_ObjectMap();
 com_gskinner_motion_GTween.gcLockList = new haxe_ds_ObjectMap();
+com_gskinner_motion_GTweener.instance = new com_gskinner_motion_GTweener();
+com_gskinner_motion_GTween.installPlugin(com_gskinner_motion_GTweener.instance,["*"]);
 js_Boot.__toStr = ({ }).toString;
 if(ArrayBuffer.prototype.slice == null) {
 	ArrayBuffer.prototype.slice = js_lib__$ArrayBuffer_ArrayBufferCompat.sliceImpl;
@@ -78820,8 +78341,7 @@ com_gskinner_motion_GTween.defaultEase = com_gskinner_motion_GTween.linearEase;
 com_gskinner_motion_GTween.pauseAll = false;
 com_gskinner_motion_GTween.timeScaleAll = 1;
 com_gskinner_motion_GTween.hasStarPlugins = false;
-com_gskinner_motion_plugins_MotionBlurPlugin.enabled = false;
-com_gskinner_motion_plugins_MotionBlurPlugin.strength = 0.6;
+com_gskinner_motion_GTweener.tweens = new haxe_ds_ObjectMap();
 haxe_Serializer.USE_CACHE = false;
 haxe_Serializer.USE_ENUM_INDEX = false;
 haxe_Serializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
@@ -80598,7 +80118,6 @@ openfl_events_TouchEvent.TOUCH_ROLL_OUT = "touchRollOut";
 openfl_events_TouchEvent.TOUCH_ROLL_OVER = "touchRollOver";
 openfl_events_TouchEvent.TOUCH_TAP = "touchTap";
 openfl_events_UncaughtErrorEvent.UNCAUGHT_ERROR = "uncaughtError";
-openfl_filters_BlurFilter.__blurShader = new openfl_filters__$BlurFilter_BlurShader();
 openfl_geom_Matrix3D.__meta__ = { statics : { create2D : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, createABCD : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, createOrtho : { SuppressWarnings : ["checkstyle:FieldDocComment"]}}};
 openfl_geom_Orientation3D.AXIS_ANGLE = 0;
 openfl_geom_Orientation3D.EULER_ANGLES = 1;
@@ -81110,7 +80629,7 @@ ApplicationMain.main();
 	} else {
 		$hx_exports.lime = $hx_exports.lime || {};
 		$hx_exports.lime.$scripts = $hx_exports.lime.$scripts || {};
-		$hx_exports.lime.$scripts["GTweenTimelineDemo"] = $hx_script;
+		$hx_exports.lime.$scripts["GTweenerDemo"] = $hx_script;
 		$hx_exports.lime.embed = function (projectName) {
 			var exports = {};
 			var script = $hx_exports.lime.$scripts[projectName];

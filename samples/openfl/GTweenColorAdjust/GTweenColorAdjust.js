@@ -887,18 +887,19 @@ var ApplicationMain = function() { };
 $hxClasses["ApplicationMain"] = ApplicationMain;
 ApplicationMain.__name__ = "ApplicationMain";
 ApplicationMain.main = function() {
-	lime_system_System.__registerEntryPoint("GTweenSimpleSequencing",ApplicationMain.create);
+	lime_system_System.__registerEntryPoint("GTweenColorAdjust",ApplicationMain.create);
 };
 ApplicationMain.create = function(config) {
 	var app = new openfl_display_Application();
+	ManifestResources.init(config);
 	app.meta.h["build"] = "1";
 	app.meta.h["company"] = "";
-	app.meta.h["file"] = "GTweenSimpleSequencing";
-	app.meta.h["name"] = "GTween Simple Sequencing";
-	app.meta.h["packageName"] = "com.gskinner.gtween-haxe.simple-sequencing";
+	app.meta.h["file"] = "GTweenColorAdjust";
+	app.meta.h["name"] = "GTween Color Adjust";
+	app.meta.h["packageName"] = "com.gskinner.gtween-haxe.color-adjust";
 	app.meta.h["version"] = "1.0.0";
-	var attributes = { allowHighDPI : true, alwaysOnTop : false, borderless : false, element : null, frameRate : 0, height : 0, hidden : false, maximized : false, minimized : false, parameters : { }, resizable : true, title : "GTween Simple Sequencing", width : 0, x : null, y : null};
-	attributes.context = { antialiasing : 0, background : 16777215, colorDepth : 32, depth : true, hardware : true, stencil : true, type : null, vsync : false};
+	var attributes = { allowHighDPI : true, alwaysOnTop : false, borderless : false, element : null, frameRate : 0, height : 0, hidden : false, maximized : false, minimized : false, parameters : { }, resizable : true, title : "GTween Color Adjust", width : 0, x : null, y : null};
+	attributes.context = { antialiasing : 0, background : 0, colorDepth : 32, depth : true, hardware : true, stencil : true, type : null, vsync : false};
 	if(app.__window == null) {
 		if(config != null) {
 			var _g = 0;
@@ -927,6 +928,20 @@ ApplicationMain.create = function(config) {
 		ApplicationMain.start(stage);
 	};
 	preloader.onComplete.add(tmp);
+	var _g = 0;
+	var _g1 = ManifestResources.preloadLibraries;
+	while(_g < _g1.length) {
+		var library = _g1[_g];
+		++_g;
+		app.__preloader.addLibrary(library);
+	}
+	var _g = 0;
+	var _g1 = ManifestResources.preloadLibraryNames;
+	while(_g < _g1.length) {
+		var name = _g1[_g];
+		++_g;
+		app.__preloader.addLibraryName(name);
+	}
 	app.__preloader.load();
 	var result = app.exec();
 };
@@ -3366,37 +3381,28 @@ openfl_display_Sprite.prototype = $extend(openfl_display_DisplayObjectContainer.
 	,__class__: openfl_display_Sprite
 	,__properties__: $extend(openfl_display_DisplayObjectContainer.prototype.__properties__,{get_graphics:"get_graphics",set_buttonMode:"set_buttonMode",get_buttonMode:"get_buttonMode"})
 });
-var GTweenSimpleSequencing = function() {
+var GTweenColorAdjust = function() {
 	openfl_display_Sprite.call(this);
-	this.ball = new openfl_display_Sprite();
-	this.ball.get_graphics().beginFill(16711680);
-	this.ball.get_graphics().drawCircle(0,0,50);
-	this.ball.get_graphics().endFill();
-	this.ball.set_x(50);
-	this.ball.set_y(50);
-	this.addChild(this.ball);
-	com_gskinner_motion_plugins_MotionBlurPlugin.install();
-	var tween4 = new com_gskinner_motion_GTween(this.ball,0.4,{ y : 50},{ autoPlay : false, delay : 0.5, ease : com_gskinner_motion_easing_Sine.easeInOut},{ MotionBlurEnabled : true});
-	var tween3 = new com_gskinner_motion_GTween(this.ball,0.4,{ x : 50},{ autoPlay : false, nextTween : tween4, delay : 0.5, ease : com_gskinner_motion_easing_Sine.easeInOut},{ MotionBlurEnabled : true});
-	var tween2 = new com_gskinner_motion_GTween(this.ball,0.4,{ y : 350},{ autoPlay : false, nextTween : tween3, delay : 0.5, ease : com_gskinner_motion_easing_Sine.easeInOut},{ MotionBlurEnabled : true});
-	var tween1 = new com_gskinner_motion_GTween(this.ball,0.5,{ x : 500},{ nextTween : tween2, delay : 0.5, ease : com_gskinner_motion_easing_Sine.easeInOut},{ MotionBlurEnabled : true});
-	tween4.nextTween = tween1;
+	var image = new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("bitmap.png"));
+	this.addChild(image);
+	com_gskinner_motion_plugins_ColorAdjustPlugin.install();
+	new com_gskinner_motion_GTween(image,3,{ saturation : -100, contrast : 70},{ repeatCount : 0, reflect : true});
 };
-$hxClasses["GTweenSimpleSequencing"] = GTweenSimpleSequencing;
-GTweenSimpleSequencing.__name__ = "GTweenSimpleSequencing";
-GTweenSimpleSequencing.__super__ = openfl_display_Sprite;
-GTweenSimpleSequencing.prototype = $extend(openfl_display_Sprite.prototype,{
-	__class__: GTweenSimpleSequencing
+$hxClasses["GTweenColorAdjust"] = GTweenColorAdjust;
+GTweenColorAdjust.__name__ = "GTweenColorAdjust";
+GTweenColorAdjust.__super__ = openfl_display_Sprite;
+GTweenColorAdjust.prototype = $extend(openfl_display_Sprite.prototype,{
+	__class__: GTweenColorAdjust
 });
 var DocumentClass = function(current) {
 	current.addChild(this);
-	GTweenSimpleSequencing.call(this);
+	GTweenColorAdjust.call(this);
 	this.dispatchEvent(new openfl_events_Event("addedToStage",false,false));
 };
 $hxClasses["DocumentClass"] = DocumentClass;
 DocumentClass.__name__ = "DocumentClass";
-DocumentClass.__super__ = GTweenSimpleSequencing;
-DocumentClass.prototype = $extend(GTweenSimpleSequencing.prototype,{
+DocumentClass.__super__ = GTweenColorAdjust;
+DocumentClass.prototype = $extend(GTweenColorAdjust.prototype,{
 	__class__: DocumentClass
 });
 var EReg = function(r,opt) {
@@ -3570,6 +3576,34 @@ Lambda.count = function(it,pred) {
 		}
 	}
 	return n;
+};
+var ManifestResources = function() { };
+$hxClasses["ManifestResources"] = ManifestResources;
+ManifestResources.__name__ = "ManifestResources";
+ManifestResources.init = function(config) {
+	ManifestResources.preloadLibraries = [];
+	ManifestResources.preloadLibraryNames = [];
+	ManifestResources.rootPath = null;
+	if(config != null && Object.prototype.hasOwnProperty.call(config,"rootPath")) {
+		ManifestResources.rootPath = Reflect.field(config,"rootPath");
+		if(!StringTools.endsWith(ManifestResources.rootPath,"/")) {
+			ManifestResources.rootPath += "/";
+		}
+	}
+	if(ManifestResources.rootPath == null) {
+		ManifestResources.rootPath = "./";
+	}
+	var bundle;
+	var data = "{\"name\":null,\"assets\":\"aoy4:pathy10:bitmap.pngy4:sizei389785y4:typey5:IMAGEy2:idR1y7:preloadtgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
+	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
+	var library = lime_utils_AssetLibrary.fromManifest(manifest);
+	lime_utils_Assets.registerLibrary("default",library);
+	library = lime_utils_Assets.getLibrary("default");
+	if(library != null) {
+		ManifestResources.preloadLibraries.push(library);
+	} else {
+		ManifestResources.preloadLibraryNames.push("default");
+	}
 };
 Math.__name__ = "Math";
 var Reflect = function() { };
@@ -4042,6 +4076,164 @@ Xml.prototype = {
 	}
 	,__class__: Xml
 };
+var com_gskinner_geom_ColorMatrix = {};
+com_gskinner_geom_ColorMatrix._new = function(matrix) {
+	var this1 = [];
+	matrix = com_gskinner_geom_ColorMatrix.fixMatrix(this1,matrix);
+	com_gskinner_geom_ColorMatrix.copyMatrix(this1,matrix.length == com_gskinner_geom_ColorMatrix.LENGTH ? matrix : com_gskinner_geom_ColorMatrix.IDENTITY_MATRIX);
+	return this1;
+};
+com_gskinner_geom_ColorMatrix.reset = function(this1) {
+	var _g = 0;
+	var _g1 = com_gskinner_geom_ColorMatrix.LENGTH;
+	while(_g < _g1) {
+		var i = _g++;
+		this1[i] = com_gskinner_geom_ColorMatrix.IDENTITY_MATRIX[i];
+	}
+};
+com_gskinner_geom_ColorMatrix.adjustColor = function(this1,brightness,contrast,saturation,hue) {
+	com_gskinner_geom_ColorMatrix.adjustHue(this1,hue);
+	com_gskinner_geom_ColorMatrix.adjustContrast(this1,contrast);
+	com_gskinner_geom_ColorMatrix.adjustBrightness(this1,brightness);
+	com_gskinner_geom_ColorMatrix.adjustSaturation(this1,saturation);
+};
+com_gskinner_geom_ColorMatrix.adjustBrightness = function(this1,value) {
+	value = com_gskinner_geom_ColorMatrix.cleanValue(this1,value,255);
+	if(value == 0 || isNaN(value)) {
+		return;
+	}
+	com_gskinner_geom_ColorMatrix.multiplyMatrix(this1,[1,0,0,0,value,0,1,0,0,value,0,0,1,0,value,0,0,0,1,0,0,0,0,0,1]);
+};
+com_gskinner_geom_ColorMatrix.adjustContrast = function(this1,value) {
+	value = com_gskinner_geom_ColorMatrix.cleanValue(this1,value,100);
+	if(value == 0 || isNaN(value)) {
+		return;
+	}
+	var x;
+	if(value < 0) {
+		x = 127 + value / 100 * 127;
+	} else {
+		x = value % 1;
+		if(x == 0) {
+			x = com_gskinner_geom_ColorMatrix.DELTA_INDEX[value | 0];
+		} else {
+			x = com_gskinner_geom_ColorMatrix.DELTA_INDEX[value | 0] * (1 - x) + com_gskinner_geom_ColorMatrix.DELTA_INDEX[(value | 0) + 1] * x;
+		}
+		x = x * 127 + 127;
+	}
+	com_gskinner_geom_ColorMatrix.multiplyMatrix(this1,[x / 127,0,0,0,0.5 * (127 - x),0,x / 127,0,0,0.5 * (127 - x),0,0,x / 127,0,0.5 * (127 - x),0,0,0,1,0,0,0,0,0,1]);
+};
+com_gskinner_geom_ColorMatrix.adjustSaturation = function(this1,value) {
+	value = com_gskinner_geom_ColorMatrix.cleanValue(this1,value,100);
+	if(value == 0 || isNaN(value)) {
+		return;
+	}
+	var x = 1 + (value > 0 ? 3 * value / 100 : value / 100);
+	var lumR = 0.3086;
+	var lumG = 0.6094;
+	var lumB = 0.0820;
+	com_gskinner_geom_ColorMatrix.multiplyMatrix(this1,[lumR * (1 - x) + x,lumG * (1 - x),lumB * (1 - x),0,0,lumR * (1 - x),lumG * (1 - x) + x,lumB * (1 - x),0,0,lumR * (1 - x),lumG * (1 - x),lumB * (1 - x) + x,0,0,0,0,0,1,0,0,0,0,0,1]);
+};
+com_gskinner_geom_ColorMatrix.adjustHue = function(this1,value) {
+	value = com_gskinner_geom_ColorMatrix.cleanValue(this1,value,180) / 180 * Math.PI;
+	if(value == 0 || isNaN(value)) {
+		return;
+	}
+	var cosVal = Math.cos(value);
+	var sinVal = Math.sin(value);
+	var lumR = 0.213;
+	var lumG = 0.715;
+	var lumB = 0.072;
+	com_gskinner_geom_ColorMatrix.multiplyMatrix(this1,[lumR + cosVal * (1 - lumR) + sinVal * -lumR,lumG + cosVal * -lumG + sinVal * -lumG,lumB + cosVal * -lumB + sinVal * (1 - lumB),0,0,lumR + cosVal * -lumR + sinVal * 0.143,lumG + cosVal * (1 - lumG) + sinVal * 0.140,lumB + cosVal * -lumB + sinVal * -0.283,0,0,lumR + cosVal * -lumR + sinVal * -(1 - lumR),lumG + cosVal * -lumG + sinVal * lumG,lumB + cosVal * (1 - lumB) + sinVal * lumB,0,0,0,0,0,1,0,0,0,0,0,1]);
+};
+com_gskinner_geom_ColorMatrix.concat = function(this1,matrix) {
+	matrix = com_gskinner_geom_ColorMatrix.fixMatrix(this1,matrix);
+	if(matrix.length != com_gskinner_geom_ColorMatrix.LENGTH) {
+		return;
+	}
+	com_gskinner_geom_ColorMatrix.multiplyMatrix(this1,matrix);
+};
+com_gskinner_geom_ColorMatrix.clone = function(this1) {
+	return com_gskinner_geom_ColorMatrix._new(this1);
+};
+com_gskinner_geom_ColorMatrix.toString = function(this1) {
+	return "ColorMatrix [ " + this1.join(" , ") + " ]";
+};
+com_gskinner_geom_ColorMatrix.toArray = function(this1) {
+	return this1.slice(0,20);
+};
+com_gskinner_geom_ColorMatrix.copyMatrix = function(this1,matrix) {
+	var l = com_gskinner_geom_ColorMatrix.LENGTH;
+	var _g = 0;
+	var _g1 = l;
+	while(_g < _g1) {
+		var i = _g++;
+		this1[i] = matrix[i];
+	}
+};
+com_gskinner_geom_ColorMatrix.multiplyMatrix = function(this1,matrix) {
+	var col = [];
+	var _g = 0;
+	while(_g < 5) {
+		var i = _g++;
+		col[0] = this1[i * 5];
+		col[1] = this1[1 + i * 5];
+		col[2] = this1[2 + i * 5];
+		col[3] = this1[3 + i * 5];
+		col[4] = this1[4 + i * 5];
+		var val = 0;
+		val += matrix[0] * col[0];
+		val += matrix[5] * col[1];
+		val += matrix[10] * col[2];
+		val += matrix[15] * col[3];
+		val += matrix[20] * col[4];
+		this1[i * 5] = val;
+		var val1 = 0;
+		val1 += matrix[1] * col[0];
+		val1 += matrix[6] * col[1];
+		val1 += matrix[11] * col[2];
+		val1 += matrix[16] * col[3];
+		val1 += matrix[21] * col[4];
+		this1[1 + i * 5] = val1;
+		var val2 = 0;
+		val2 += matrix[2] * col[0];
+		val2 += matrix[7] * col[1];
+		val2 += matrix[12] * col[2];
+		val2 += matrix[17] * col[3];
+		val2 += matrix[22] * col[4];
+		this1[2 + i * 5] = val2;
+		var val3 = 0;
+		val3 += matrix[3] * col[0];
+		val3 += matrix[8] * col[1];
+		val3 += matrix[13] * col[2];
+		val3 += matrix[18] * col[3];
+		val3 += matrix[23] * col[4];
+		this1[3 + i * 5] = val3;
+		var val4 = 0;
+		val4 += matrix[4] * col[0];
+		val4 += matrix[9] * col[1];
+		val4 += matrix[14] * col[2];
+		val4 += matrix[19] * col[3];
+		val4 += matrix[24] * col[4];
+		this1[4 + i * 5] = val4;
+	}
+};
+com_gskinner_geom_ColorMatrix.cleanValue = function(this1,value,limit) {
+	return Math.min(limit,Math.max(-limit,value));
+};
+com_gskinner_geom_ColorMatrix.fixMatrix = function(this1,matrix) {
+	if(matrix == null) {
+		return com_gskinner_geom_ColorMatrix.IDENTITY_MATRIX;
+	}
+	if(matrix.length < com_gskinner_geom_ColorMatrix.LENGTH) {
+		matrix = matrix.slice(0,matrix.length).concat(com_gskinner_geom_ColorMatrix.IDENTITY_MATRIX.slice(matrix.length,com_gskinner_geom_ColorMatrix.LENGTH));
+	} else if(matrix.length > com_gskinner_geom_ColorMatrix.LENGTH) {
+		matrix = matrix.slice(0,com_gskinner_geom_ColorMatrix.LENGTH);
+	} else {
+		matrix = matrix.slice(0);
+	}
+	return matrix;
+};
 var com_gskinner_motion_GTween = function(target,duration,values,props,pluginData) {
 	if(duration == null) {
 		duration = 1;
@@ -4460,18 +4652,6 @@ com_gskinner_motion__$GTween_TargetProxy.arrayWrite = function(this1,name,value)
 		this1.setValue(name,parseFloat(Std.string(value)));
 	}
 };
-var com_gskinner_motion_easing_Sine = function() { };
-$hxClasses["com.gskinner.motion.easing.Sine"] = com_gskinner_motion_easing_Sine;
-com_gskinner_motion_easing_Sine.__name__ = "com.gskinner.motion.easing.Sine";
-com_gskinner_motion_easing_Sine.easeIn = function(ratio,unused1,unused2,unused3) {
-	return 1 - Math.cos(ratio * (Math.PI / 2));
-};
-com_gskinner_motion_easing_Sine.easeOut = function(ratio,unused1,unused2,unused3) {
-	return Math.sin(ratio * (Math.PI / 2));
-};
-com_gskinner_motion_easing_Sine.easeInOut = function(ratio,unused1,unused2,unused3) {
-	return -0.5 * (Math.cos(ratio * Math.PI) - 1);
-};
 var com_gskinner_motion_plugins_IGTweenPlugin = function() { };
 $hxClasses["com.gskinner.motion.plugins.IGTweenPlugin"] = com_gskinner_motion_plugins_IGTweenPlugin;
 com_gskinner_motion_plugins_IGTweenPlugin.__name__ = "com.gskinner.motion.plugins.IGTweenPlugin";
@@ -4479,62 +4659,245 @@ com_gskinner_motion_plugins_IGTweenPlugin.__isInterface__ = true;
 com_gskinner_motion_plugins_IGTweenPlugin.prototype = {
 	__class__: com_gskinner_motion_plugins_IGTweenPlugin
 };
-var com_gskinner_motion_plugins_MotionBlurPlugin = function() {
+var com_gskinner_motion_GTweener = function() {
 };
-$hxClasses["com.gskinner.motion.plugins.MotionBlurPlugin"] = com_gskinner_motion_plugins_MotionBlurPlugin;
-com_gskinner_motion_plugins_MotionBlurPlugin.__name__ = "com.gskinner.motion.plugins.MotionBlurPlugin";
-com_gskinner_motion_plugins_MotionBlurPlugin.__interfaces__ = [com_gskinner_motion_plugins_IGTweenPlugin];
-com_gskinner_motion_plugins_MotionBlurPlugin.install = function() {
-	if(com_gskinner_motion_plugins_MotionBlurPlugin.instance != null) {
+$hxClasses["com.gskinner.motion.GTweener"] = com_gskinner_motion_GTweener;
+com_gskinner_motion_GTweener.__name__ = "com.gskinner.motion.GTweener";
+com_gskinner_motion_GTweener.__interfaces__ = [com_gskinner_motion_plugins_IGTweenPlugin];
+com_gskinner_motion_GTweener.to = function(target,duration,values,props,pluginData) {
+	if(duration == null) {
+		duration = 1;
+	}
+	var tween = new com_gskinner_motion_GTween(target,duration,values,props,pluginData);
+	com_gskinner_motion_GTweener.add(tween);
+	return tween;
+};
+com_gskinner_motion_GTweener.from = function(target,duration,values,props,pluginData) {
+	if(duration == null) {
+		duration = 1;
+	}
+	var tween = com_gskinner_motion_GTweener.to(target,duration,values,props,pluginData);
+	tween.swapValues();
+	return tween;
+};
+com_gskinner_motion_GTweener.add = function(tween) {
+	var target = tween.target;
+	var list = com_gskinner_motion_GTweener.tweens.h[target.__id__];
+	if(list != null) {
+		com_gskinner_motion_GTweener.clearValues(target,tween.getValues());
+	} else {
+		list = [];
+		com_gskinner_motion_GTweener.tweens.set(target,list);
+	}
+	list.push(tween);
+	tween.pluginData.GTweener = true;
+};
+com_gskinner_motion_GTweener.getTween = function(target,name) {
+	var list = com_gskinner_motion_GTweener.tweens.h[target.__id__];
+	if(list == null) {
+		return null;
+	}
+	var l = list.length;
+	var _g = 0;
+	var _g1 = l;
+	while(_g < _g1) {
+		var i = _g++;
+		var tween = list[i];
+		var f = tween.getValue(name);
+		if(!isNaN(f)) {
+			return tween;
+		}
+	}
+	return null;
+};
+com_gskinner_motion_GTweener.getTweens = function(target) {
+	var tweens = com_gskinner_motion_GTweener.tweens.h[target.__id__];
+	if(tweens != null) {
+		return tweens;
+	}
+	return [];
+};
+com_gskinner_motion_GTweener.pauseTweens = function(target,paused) {
+	if(paused == null) {
+		paused = true;
+	}
+	var list = com_gskinner_motion_GTweener.tweens.h[target.__id__];
+	if(list == null) {
 		return;
 	}
-	com_gskinner_motion_plugins_MotionBlurPlugin.instance = new com_gskinner_motion_plugins_MotionBlurPlugin();
-	com_gskinner_motion_GTween.installPlugin(com_gskinner_motion_plugins_MotionBlurPlugin.instance,["x","y"]);
+	var l = list.length;
+	var _g = 0;
+	var _g1 = l;
+	while(_g < _g1) {
+		var i = _g++;
+		list[i].set_paused(paused);
+	}
 };
-com_gskinner_motion_plugins_MotionBlurPlugin.prototype = {
+com_gskinner_motion_GTweener.resumeTweens = function(target) {
+	com_gskinner_motion_GTweener.pauseTweens(target,false);
+};
+com_gskinner_motion_GTweener.remove = function(tween) {
+	Reflect.deleteField(tween.pluginData,"GTweener");
+	var list = com_gskinner_motion_GTweener.tweens.h[tween.target.__id__];
+	if(list == null) {
+		return;
+	}
+	var l = list.length;
+	var _g = 0;
+	var _g1 = l;
+	while(_g < _g1) {
+		var i = _g++;
+		if(list[i] == tween) {
+			list.splice(i,1);
+			return;
+		}
+	}
+};
+com_gskinner_motion_GTweener.removeTweens = function(target) {
+	com_gskinner_motion_GTweener.pauseTweens(target);
+	var list = com_gskinner_motion_GTweener.tweens.h[target.__id__];
+	if(list == null) {
+		return;
+	}
+	var l = list.length;
+	var _g = 0;
+	var _g1 = l;
+	while(_g < _g1) {
+		var i = _g++;
+		Reflect.deleteField(list[i].pluginData,"GTweener");
+	}
+	com_gskinner_motion_GTweener.tweens.remove(target);
+};
+com_gskinner_motion_GTweener.clearValues = function(target,values) {
+	var _g = 0;
+	var _g1 = Reflect.fields(values);
+	while(_g < _g1.length) {
+		var n = _g1[_g];
+		++_g;
+		var tween = com_gskinner_motion_GTweener.getTween(target,n);
+		if(tween != null) {
+			tween.deleteValue(n);
+		}
+	}
+};
+com_gskinner_motion_GTweener.prototype = {
 	init: function(tween,name,value) {
 		return value;
 	}
 	,tween: function(tween,name,value,initValue,rangeValue,ratio,end) {
-		if(!(com_gskinner_motion_plugins_MotionBlurPlugin.enabled && tween.pluginData.MotionBlurEnabled == null || tween.pluginData.MotionBlurEnabled)) {
+		if(end && tween.pluginData.GTweener) {
+			com_gskinner_motion_GTweener.remove(tween);
+		}
+		return value;
+	}
+	,__class__: com_gskinner_motion_GTweener
+};
+var com_gskinner_motion_plugins_ColorAdjustPlugin = function() {
+};
+$hxClasses["com.gskinner.motion.plugins.ColorAdjustPlugin"] = com_gskinner_motion_plugins_ColorAdjustPlugin;
+com_gskinner_motion_plugins_ColorAdjustPlugin.__name__ = "com.gskinner.motion.plugins.ColorAdjustPlugin";
+com_gskinner_motion_plugins_ColorAdjustPlugin.__interfaces__ = [com_gskinner_motion_plugins_IGTweenPlugin];
+com_gskinner_motion_plugins_ColorAdjustPlugin.install = function() {
+	if(com_gskinner_motion_plugins_ColorAdjustPlugin.instance != null) {
+		return;
+	}
+	com_gskinner_motion_plugins_ColorAdjustPlugin.instance = new com_gskinner_motion_plugins_ColorAdjustPlugin();
+	com_gskinner_motion_GTween.installPlugin(com_gskinner_motion_plugins_ColorAdjustPlugin.instance,com_gskinner_motion_plugins_ColorAdjustPlugin.tweenProperties);
+};
+com_gskinner_motion_plugins_ColorAdjustPlugin.prototype = {
+	init: function(tween,name,value) {
+		if(!(tween.pluginData.ColorAdjustEnabled == null && com_gskinner_motion_plugins_ColorAdjustPlugin.enabled || tween.pluginData.ColorAdjustEnabled)) {
 			return value;
 		}
-		var data = Reflect.field(tween.pluginData,"MotionBlurData");
+		if(tween.pluginData.ColorAdjustData == null) {
+			var tweenTarget = js_Boot.__cast(tween.target , openfl_display_DisplayObject);
+			var f = tweenTarget.get_filters();
+			var _g = 0;
+			var _g1 = f.length;
+			while(_g < _g1) {
+				var i = _g++;
+				if(((f[i]) instanceof openfl_filters_ColorMatrixFilter)) {
+					var cmF = f[i];
+					var o = { index : i, ratio : NaN};
+					o.initMatrix = cmF.get_matrix();
+					o.matrix = this.getMatrix(tween);
+					tween.pluginData.ColorAdjustData = o;
+				}
+			}
+		}
+		return tween.getValue(name) - 1;
+	}
+	,tween: function(tween,name,value,initValue,rangeValue,ratio,end) {
+		if(!(tween.pluginData.ColorAdjustEnabled == null && com_gskinner_motion_plugins_ColorAdjustPlugin.enabled || tween.pluginData.ColorAdjustEnabled)) {
+			return value;
+		}
+		var data = tween.pluginData.ColorAdjustData;
 		if(data == null) {
 			data = this.initTarget(tween);
 		}
+		if(ratio == data.ratio) {
+			return NaN;
+		}
+		data.ratio = ratio;
+		ratio = value - initValue;
 		var tweenTarget = js_Boot.__cast(tween.target , openfl_display_DisplayObject);
 		var f = tweenTarget.get_filters();
-		var dataIndex = Reflect.field(data,"index");
-		var value1 = f[dataIndex];
-		var blurF = ((value1) instanceof openfl_filters_BlurFilter) ? value1 : null;
-		if(blurF == null) {
+		var value1 = f[data.index | 0];
+		var cmF = ((value1) instanceof openfl_filters_ColorMatrixFilter) ? value1 : null;
+		if(cmF == null) {
 			return value;
 		}
-		if(end) {
-			f.splice(dataIndex,1);
-			Reflect.deleteField(tween.pluginData,"MotionBlurData");
-		} else {
-			var blur = Math.abs((tween.ratioOld - ratio) * rangeValue * com_gskinner_motion_plugins_MotionBlurPlugin.strength);
-			if(name == "x") {
-				blurF.set_blurX(blur);
-			} else {
-				blurF.set_blurY(blur);
-			}
+		var initMatrix = data.initMatrix;
+		var targMatrix = data.matrix;
+		if(rangeValue < 0) {
+			initMatrix = targMatrix;
+			targMatrix = data.initMatrix;
+			ratio *= -1;
 		}
+		var matrix = cmF.get_matrix();
+		var l = matrix.length;
+		var _g = 0;
+		var _g1 = l;
+		while(_g < _g1) {
+			var i = _g++;
+			matrix[i] = initMatrix[i] + (targMatrix[i] - initMatrix[i]) * ratio;
+		}
+		cmF.set_matrix(matrix);
 		tweenTarget.set_filters(f);
-		return value;
+		if(end) {
+			Reflect.deleteField(tween.pluginData,"ColorAdjustData");
+		}
+		return NaN;
+	}
+	,getMatrix: function(tween) {
+		var brightness = this.fixValue(tween.getValue("brightness"));
+		var contrast = this.fixValue(tween.getValue("contrast"));
+		var saturation = this.fixValue(tween.getValue("saturation"));
+		var hue = this.fixValue(tween.getValue("hue"));
+		var mtx = com_gskinner_geom_ColorMatrix._new();
+		com_gskinner_geom_ColorMatrix.adjustColor(mtx,brightness,contrast,saturation,hue);
+		return mtx;
 	}
 	,initTarget: function(tween) {
 		var tweenTarget = js_Boot.__cast(tween.target , openfl_display_DisplayObject);
 		var f = tweenTarget.get_filters();
-		f.push(new openfl_filters_BlurFilter(0,0,1));
+		var mtx = com_gskinner_geom_ColorMatrix._new();
+		f.push(new openfl_filters_ColorMatrixFilter(mtx));
 		tweenTarget.set_filters(f);
-		var result = { index : f.length - 1};
-		tween.pluginData["MotionBlurData"] = result;
-		return result;
+		var o = { index : f.length - 1, ratio : NaN};
+		o.initMatrix = mtx;
+		o.matrix = this.getMatrix(tween);
+		tween.pluginData.ColorAdjustData = o;
+		return o;
 	}
-	,__class__: com_gskinner_motion_plugins_MotionBlurPlugin
+	,fixValue: function(value) {
+		if(isNaN(value)) {
+			return 0;
+		} else {
+			return value;
+		}
+	}
+	,__class__: com_gskinner_motion_plugins_ColorAdjustPlugin
 };
 var haxe_StackItem = $hxEnums["haxe.StackItem"] = { __ename__:"haxe.StackItem",__constructs__:null
 	,CFunction: {_hx_name:"CFunction",_hx_index:0,__enum__:"haxe.StackItem",toString:$estr}
@@ -25131,7 +25494,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 506161;
+	this.version = 382536;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -27221,8 +27584,58 @@ lime_utils_Preloader.prototype = {
 	,update: function(loaded,total) {
 	}
 	,updateProgress: function() {
+		var _gthis = this;
 		if(!this.simulateProgress) {
 			this.onProgress.dispatch(this.bytesLoaded,this.bytesTotal);
+		}
+		if(this.loadedLibraries == this.libraries.length && !this.initLibraryNames) {
+			this.initLibraryNames = true;
+			var _g = 0;
+			var _g1 = this.libraryNames;
+			while(_g < _g1.length) {
+				var name = [_g1[_g]];
+				++_g;
+				lime_utils_Log.verbose("Preloading asset library: " + name[0],{ fileName : "lime/utils/Preloader.hx", lineNumber : 239, className : "lime.utils.Preloader", methodName : "updateProgress"});
+				lime_utils_Assets.loadLibrary(name[0]).onProgress((function(name) {
+					return function(loaded,total) {
+						if(total > 0) {
+							if(!Object.prototype.hasOwnProperty.call(_gthis.bytesTotalCache.h,name[0])) {
+								_gthis.bytesTotalCache.h[name[0]] = total;
+								_gthis.bytesTotal += total - 200;
+							}
+							if(loaded > total) {
+								loaded = total;
+							}
+							if(!Object.prototype.hasOwnProperty.call(_gthis.bytesLoadedCache2.h,name[0])) {
+								_gthis.bytesLoaded += loaded;
+							} else {
+								_gthis.bytesLoaded += loaded - _gthis.bytesLoadedCache2.h[name[0]];
+							}
+							_gthis.bytesLoadedCache2.h[name[0]] = loaded;
+							if(!_gthis.simulateProgress) {
+								_gthis.onProgress.dispatch(_gthis.bytesLoaded,_gthis.bytesTotal);
+							}
+						}
+					};
+				})(name)).onComplete((function(name) {
+					return function(library) {
+						var total = 200;
+						if(Object.prototype.hasOwnProperty.call(_gthis.bytesTotalCache.h,name[0])) {
+							total = _gthis.bytesTotalCache.h[name[0]];
+						}
+						if(!Object.prototype.hasOwnProperty.call(_gthis.bytesLoadedCache2.h,name[0])) {
+							_gthis.bytesLoaded += total;
+						} else {
+							_gthis.bytesLoaded += total - _gthis.bytesLoadedCache2.h[name[0]];
+						}
+						_gthis.loadedAssetLibrary(name[0]);
+					};
+				})(name)).onError((function() {
+					return function(e) {
+						lime_utils_Log.error(e,{ fileName : "lime/utils/Preloader.hx", lineNumber : 293, className : "lime.utils.Preloader", methodName : "updateProgress"});
+					};
+				})());
+			}
 		}
 		if(!this.simulateProgress && this.loadedLibraries == this.libraries.length + this.libraryNames.length) {
 			if(!this.preloadComplete) {
@@ -66105,112 +66518,186 @@ openfl_filters_BitmapFilterShader.__super__ = openfl_display_Shader;
 openfl_filters_BitmapFilterShader.prototype = $extend(openfl_display_Shader.prototype,{
 	__class__: openfl_filters_BitmapFilterShader
 });
-var openfl_filters__$BlurFilter_BlurShader = function() {
+var openfl_filters__$ColorMatrixFilter_ColorMatrixShader = function() {
 	if(this.__glFragmentSource == null) {
-		this.__glFragmentSource = "uniform sampler2D openfl_Texture;\n\n\t\tvarying vec2 vBlurCoords[7];\n\n\t\tvoid main(void) {\n\n\t\t\tvec4 sum = vec4(0.0);\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[0]) * 0.00443;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[1]) * 0.05399;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[2]) * 0.24197;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[3]) * 0.39894;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[4]) * 0.24197;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[5]) * 0.05399;\n\t\t\tsum += texture2D(openfl_Texture, vBlurCoords[6]) * 0.00443;\n\n\t\t\tgl_FragColor = sum;\n\n\t\t}";
+		this.__glFragmentSource = "varying vec2 openfl_TextureCoordv;\n\t\tuniform sampler2D openfl_Texture;\n\n\t\tuniform mat4 uMultipliers;\n\t\tuniform vec4 uOffsets;\n\n\t\tvoid main(void) {\n\n\t\t\tvec4 color = texture2D (openfl_Texture, openfl_TextureCoordv);\n\n\t\t\tif (color.a == 0.0) {\n\n\t\t\t\tgl_FragColor = vec4 (0.0, 0.0, 0.0, 0.0);\n\n\t\t\t} else {\n\n\t\t\t\tcolor = vec4 (color.rgb / color.a, color.a);\n\t\t\t\tcolor = uOffsets + color * uMultipliers;\n\n\t\t\t\tgl_FragColor = vec4 (color.rgb * color.a, color.a);\n\n\t\t\t}\n\n\t\t}";
 	}
 	if(this.__glVertexSource == null) {
-		this.__glVertexSource = "attribute vec4 openfl_Position;\n\t\tattribute vec2 openfl_TextureCoord;\n\n\t\tuniform mat4 openfl_Matrix;\n\n\t\tuniform vec2 uRadius;\n\t\tvarying vec2 vBlurCoords[7];\n\t\tuniform vec2 uTextureSize;\n\n\t\tvoid main(void) {\n\n\t\t\tgl_Position = openfl_Matrix * openfl_Position;\n\n\t\t\tvec2 r = uRadius / uTextureSize;\n\t\t\tvBlurCoords[0] = openfl_TextureCoord - r;\n\t\t\tvBlurCoords[1] = openfl_TextureCoord - r * 0.75;\n\t\t\tvBlurCoords[2] = openfl_TextureCoord - r * 0.5;\n\t\t\tvBlurCoords[3] = openfl_TextureCoord;\n\t\t\tvBlurCoords[4] = openfl_TextureCoord + r * 0.5;\n\t\t\tvBlurCoords[5] = openfl_TextureCoord + r * 0.75;\n\t\t\tvBlurCoords[6] = openfl_TextureCoord + r;\n\n\t\t}";
+		this.__glVertexSource = "attribute vec4 openfl_Position;\n\t\tattribute vec2 openfl_TextureCoord;\n\n\t\tvarying vec2 openfl_TextureCoordv;\n\n\t\tuniform mat4 openfl_Matrix;\n\t\tuniform vec2 openfl_TextureSize;\n\n\n\t\tvoid main(void) {\n\n\t\t\topenfl_TextureCoordv = openfl_TextureCoord;\n\n\t\tgl_Position = openfl_Matrix * openfl_Position;\n\n\n\t\t}";
 	}
 	openfl_filters_BitmapFilterShader.call(this);
-	this.uRadius.value = [0,0];
+	this.uMultipliers.value = [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
+	this.uOffsets.value = [0,0,0,0];
 	this.__isGenerated = true;
 	this.__initGL();
 };
-$hxClasses["openfl.filters._BlurFilter.BlurShader"] = openfl_filters__$BlurFilter_BlurShader;
-openfl_filters__$BlurFilter_BlurShader.__name__ = "openfl.filters._BlurFilter.BlurShader";
-openfl_filters__$BlurFilter_BlurShader.__super__ = openfl_filters_BitmapFilterShader;
-openfl_filters__$BlurFilter_BlurShader.prototype = $extend(openfl_filters_BitmapFilterShader.prototype,{
-	__update: function() {
-		this.uTextureSize.value = [this.__texture.input.width,this.__texture.input.height];
-		openfl_filters_BitmapFilterShader.prototype.__update.call(this);
+$hxClasses["openfl.filters._ColorMatrixFilter.ColorMatrixShader"] = openfl_filters__$ColorMatrixFilter_ColorMatrixShader;
+openfl_filters__$ColorMatrixFilter_ColorMatrixShader.__name__ = "openfl.filters._ColorMatrixFilter.ColorMatrixShader";
+openfl_filters__$ColorMatrixFilter_ColorMatrixShader.__super__ = openfl_filters_BitmapFilterShader;
+openfl_filters__$ColorMatrixFilter_ColorMatrixShader.prototype = $extend(openfl_filters_BitmapFilterShader.prototype,{
+	init: function(matrix) {
+		var multipliers = this.uMultipliers.value;
+		var offsets = this.uOffsets.value;
+		multipliers[0] = matrix[0];
+		multipliers[1] = matrix[1];
+		multipliers[2] = matrix[2];
+		multipliers[3] = matrix[3];
+		multipliers[4] = matrix[5];
+		multipliers[5] = matrix[6];
+		multipliers[6] = matrix[7];
+		multipliers[7] = matrix[8];
+		multipliers[8] = matrix[10];
+		multipliers[9] = matrix[11];
+		multipliers[10] = matrix[12];
+		multipliers[11] = matrix[13];
+		multipliers[12] = matrix[15];
+		multipliers[13] = matrix[16];
+		multipliers[14] = matrix[17];
+		multipliers[15] = matrix[18];
+		offsets[0] = matrix[4] / 255.0;
+		offsets[1] = matrix[9] / 255.0;
+		offsets[2] = matrix[14] / 255.0;
+		offsets[3] = matrix[19] / 255.0;
 	}
-	,__class__: openfl_filters__$BlurFilter_BlurShader
+	,__class__: openfl_filters__$ColorMatrixFilter_ColorMatrixShader
 });
-var openfl_filters_BlurFilter = function(blurX,blurY,quality) {
-	if(quality == null) {
-		quality = 1;
-	}
-	if(blurY == null) {
-		blurY = 4;
-	}
-	if(blurX == null) {
-		blurX = 4;
-	}
+var openfl_filters_ColorMatrixFilter = function(matrix) {
 	openfl_filters_BitmapFilter.call(this);
-	this.set_blurX(blurX);
-	this.set_blurY(blurY);
-	this.set_quality(quality);
-	this.__needSecondBitmapData = true;
-	this.__preserveObject = false;
-	this.__renderDirty = true;
+	this.set_matrix(matrix);
+	this.__numShaderPasses = 1;
+	this.__needSecondBitmapData = false;
 };
-$hxClasses["openfl.filters.BlurFilter"] = openfl_filters_BlurFilter;
-openfl_filters_BlurFilter.__name__ = "openfl.filters.BlurFilter";
-openfl_filters_BlurFilter.__super__ = openfl_filters_BitmapFilter;
-openfl_filters_BlurFilter.prototype = $extend(openfl_filters_BitmapFilter.prototype,{
+$hxClasses["openfl.filters.ColorMatrixFilter"] = openfl_filters_ColorMatrixFilter;
+openfl_filters_ColorMatrixFilter.__name__ = "openfl.filters.ColorMatrixFilter";
+openfl_filters_ColorMatrixFilter.__super__ = openfl_filters_BitmapFilter;
+openfl_filters_ColorMatrixFilter.prototype = $extend(openfl_filters_BitmapFilter.prototype,{
 	clone: function() {
-		return new openfl_filters_BlurFilter(this.__blurX,this.__blurY,this.__quality);
+		return new openfl_filters_ColorMatrixFilter(this.__matrix);
 	}
-	,__applyFilter: function(bitmapData,sourceBitmapData,sourceRect,destPoint) {
-		var time = new Date().getTime() / 1000;
-		var finalImage = lime__$internal_graphics_ImageDataUtil.gaussianBlur(bitmapData.image,sourceBitmapData.image,sourceRect.__toLimeRectangle(),destPoint.__toLimeVector2(),this.__blurX,this.__blurY,this.__quality);
-		var elapsed = new Date().getTime() / 1000 - time;
-		if(finalImage == bitmapData.image) {
-			return bitmapData;
+	,__applyFilter: function(destBitmapData,sourceBitmapData,sourceRect,destPoint) {
+		var sourceImage = sourceBitmapData.image;
+		var image = destBitmapData.image;
+		lime__$internal_graphics_ImageCanvasUtil.convertToData(sourceImage);
+		lime__$internal_graphics_ImageCanvasUtil.convertToData(image);
+		var sourceData = sourceImage.get_data();
+		var destData = image.get_data();
+		var offsetX = destPoint.x - sourceRect.x | 0;
+		var offsetY = destPoint.y - sourceRect.y | 0;
+		var sourceStride = sourceBitmapData.width * 4;
+		var destStride = destBitmapData.width * 4;
+		var sourceFormat = sourceImage.buffer.format;
+		var destFormat = image.buffer.format;
+		var sourcePremultiplied = sourceImage.buffer.premultiplied;
+		var destPremultiplied = image.buffer.premultiplied;
+		var sourcePixel = 0;
+		var destPixel = 0;
+		var sourceOffset;
+		var destOffset;
+		var _g = sourceRect.y | 0;
+		var _g1 = sourceRect.height | 0;
+		while(_g < _g1) {
+			var row = _g++;
+			var _g2 = sourceRect.x | 0;
+			var _g3 = sourceRect.width | 0;
+			while(_g2 < _g3) {
+				var column = _g2++;
+				sourceOffset = row * sourceStride + column * 4;
+				destOffset = (row + offsetX) * destStride + (column + offsetY) * 4;
+				var format = sourceFormat;
+				var premultiplied = sourcePremultiplied;
+				if(premultiplied == null) {
+					premultiplied = false;
+				}
+				if(format == null) {
+					format = 0;
+				}
+				switch(format) {
+				case 0:
+					sourcePixel = (sourceData[sourceOffset] & 255) << 24 | (sourceData[sourceOffset + 1] & 255) << 16 | (sourceData[sourceOffset + 2] & 255) << 8 | sourceData[sourceOffset + 3] & 255;
+					break;
+				case 1:
+					sourcePixel = (sourceData[sourceOffset + 1] & 255) << 24 | (sourceData[sourceOffset + 2] & 255) << 16 | (sourceData[sourceOffset + 3] & 255) << 8 | sourceData[sourceOffset] & 255;
+					break;
+				case 2:
+					sourcePixel = (sourceData[sourceOffset + 2] & 255) << 24 | (sourceData[sourceOffset + 1] & 255) << 16 | (sourceData[sourceOffset] & 255) << 8 | sourceData[sourceOffset + 3] & 255;
+					break;
+				}
+				if(premultiplied) {
+					if((sourcePixel & 255) != 0 && (sourcePixel & 255) != 255) {
+						lime_math_RGBA.unmult = 255.0 / (sourcePixel & 255);
+						sourcePixel = (lime_math_RGBA.__clamp[Math.round((sourcePixel >>> 24 & 255) * lime_math_RGBA.unmult)] & 255) << 24 | (lime_math_RGBA.__clamp[Math.round((sourcePixel >>> 16 & 255) * lime_math_RGBA.unmult)] & 255) << 16 | (lime_math_RGBA.__clamp[Math.round((sourcePixel >>> 8 & 255) * lime_math_RGBA.unmult)] & 255) << 8 | sourcePixel & 255 & 255;
+					}
+				}
+				if((sourcePixel & 255) == 0) {
+					destPixel = 0;
+				} else {
+					var value = Math.max(0,Math.min(this.__matrix[0] * (sourcePixel >>> 24 & 255) + this.__matrix[1] * (sourcePixel >>> 16 & 255) + this.__matrix[2] * (sourcePixel >>> 8 & 255) + this.__matrix[3] * (sourcePixel & 255) + this.__matrix[4],255)) | 0;
+					destPixel = (value & 255) << 24 | (destPixel >>> 16 & 255 & 255) << 16 | (destPixel >>> 8 & 255 & 255) << 8 | destPixel & 255 & 255;
+					var value1 = Math.max(0,Math.min(this.__matrix[5] * (sourcePixel >>> 24 & 255) + this.__matrix[6] * (sourcePixel >>> 16 & 255) + this.__matrix[7] * (sourcePixel >>> 8 & 255) + this.__matrix[8] * (sourcePixel & 255) + this.__matrix[9],255)) | 0;
+					destPixel = (destPixel >>> 24 & 255 & 255) << 24 | (value1 & 255) << 16 | (destPixel >>> 8 & 255 & 255) << 8 | destPixel & 255 & 255;
+					var value2 = Math.max(0,Math.min(this.__matrix[10] * (sourcePixel >>> 24 & 255) + this.__matrix[11] * (sourcePixel >>> 16 & 255) + this.__matrix[12] * (sourcePixel >>> 8 & 255) + this.__matrix[13] * (sourcePixel & 255) + this.__matrix[14],255)) | 0;
+					destPixel = (destPixel >>> 24 & 255 & 255) << 24 | (destPixel >>> 16 & 255 & 255) << 16 | (value2 & 255) << 8 | destPixel & 255 & 255;
+					var value3 = Math.max(0,Math.min(this.__matrix[15] * (sourcePixel >>> 24 & 255) + this.__matrix[16] * (sourcePixel >>> 16 & 255) + this.__matrix[17] * (sourcePixel >>> 8 & 255) + this.__matrix[18] * (sourcePixel & 255) + this.__matrix[19],255)) | 0;
+					destPixel = (destPixel >>> 24 & 255 & 255) << 24 | (destPixel >>> 16 & 255 & 255) << 16 | (destPixel >>> 8 & 255 & 255) << 8 | value3 & 255;
+				}
+				var format1 = destFormat;
+				var premultiplied1 = destPremultiplied;
+				if(premultiplied1 == null) {
+					premultiplied1 = false;
+				}
+				if(format1 == null) {
+					format1 = 0;
+				}
+				if(premultiplied1) {
+					if((destPixel & 255) == 0) {
+						if(destPixel != 0) {
+							destPixel = 0;
+						}
+					} else if((destPixel & 255) != 255) {
+						lime_math_RGBA.a16 = lime_math_RGBA.__alpha16[destPixel & 255];
+						destPixel = ((destPixel >>> 24 & 255) * lime_math_RGBA.a16 >> 16 & 255) << 24 | ((destPixel >>> 16 & 255) * lime_math_RGBA.a16 >> 16 & 255) << 16 | ((destPixel >>> 8 & 255) * lime_math_RGBA.a16 >> 16 & 255) << 8 | destPixel & 255 & 255;
+					}
+				}
+				switch(format1) {
+				case 0:
+					destData[destOffset] = destPixel >>> 24 & 255;
+					destData[destOffset + 1] = destPixel >>> 16 & 255;
+					destData[destOffset + 2] = destPixel >>> 8 & 255;
+					destData[destOffset + 3] = destPixel & 255;
+					break;
+				case 1:
+					destData[destOffset] = destPixel & 255;
+					destData[destOffset + 1] = destPixel >>> 24 & 255;
+					destData[destOffset + 2] = destPixel >>> 16 & 255;
+					destData[destOffset + 3] = destPixel >>> 8 & 255;
+					break;
+				case 2:
+					destData[destOffset] = destPixel >>> 8 & 255;
+					destData[destOffset + 1] = destPixel >>> 16 & 255;
+					destData[destOffset + 2] = destPixel >>> 24 & 255;
+					destData[destOffset + 3] = destPixel & 255;
+					break;
+				}
+			}
 		}
-		return sourceBitmapData;
+		destBitmapData.image.dirty = true;
+		return destBitmapData;
 	}
 	,__initShader: function(renderer,pass,sourceBitmapData) {
-		if(pass < this.__horizontalPasses) {
-			var scale = Math.pow(0.5,pass >> 1);
-			openfl_filters_BlurFilter.__blurShader.uRadius.value[0] = this.get_blurX() * scale;
-			openfl_filters_BlurFilter.__blurShader.uRadius.value[1] = 0;
-		} else {
-			var scale = Math.pow(0.5,pass - this.__horizontalPasses >> 1);
-			openfl_filters_BlurFilter.__blurShader.uRadius.value[0] = 0;
-			openfl_filters_BlurFilter.__blurShader.uRadius.value[1] = this.get_blurY() * scale;
+		openfl_filters_ColorMatrixFilter.__colorMatrixShader.init(this.get_matrix());
+		return openfl_filters_ColorMatrixFilter.__colorMatrixShader;
+	}
+	,get_matrix: function() {
+		return this.__matrix;
+	}
+	,set_matrix: function(value) {
+		if(value == null) {
+			value = [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0];
 		}
-		return openfl_filters_BlurFilter.__blurShader;
+		return this.__matrix = value;
 	}
-	,get_blurX: function() {
-		return this.__blurX;
-	}
-	,set_blurX: function(value) {
-		if(value != this.__blurX) {
-			this.__blurX = value;
-			this.__renderDirty = true;
-			this.__leftExtension = value > 0 ? Math.ceil(value) : 0;
-			this.__rightExtension = this.__leftExtension;
-		}
-		return value;
-	}
-	,get_blurY: function() {
-		return this.__blurY;
-	}
-	,set_blurY: function(value) {
-		if(value != this.__blurY) {
-			this.__blurY = value;
-			this.__renderDirty = true;
-			this.__topExtension = value > 0 ? Math.ceil(value) : 0;
-			this.__bottomExtension = this.__topExtension;
-		}
-		return value;
-	}
-	,get_quality: function() {
-		return this.__quality;
-	}
-	,set_quality: function(value) {
-		this.__horizontalPasses = this.__blurX <= 0 ? 0 : Math.round(this.__blurX * (value / 4)) + 1;
-		this.__verticalPasses = this.__blurY <= 0 ? 0 : Math.round(this.__blurY * (value / 4)) + 1;
-		this.__numShaderPasses = this.__horizontalPasses + this.__verticalPasses;
-		if(value != this.__quality) {
-			this.__renderDirty = true;
-		}
-		return this.__quality = value;
-	}
-	,__class__: openfl_filters_BlurFilter
-	,__properties__: {set_quality:"set_quality",get_quality:"get_quality",set_blurY:"set_blurY",get_blurY:"get_blurY",set_blurX:"set_blurX",get_blurX:"get_blurX"}
+	,__class__: openfl_filters_ColorMatrixFilter
+	,__properties__: {set_matrix:"set_matrix",get_matrix:"get_matrix"}
 });
 var openfl_geom_Matrix3D = function(v) {
 	if(v != null && v.get_length() == 16) {
@@ -78322,6 +78809,8 @@ var Enum = { };
 com_gskinner_motion_GTween.plugins = { };
 com_gskinner_motion_GTween.tickList = new haxe_ds_ObjectMap();
 com_gskinner_motion_GTween.gcLockList = new haxe_ds_ObjectMap();
+com_gskinner_motion_GTweener.instance = new com_gskinner_motion_GTweener();
+com_gskinner_motion_GTween.installPlugin(com_gskinner_motion_GTweener.instance,["*"]);
 js_Boot.__toStr = ({ }).toString;
 if(ArrayBuffer.prototype.slice == null) {
 	ArrayBuffer.prototype.slice = js_lib__$ArrayBuffer_ArrayBufferCompat.sliceImpl;
@@ -78394,14 +78883,18 @@ Xml.Comment = 3;
 Xml.DocType = 4;
 Xml.ProcessingInstruction = 5;
 Xml.Document = 6;
+com_gskinner_geom_ColorMatrix.DELTA_INDEX = [0,0.01,0.02,0.04,0.05,0.06,0.07,0.08,0.1,0.11,0.12,0.14,0.15,0.16,0.17,0.18,0.20,0.21,0.22,0.24,0.25,0.27,0.28,0.30,0.32,0.34,0.36,0.38,0.40,0.42,0.44,0.46,0.48,0.5,0.53,0.56,0.59,0.62,0.65,0.68,0.71,0.74,0.77,0.80,0.83,0.86,0.89,0.92,0.95,0.98,1.0,1.06,1.12,1.18,1.24,1.30,1.36,1.42,1.48,1.54,1.60,1.66,1.72,1.78,1.84,1.90,1.96,2.0,2.12,2.25,2.37,2.50,2.62,2.75,2.87,3.0,3.2,3.4,3.6,3.8,4.0,4.3,4.7,4.9,5.0,5.5,6.0,6.5,6.8,7.0,7.3,7.5,7.8,8.0,8.4,8.7,9.0,9.4,9.6,9.8,10.0];
+com_gskinner_geom_ColorMatrix.IDENTITY_MATRIX = [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1];
+com_gskinner_geom_ColorMatrix.LENGTH = com_gskinner_geom_ColorMatrix.IDENTITY_MATRIX.length;
 com_gskinner_motion_GTween.version = 2.01;
 com_gskinner_motion_GTween.defaultDispatchEvents = false;
 com_gskinner_motion_GTween.defaultEase = com_gskinner_motion_GTween.linearEase;
 com_gskinner_motion_GTween.pauseAll = false;
 com_gskinner_motion_GTween.timeScaleAll = 1;
 com_gskinner_motion_GTween.hasStarPlugins = false;
-com_gskinner_motion_plugins_MotionBlurPlugin.enabled = false;
-com_gskinner_motion_plugins_MotionBlurPlugin.strength = 0.6;
+com_gskinner_motion_GTweener.tweens = new haxe_ds_ObjectMap();
+com_gskinner_motion_plugins_ColorAdjustPlugin.enabled = true;
+com_gskinner_motion_plugins_ColorAdjustPlugin.tweenProperties = ["brightness","contrast","hue","saturation"];
 haxe_Serializer.USE_CACHE = false;
 haxe_Serializer.USE_ENUM_INDEX = false;
 haxe_Serializer.BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%:";
@@ -80178,7 +80671,8 @@ openfl_events_TouchEvent.TOUCH_ROLL_OUT = "touchRollOut";
 openfl_events_TouchEvent.TOUCH_ROLL_OVER = "touchRollOver";
 openfl_events_TouchEvent.TOUCH_TAP = "touchTap";
 openfl_events_UncaughtErrorEvent.UNCAUGHT_ERROR = "uncaughtError";
-openfl_filters_BlurFilter.__blurShader = new openfl_filters__$BlurFilter_BlurShader();
+openfl_filters__$ColorMatrixFilter_ColorMatrixShader.__meta__ = { obj : { SuppressWarnings : ["checkstyle:FieldDocComment"]}};
+openfl_filters_ColorMatrixFilter.__colorMatrixShader = new openfl_filters__$ColorMatrixFilter_ColorMatrixShader();
 openfl_geom_Matrix3D.__meta__ = { statics : { create2D : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, createABCD : { SuppressWarnings : ["checkstyle:FieldDocComment"]}, createOrtho : { SuppressWarnings : ["checkstyle:FieldDocComment"]}}};
 openfl_geom_Orientation3D.AXIS_ANGLE = 0;
 openfl_geom_Orientation3D.EULER_ANGLES = 1;
@@ -80690,7 +81184,7 @@ ApplicationMain.main();
 	} else {
 		$hx_exports.lime = $hx_exports.lime || {};
 		$hx_exports.lime.$scripts = $hx_exports.lime.$scripts || {};
-		$hx_exports.lime.$scripts["GTweenSimpleSequencing"] = $hx_script;
+		$hx_exports.lime.$scripts["GTweenColorAdjust"] = $hx_script;
 		$hx_exports.lime.embed = function (projectName) {
 			var exports = {};
 			var script = $hx_exports.lime.$scripts[projectName];
