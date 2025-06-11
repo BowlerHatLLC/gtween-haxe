@@ -4487,6 +4487,7 @@ com_gskinner_motion_GTween.prototype = $extend(openfl_events_EventDispatcher.pro
 			++_g;
 			this._rangeValues[n] = Reflect.field(this._rangeValues,n) * -1;
 		}
+		this.calculatedPosition = this.calculatedPositionOld = NaN;
 		if(this._position < 0) {
 			var pos = this.positionOld;
 			this.set_position(0);
@@ -25551,7 +25552,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 898669;
+	this.version = 55987;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";

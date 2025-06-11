@@ -384,6 +384,7 @@ com_gskinner_motion_GTween.prototype = {
 			++_g;
 			this._rangeValues[n] = Reflect.field(this._rangeValues,n) * -1;
 		}
+		this.calculatedPosition = this.calculatedPositionOld = NaN;
 		if(this._position < 0) {
 			var pos = this.positionOld;
 			this.set_position(0);
