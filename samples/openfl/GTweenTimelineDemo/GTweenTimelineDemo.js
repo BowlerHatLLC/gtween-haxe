@@ -4694,7 +4694,12 @@ com_gskinner_motion_GTweenTimeline.prototype = $extend(com_gskinner_motion_GTwee
 		}
 		this.tweens.splice(index,0,tween);
 		this.tweenStartPositions.splice(index,0,position);
-		tween.set_position(this.calculatedPosition - position);
+		var f = this.calculatedPosition;
+		if(isNaN(f)) {
+			tween.set_position(0.0 - position);
+		} else {
+			tween.set_position(this.calculatedPosition - position);
+		}
 	}
 	,addTweens: function(tweens) {
 		if(tweens == null) {
@@ -25552,7 +25557,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 55987;
+	this.version = 414858;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
