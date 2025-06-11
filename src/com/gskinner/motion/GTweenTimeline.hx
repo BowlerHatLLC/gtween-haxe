@@ -147,7 +147,15 @@ class GTweenTimeline extends GTween {
 		while (++index < tweens.length && tweenStartPositions[index] < position) { }
 		tweens.insert(index,tween);
 		tweenStartPositions.insert(index,position);
-		tween.position = calculatedPosition-position;
+
+		if (Math.isNaN(calculatedPosition))
+		{
+			tween.position = 0.0-position;
+		}
+		else 
+		{
+			tween.position = calculatedPosition-position;
+		}
 	}
 	
 	/**
