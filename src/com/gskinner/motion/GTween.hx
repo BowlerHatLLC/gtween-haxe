@@ -854,6 +854,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 		{
 			Reflect.setField(_rangeValues, n, Reflect.field(_rangeValues, n) * -1);
 		}
+		calculatedPosition = calculatedPositionOld = Math.NaN;
 		if (_position < 0)
 		{
 			// render it at position 0:
