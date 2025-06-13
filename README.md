@@ -139,10 +139,10 @@ See the [API reference](https://bowlerhatllc.github.io/gtween-haxe/api/) for des
 
 ## Download
 
-This library is not yet available on Haxelib. In the meantime, use the [**haxelib git**](https://lib.haxe.org/documentation/using-haxelib/#git) command to download GTween for Haxe.
+Use the [**haxelib install**](https://lib.haxe.org/documentation/using-haxelib/#install) command to download GTween for Haxe.
 
 ```sh
-haxelib git gtween https://github.com/BowlerHatLLC/gtween-haxe.git
+haxelib install gtween
 ```
 
 Requires Haxe 4.0 or newer.
