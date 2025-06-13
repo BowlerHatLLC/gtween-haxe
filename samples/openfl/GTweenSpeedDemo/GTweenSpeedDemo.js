@@ -25069,7 +25069,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 980713;
+	this.version = 185151;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
@@ -78247,7 +78247,7 @@ Xml.Comment = 3;
 Xml.DocType = 4;
 Xml.ProcessingInstruction = 5;
 Xml.Document = 6;
-com_gskinner_motion_GTween.version = 2.01;
+com_gskinner_motion_GTween.version = 2.20;
 com_gskinner_motion_GTween.defaultDispatchEvents = false;
 com_gskinner_motion_GTween.defaultEase = com_gskinner_motion_GTween.linearEase;
 com_gskinner_motion_GTween.pauseAll = false;
