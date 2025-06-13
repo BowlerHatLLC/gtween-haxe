@@ -3383,7 +3383,7 @@ openfl_display_Sprite.prototype = $extend(openfl_display_DisplayObjectContainer.
 });
 var GTweenColorAdjust = function() {
 	openfl_display_Sprite.call(this);
-	var image = new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("bitmap.png"));
+	var image = new openfl_display_Bitmap(openfl_utils_Assets.getBitmapData("assets/bitmap.png"));
 	this.addChild(image);
 	com_gskinner_motion_plugins_ColorAdjustPlugin.install();
 	new com_gskinner_motion_GTween(image,3,{ saturation : -100, contrast : 70},{ repeatCount : 0, reflect : true});
@@ -3594,7 +3594,7 @@ ManifestResources.init = function(config) {
 		ManifestResources.rootPath = "./";
 	}
 	var bundle;
-	var data = "{\"name\":null,\"assets\":\"aoy4:pathy10:bitmap.pngy4:sizei389785y4:typey5:IMAGEy2:idR1y7:preloadtgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
+	var data = "{\"name\":null,\"assets\":\"aoy4:pathy19:assets%2Fbitmap.pngy4:sizei389785y4:typey5:IMAGEy2:idR1y7:preloadtgh\",\"rootPath\":null,\"version\":2,\"libraryArgs\":[],\"libraryType\":null}";
 	var manifest = lime_utils_AssetManifest.parse(data,ManifestResources.rootPath);
 	var library = lime_utils_AssetLibrary.fromManifest(manifest);
 	lime_utils_Assets.registerLibrary("default",library);
@@ -4820,7 +4820,7 @@ com_gskinner_motion_plugins_ColorAdjustPlugin.prototype = {
 				if(((f[i]) instanceof openfl_filters_ColorMatrixFilter)) {
 					var cmF = f[i];
 					var o = { index : i, ratio : NaN};
-					o.initMatrix = cmF.get_matrix();
+					o.initMatrix = cmF.get_matrix().slice();
 					o.matrix = this.getMatrix(tween);
 					tween.pluginData.ColorAdjustData = o;
 				}
@@ -4855,7 +4855,7 @@ com_gskinner_motion_plugins_ColorAdjustPlugin.prototype = {
 			targMatrix = data.initMatrix;
 			ratio *= -1;
 		}
-		var matrix = cmF.get_matrix();
+		var matrix = cmF.get_matrix().slice();
 		var l = matrix.length;
 		var _g = 0;
 		var _g1 = l;
@@ -25495,7 +25495,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 26866;
+	this.version = 35388;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";

@@ -27,15 +27,23 @@ var GTweenerDemo = function() {
 		_gthis.ball.style.top = Std.string(_gthis.delegate.top) + "px";
 	};
 	com_gskinner_motion_GTweener.to(this.delegate,2,{ left : 200, top : 350},{ repeatCount : 0, reflect : true, onChange : onChange});
-	window.addEventListener("click",$bind(this,this.handleClick));
+	if(window.matchMedia("(pointer: coarse)").matches) {
+		window.addEventListener("touchstart",$bind(this,this.handleTouch));
+	} else {
+		window.addEventListener("mousedown",$bind(this,this.handleMouse));
+	}
 };
 GTweenerDemo.__name__ = true;
 GTweenerDemo.main = function() {
 	new GTweenerDemo();
 };
 GTweenerDemo.prototype = {
-	handleClick: function(evt) {
+	handleMouse: function(evt) {
 		com_gskinner_motion_GTweener.to(this.delegate,0.4,{ left : evt.clientX});
+	}
+	,handleTouch: function(evt) {
+		var touch = evt.touches.item(0);
+		com_gskinner_motion_GTweener.to(this.delegate,0.4,{ left : touch.clientX});
 	}
 };
 Math.__name__ = true;

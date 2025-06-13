@@ -37,19 +37,32 @@ var GTweenInterrupt = function() {
 		var circleTween = new com_gskinner_motion_GTween(delegate,0.5 + i * 0.04,{ left : 275, top : 200},{ ease : com_gskinner_motion_easing_Bounce.easeOut, onChange : onChange});
 		this.tweens.push(circleTween);
 	}
-	window.addEventListener("click",$bind(this,this.handleClick));
+	if(window.matchMedia("(pointer: coarse)").matches) {
+		window.addEventListener("touchstart",$bind(this,this.handleTouch));
+	} else {
+		window.addEventListener("mousedown",$bind(this,this.handleMouse));
+	}
 };
 GTweenInterrupt.__name__ = true;
 GTweenInterrupt.main = function() {
 	new GTweenInterrupt();
 };
 GTweenInterrupt.prototype = {
-	handleClick: function(evt) {
+	handleMouse: function(evt) {
 		var _g = 0;
 		var _g1 = this.tweens.length;
 		while(_g < _g1) {
 			var i = _g++;
 			this.tweens[i].setValues({ left : evt.clientX, top : evt.clientY});
+		}
+	}
+	,handleTouch: function(evt) {
+		var touch = evt.touches.item(0);
+		var _g = 0;
+		var _g1 = this.tweens.length;
+		while(_g < _g1) {
+			var i = _g++;
+			this.tweens[i].setValues({ left : touch.clientX, top : touch.clientY});
 		}
 	}
 };
