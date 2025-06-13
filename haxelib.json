@@ -9,7 +9,7 @@
 		"frontend"
 	],
 	"description": "A small but extremely robust Haxe library for programmatic tweening, animation, and transitions",
-	"version": "2.2.0-alpha.0",
+	"version": "2.2.0",
 	"classPath": "src",
 	"contributors": ["bowlerhat"],
 	"releasenote": "Initial release"

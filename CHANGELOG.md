@@ -1,11 +1,15 @@
 # GTween Change Log
 
-## Haxe 2.2.0 (2025)
+## Haxe 2.2.0 (June 13, 2025)
 
 Version 2.2.0 of GTween ports the AS3 library to Haxe.
 
 Changes:
-- Initial release of Haxe port
+- fixed issue where adding a tween to a timeline set the tween's position to NaN
+- fixed issue where swapValues() didn't update the target soon enough not to render with the original value
+- fixed documentation typos that referred to wrong method names
+- added samples for Haxe compiled to JavaScript that animate HTML DOM elements
+- proxy property supports only . member access and [] array access only, and method calls or deleting properties are not supported in the Haxe version
 
 ## GTween AS3 master
 
