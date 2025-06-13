@@ -94,7 +94,11 @@ class ColorAdjustPlugin implements IGTweenPlugin {
 					var o:Dynamic = {index:i,ratio:Math.NaN};
 					
 					// save off the initial matrix:
+					#if (!flash && openfl <= "9.4.1")
+					o.initMatrix = cmF.matrix.copy();
+					#else
 					o.initMatrix = cmF.matrix;
+					#end
 					
 					// save off the target matrix:
 					o.matrix = getMatrix(tween);
@@ -145,7 +149,11 @@ class ColorAdjustPlugin implements IGTweenPlugin {
 		}
 		
 		// grab the current color matrix, and tween it's values:
-		var matrix:Array<#if openfl Float #else Dynamic #end> = cmF.matrix;
+		#if (!flash && openfl <= "9.4.1")
+		var matrix:Array<Float> = cmF.matrix.copy();
+		#else
+		var matrix:Array<Float> = cmF.matrix;
+		#end
 		var l:Int = matrix.length;
 		for (i in 0...l) {
 			matrix[i] = initMatrix[i]+(targMatrix[i]-initMatrix[i])*ratio;
