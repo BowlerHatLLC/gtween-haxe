@@ -21,7 +21,7 @@ class GTweenColorAdjust extends Sprite {
 	public function new() {
 		super();
 
-		var image = new Bitmap(Assets.getBitmapData("bitmap.png"));
+		var image = new Bitmap(Assets.getBitmapData("assets/bitmap.png"));
 		addChild(image);
 
 		ColorAdjustPlugin.install();
