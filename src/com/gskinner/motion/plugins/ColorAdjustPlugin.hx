@@ -152,7 +152,7 @@ class ColorAdjustPlugin implements IGTweenPlugin {
 		#if (!flash && openfl <= "9.4.1")
 		var matrix:Array<Float> = cmF.matrix.copy();
 		#else
-		var matrix:Array<Float> = cmF.matrix;
+		var matrix:Array<#if openfl Float #else Dynamic #end> = cmF.matrix;
 		#end
 		var l:Int = matrix.length;
 		for (i in 0...l) {
