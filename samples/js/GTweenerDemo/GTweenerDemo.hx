@@ -10,10 +10,11 @@ Test movie, then click around the stage quickly. Note that you can interrupt
 the tween while it is running, and it will attempt to recover appropriately.
 */
 
+import com.gskinner.motion.GTweener;
 import js.Browser;
 import js.html.Element;
 import js.html.MouseEvent;
-import com.gskinner.motion.GTweener;
+import js.html.TouchEvent;
 
 class GTweenerDemo {
 	public static function main():Void {
@@ -53,7 +54,11 @@ class GTweenerDemo {
 
 		GTweener.to(delegate, 2, {left:200, top:350}, {repeatCount:0, reflect:true, onChange:onChange});
 		
-		Browser.window.addEventListener("click",handleClick);
+		if (Browser.window.matchMedia("(pointer: coarse)").matches) {
+			Browser.window.addEventListener("touchstart",handleTouch);
+		} else {
+			Browser.window.addEventListener("mousedown",handleMouse);
+		}
 	}
 	
 // Public getter / setters:
@@ -62,7 +67,12 @@ class GTweenerDemo {
 	
 // Protected Methods:
 
-	private function handleClick(evt:MouseEvent):Void {
+	private function handleMouse(evt:MouseEvent):Void {
 		GTweener.to(delegate, 0.4, {left: evt.clientX});
+	}
+
+	private function handleTouch(evt:TouchEvent):Void {
+		var touch = evt.touches.item(0);
+		GTweener.to(delegate, 0.4, {left: touch.clientX});
 	}
 }

@@ -10,10 +10,11 @@ Test movie, then click around the stage quickly. Note that you can interrupt
 the tween while it is running, and it will attempt to recover appropriately.
 */
 
-import js.Browser;
-import js.html.MouseEvent;
 import com.gskinner.motion.GTween;
 import com.gskinner.motion.easing.*;
+import js.Browser;
+import js.html.MouseEvent;
+import js.html.TouchEvent;
 
 class GTweenInterrupt {
 	public static function main():Void {
@@ -63,7 +64,11 @@ class GTweenInterrupt {
 			tweens.push(circleTween);
 		}
 		
-		Browser.window.addEventListener("click",handleClick);
+		if (Browser.window.matchMedia("(pointer: coarse)").matches) {
+			Browser.window.addEventListener("touchstart",handleTouch);
+		} else {
+			Browser.window.addEventListener("mousedown",handleMouse);
+		}
 	}
 	
 // Public getter / setters:
@@ -72,11 +77,18 @@ class GTweenInterrupt {
 	
 // Protected Methods:
 
-	private function handleClick(evt:MouseEvent):Void {
+	private function handleMouse(evt:MouseEvent):Void {
 		// update each tween with the new end property values.
 		// note that I didn't create a new tween object, but reused the existing one instead.
 		for (i in 0...tweens.length) {
 			tweens[i].setValues({left:evt.clientX,top:evt.clientY});
+		}
+	}
+
+	private function handleTouch(evt:TouchEvent):Void {
+		var touch = evt.touches.item(0);
+		for (i in 0...tweens.length) {
+			tweens[i].setValues({left:touch.clientX,top:touch.clientY});
 		}
 	}
 }
