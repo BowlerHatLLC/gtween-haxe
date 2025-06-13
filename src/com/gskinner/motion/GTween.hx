@@ -90,7 +90,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 		build number as the decimal value. For example, the fourth build of version 3 would
 		have version=3.04.
 	**/
-	public static var version:Float = 2.01;
+	public static var version:Float = 2.20;
 	
 	#if (flash || openfl)
 	/**
