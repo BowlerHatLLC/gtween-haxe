@@ -1,4 +1,4 @@
--cp ../../../src
+-lib gtween
 -main GTweenColorAdjust
 -swf bin/GTweenColorAdjust.swf
 -swf-version 19

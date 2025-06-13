@@ -1,4 +1,4 @@
--cp ../../../src
+-lib gtween
 -main GTweenerDemo
 -swf bin/GTweenerDemo.swf
 -swf-version 19

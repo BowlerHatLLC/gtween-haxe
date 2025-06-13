@@ -1,4 +1,4 @@
--cp ../../../src
+-lib gtween
 -main GTweenInterrupt
 -swf bin/GTweenInterrupt.swf
 -swf-version 19

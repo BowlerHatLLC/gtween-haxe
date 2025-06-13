@@ -1,4 +1,4 @@
--cp ../../../src
+-lib gtween
 -main GTweenSimpleSequencing
 -swf bin/GTweenSimpleSequencing.swf
 -swf-version 19
