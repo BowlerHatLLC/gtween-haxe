@@ -264,7 +264,7 @@ com_gskinner_motion_GTween.prototype = {
 				this.init();
 			}
 			var _g = 0;
-			var _g1 = Reflect.fields(this._values);
+			var _g1 = this._valuesFields;
 			while(_g < _g1.length) {
 				var n = _g1[_g];
 				++_g;
@@ -382,7 +382,7 @@ com_gskinner_motion_GTween.prototype = {
 		this._values = this._initValues;
 		this._initValues = o;
 		var _g = 0;
-		var _g1 = Reflect.fields(this._rangeValues);
+		var _g1 = this._valuesFields;
 		while(_g < _g1.length) {
 			var n = _g1[_g];
 			++_g;
@@ -402,8 +402,9 @@ com_gskinner_motion_GTween.prototype = {
 		this._inited = true;
 		this._initValues = { };
 		this._rangeValues = { };
+		this._valuesFields = Reflect.fields(this._values);
 		var _g = 0;
-		var _g1 = Reflect.fields(this._values);
+		var _g1 = this._valuesFields;
 		while(_g < _g1.length) {
 			var n = _g1[_g];
 			++_g;
@@ -499,7 +500,7 @@ com_gskinner_motion__$GTween_TargetProxy.fieldRead = function(this1,name) {
 	}
 };
 com_gskinner_motion__$GTween_TargetProxy.fieldWrite = function(this1,name,value) {
-	if(value == true || value == false || typeof(value) == "string" || isNaN(value)) {
+	if(typeof(value) == "boolean" || typeof(value) == "string" || isNaN(value)) {
 		Reflect.setProperty(this1.target,name,value);
 	} else {
 		this1.setValue(name,parseFloat(Std.string(value)));
