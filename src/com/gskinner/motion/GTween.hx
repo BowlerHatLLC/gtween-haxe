@@ -747,7 +747,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 		{
 			return Math.NaN;
 		}
-		var value:Dynamic = Reflect.field(_values, name);
+		var value:Any = Reflect.field(_values, name);
 		if (!(value is Float))
 		{
 			return Math.NaN;
@@ -817,7 +817,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 		{
 			throw "Not initialized";
 		}
-		var value:Dynamic = Reflect.field(_initValues, name);
+		var value:Any = Reflect.field(_initValues, name);
 		if (!(value is Float))
 		{
 			return Math.NaN;
@@ -848,7 +848,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 		{
 			init();
 		}
-		var o:Dynamic = _values;
+		var o:Any = _values;
 		_values = _initValues;
 		_initValues = o;
 		for (n in _valuesFields)
@@ -977,7 +977,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 		}
 	}
 	
-	private function copy(o1:Dynamic, o2:Dynamic, smart:Bool = false):Dynamic
+	private function copy(o1:Any, o2:Any, smart:Bool = false):Any
 	{
 		for (n in Reflect.fields(o1))
 		{
@@ -1016,14 +1016,14 @@ private abstract TargetProxy(GTween) from GTween
 	}
 
 	@:op(a.b)
-	public function fieldRead(name:String):Dynamic
+	public function fieldRead(name:String):Any
 	{
 		var value:Float = this.getValue(name);
 		return (Math.isNaN(value)) ? Reflect.getProperty(this.target, name) : value;
 	}
 
 	@:op(a.b)
-	public function fieldWrite(name:String, value:Dynamic):Void
+	public function fieldWrite(name:String, value:Any):Void
 	{
 		if (value == true || value == false || (value is String) || Math.isNaN(value))
 		{
@@ -1036,14 +1036,14 @@ private abstract TargetProxy(GTween) from GTween
 	}
 
 	@:op([])
-	public function arrayRead(name:String):Dynamic
+	public function arrayRead(name:String):Any
 	{
 		var value:Float = this.getValue(name);
 		return (Math.isNaN(value)) ? Reflect.getProperty(this.target, name) : value;
 	}
 
 	@:op([])
-	public function arrayWrite(name:String, value:Dynamic):Void
+	public function arrayWrite(name:String, value:Any):Void
 	{
 		if ((value is Bool) || (value is String) || Math.isNaN(value))
 		{
