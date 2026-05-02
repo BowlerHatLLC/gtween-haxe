@@ -1025,7 +1025,7 @@ private abstract TargetProxy(GTween) from GTween
 	@:op(a.b)
 	public function fieldWrite(name:String, value:Any):Void
 	{
-		if (value == true || value == false || (value is String) || Math.isNaN(value))
+		if (((value is Bool) && (value == true || value == false)) || (value is String) || Math.isNaN(value))
 		{
 			Reflect.setProperty(this.target, name, value);
 		}
