@@ -1016,16 +1016,16 @@ private abstract TargetProxy(GTween) from GTween
 	}
 
 	@:op(a.b)
-	public function fieldRead(name:String):Any
+	public function fieldRead(name:String):Dynamic
 	{
 		var value:Float = this.getValue(name);
 		return (Math.isNaN(value)) ? Reflect.getProperty(this.target, name) : value;
 	}
 
 	@:op(a.b)
-	public function fieldWrite(name:String, value:Any):Void
+	public function fieldWrite(name:String, value:Dynamic):Void
 	{
-		if (((value is Bool) && (value == true || value == false)) || (value is String) || Math.isNaN(value))
+		if ((value is Bool) || (value is String) || Math.isNaN(value))
 		{
 			Reflect.setProperty(this.target, name, value);
 		}
@@ -1036,14 +1036,14 @@ private abstract TargetProxy(GTween) from GTween
 	}
 
 	@:op([])
-	public function arrayRead(name:String):Any
+	public function arrayRead(name:String):Dynamic
 	{
 		var value:Float = this.getValue(name);
 		return (Math.isNaN(value)) ? Reflect.getProperty(this.target, name) : value;
 	}
 
 	@:op([])
-	public function arrayWrite(name:String, value:Any):Void
+	public function arrayWrite(name:String, value:Dynamic):Void
 	{
 		if ((value is Bool) || (value is String) || Math.isNaN(value))
 		{
