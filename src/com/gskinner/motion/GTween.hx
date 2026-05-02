@@ -233,6 +233,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 	private var _inited:Bool;
 	private var _initValues:Any;
 	private var _rangeValues:Any;
+	private var _valuesFields:Array<String>;
 	
 	// Protected Properties:
 	/**
@@ -573,7 +574,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 			{
 				init();
 			}
-			for (n in Reflect.fields(_values))
+			for (n in _valuesFields)
 			{
 				var initVal:Float = Reflect.field(_initValues, n);
 				var rangeVal:Float = Reflect.field(_rangeValues, n);
@@ -850,7 +851,7 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 		var o:Dynamic = _values;
 		_values = _initValues;
 		_initValues = o;
-		for (n in Reflect.fields(_rangeValues))
+		for (n in _valuesFields)
 		{
 			Reflect.setField(_rangeValues, n, Reflect.field(_rangeValues, n) * -1);
 		}
@@ -880,7 +881,8 @@ class GTween #if (flash || openfl) extends EventDispatcher #end
 		_inited = true;
 		_initValues = {};
 		_rangeValues = {};
-		for (n in Reflect.fields(_values))
+		_valuesFields = Reflect.fields(_values);
+		for (n in _valuesFields)
 		{
 			if (Reflect.field(plugins, n) != null)
 			{
