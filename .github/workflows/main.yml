@@ -13,14 +13,14 @@ jobs:
   haxelib:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: krdlab/setup-haxe@master
+    - uses: actions/checkout@v6
+    - uses: krdlab/setup-haxe@v2
       with:
         haxe-version: 4.3.7
     - name: Package Haxelib
       working-directory: haxelib
       run: haxe haxelib.hxml
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
         name: gtween-haxelib
         path: bin/haxelib/
@@ -29,8 +29,8 @@ jobs:
   build-api:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: krdlab/setup-haxe@master
+    - uses: actions/checkout@v6
+    - uses: krdlab/setup-haxe@v2
       with:
         haxe-version: 4.3.7
     - name: Set up Haxelib dependencies
@@ -40,7 +40,7 @@ jobs:
     - name: Build API reference
       working-directory: docs
       run: haxe docs.hxml
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
         name: gtween-docs
         path: bin/api/
@@ -56,8 +56,8 @@ jobs:
   build-swc:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: krdlab/setup-haxe@master
+    - uses: actions/checkout@v6
+    - uses: krdlab/setup-haxe@v2
       with:
         haxe-version: 4.3.7
     - name: Set up Haxelib dependencies
@@ -65,7 +65,7 @@ jobs:
         haxelib dev gtween ${{ github.workspace }}
     - name: Build Flash .swc library
       run: haxe flash.hxml
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
         name: gtween-swc
         path: bin/gtween-haxe.swc
@@ -77,8 +77,8 @@ jobs:
         haxe-version: [4.3.7]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: krdlab/setup-haxe@master
+    - uses: actions/checkout@v6
+    - uses: krdlab/setup-haxe@v2
       with:
         haxe-version: ${{ matrix.haxe-version }}
     - uses: cedx/setup-hashlink@v6
@@ -110,8 +110,8 @@ jobs:
         haxe-version: [4.3.7]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: krdlab/setup-haxe@master
+    - uses: actions/checkout@v6
+    - uses: krdlab/setup-haxe@v2
       with:
         haxe-version: ${{ matrix.haxe-version }}
     - name: Set up Haxelib dependencies
